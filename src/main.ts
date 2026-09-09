@@ -1,3 +1,4 @@
+import { DriftAttack, RouteTokens, driftKey, type PlayMode } from './playground';
 import { loadMiamiAssets } from './miami';
 import '@fontsource/barlow/latin-400.css';
 import '@fontsource/barlow/latin-500.css';
@@ -83,17 +84,20 @@ let raceId = '',
 let raceDifficulty: Difficulty = 'easy';
 let raceNight = false;
 let garageTab = 'build';
-function loadTrack(night = save.settings.night && [1, 4].includes(selected)) {
+let playMode: PlayMode = 'race';
+let driftAttack = new DriftAttack();
+let routeTokens: RouteTokens | undefined;
+function loadTrack(night = save.settings.night && [1, 4, 5].includes(selected)) {
   world.rgb = save.rgb;
   world.rgbCycle = save.rgbCycle;
   world.load(TRACKS[selected], PAINTS[save.paint].color, night);
   world.customize(save.rims, save.exhaust);
 }
 function difficultyPicker() {
-  return `<div class="difficulty-picker" role="group" aria-label="Race difficulty">${(['easy', 'hard'] as const).map((d) => `<button data-difficulty="${d}" aria-pressed="${save.settings.difficulty === d}"><b>${DIFFICULTIES[d].name}</b><small>${d === 'hard' ? '+30% RACE PURSE' : 'STEERING ASSIST'}</small></button>`).join('')}</div><p class="mode-description">${DIFFICULTIES[save.settings.difficulty].description}</p>`;
+  return `<div class="difficulty-picker" role="group" aria-label="Race difficulty">${(['easy', 'hard'] as const).map((d) => `<button data-difficulty="${d}" aria-pressed="${save.settings.difficulty === d}"><b>${DIFFICULTIES[d].name}</b><small>${d === 'hard' ? (playMode === 'race' ? '+30% RACE PURSE' : 'FULL CONTROL') : 'GRIP ASSIST'}</small></button>`).join('')}</div><p class="mode-description">${DIFFICULTIES[save.settings.difficulty].description}</p>`;
 }
 function nightPicker() {
-  return [1, 4].includes(selected)
+  return [1, 4, 5].includes(selected)
     ? `<div class="time-picker" role="group" aria-label="Coastal lighting"><button data-night="day" aria-pressed="${!world.night}">SUNSET</button><button data-night="night" aria-pressed="${world.night}">AFTER DARK <span>↗</span></button></div>`
     : '';
 }
@@ -153,19 +157,44 @@ function home() {
 function renderHome() {
   const chapter = Math.min(save.chapter, 7),
     c = CHAPTERS[chapter];
-  app.innerHTML = `<div class="menu-screen">${header('tour')}<main class="home-main"><div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> THE OPEN ROAD IS CALLING</div><h1>THREE WHEELS.<br>FIVE STOPS.<br><em>YOUR STORY.</em></h1><p class="hero-description">Chase the apex. Build your ride.<br>Earn your place on the SlingMods tour.</p><div class="hero-actions"><button class="primary" data-action="campaign">${save.chapter === 8 ? 'TOUR COMPLETE' : save.chapter ? 'CONTINUE THE TOUR' : 'START YOUR STORY'} ${icons.arrow}</button><button class="text-button" data-action="quick">QUICK RACE <span>↗</span></button></div><div class="campaign-progress"><span>${save.chapter === 8 ? 'CHAMPION' : `CHAPTER ${String(chapter + 1).padStart(2, '0')} / 08`}</span><div>${CHAPTERS.map((_, i) => `<i class="${i < save.chapter ? 'done' : i === save.chapter ? 'current' : ''}"></i>`).join('')}</div><small>${save.chapter === 8 ? 'The road is yours.' : c.title}</small></div></div><div class="vehicle-tag"><span class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</span><strong>BUILT TO STAND OUT.</strong><span>OPEN COCKPIT / THREE WHEELS / ZERO LIMITS</span></div><div class="scene-label"><span>LIVE FROM</span><strong>${TRACKS[selected].location}</strong><small>${TRACKS[selected].state}</small>${nightPicker()}</div></main><section class="destinations" aria-label="Choose a destination"><div class="section-kicker"><span>THE TOUR ROUTE</span><small>05 DESTINATIONS · ONE OPEN ROAD</small></div><div class="track-list">${TRACKS.map((t, i) => `<button class="track-card ${selected === i ? 'selected' : ''}" data-track="${i}" style="--track-color:${t.color}" aria-label="Preview ${t.location}" aria-pressed="${selected === i}"><span class="track-number">0${i + 1}</span>${trackMap(i)}<span class="track-copy"><small>${t.state}</small><strong>${t.location}</strong><span>${t.character}</span></span><span class="track-arrow">↗</span></button>`).join('')}</div></section><footer><span>SPONSORED BY <b>SLINGMODS.COM</b></span><span class="footer-note">OWNER TOUR / v0.4.1</span><span>${storageOK ? 'PROGRESS SAVED ON THIS DEVICE' : 'SESSION ONLY · STORAGE UNAVAILABLE'}</span></footer></div>`;
+  app.innerHTML = `<div class="menu-screen">${header('tour')}<main class="home-main"><div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> THE OPEN ROAD IS CALLING</div><h1>THREE WHEELS.<br>SIX STOPS.<br><em>YOUR STORY.</em></h1><p class="hero-description">Chase the apex. Build your ride.<br>Earn your place on the SlingMods tour.</p><div class="hero-actions"><button class="primary" data-action="campaign">${save.chapter === 8 ? 'TOUR COMPLETE' : save.chapter ? 'CONTINUE THE TOUR' : 'START YOUR STORY'} ${icons.arrow}</button><button class="text-button" data-action="quick">QUICK RACE <span>↗</span></button></div><div class="campaign-progress"><span>${save.chapter === 8 ? 'CHAMPION' : `CHAPTER ${String(chapter + 1).padStart(2, '0')} / 08`}</span><div>${CHAPTERS.map((_, i) => `<i class="${i < save.chapter ? 'done' : i === save.chapter ? 'current' : ''}"></i>`).join('')}</div><small>${save.chapter === 8 ? 'The road is yours.' : c.title}</small></div></div><div class="vehicle-tag"><span class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</span><strong>BUILT TO STAND OUT.</strong><span>OPEN COCKPIT / THREE WHEELS / ZERO LIMITS</span></div><div class="scene-label"><span>LIVE FROM</span><strong>${TRACKS[selected].location}</strong><small>${TRACKS[selected].state}</small>${nightPicker()}</div></main><section class="destinations" aria-label="Choose a destination"><div class="section-kicker"><span>THE TOUR ROUTE</span><small>06 DESTINATIONS · ONE OPEN ROAD</small></div><div class="track-list">${TRACKS.map((t, i) => `<button class="track-card ${selected === i ? 'selected' : ''}" data-track="${i}" style="--track-color:${t.color}" aria-label="Preview ${t.location}" aria-pressed="${selected === i}"><span class="track-number">0${i + 1}</span>${trackMap(i)}<span class="track-copy"><small>${t.state}</small><strong>${t.location}</strong><span>${t.character}</span></span><span class="track-arrow">↗</span></button>`).join('')}</div></section><footer><span>SPONSORED BY <b>SLINGMODS.COM</b></span><span class="footer-note">PLAYGROUND / v0.5 PREVIEW</span><span>${storageOK ? 'PROGRESS SAVED ON THIS DEVICE' : 'SESSION ONLY · STORAGE UNAVAILABLE'}</span></footer></div>`;
 }
 function briefing(quick = false) {
   screen = 'briefing';
   tab = quick ? 'quick' : 'tour';
   const c = CHAPTERS[Math.min(save.chapter, 7)];
   audio.stopVoice();
-  if (!quick) selected = c.track;
-  loadTrack(quick ? save.settings.night && [1, 4].includes(selected) : save.chapter === 3);
+  if (!quick) {
+    selected = c.track;
+    playMode = 'race';
+  }
+  loadTrack(quick ? save.settings.night && [1, 4, 5].includes(selected) : save.chapter === 3);
   if (!quick) void audio.voice(`brief-${Math.min(save.chapter, 7)}`);
-  const t = TRACKS[selected];
-  app.innerHTML = `<div class="menu-screen sub-screen">${header('tour')}<main class="briefing"><button class="back" data-action="home">← BACK TO THE TOUR</button><div class="eyebrow">${quick ? 'PICK YOUR PLAYGROUND' : `CHAPTER ${String(Math.min(save.chapter + 1, 8)).padStart(2, '0')} / 08`}</div><h1>${quick ? t.name : c.title}</h1><div class="location-line">${t.location.toUpperCase()} <span>/</span> ${t.state}</div>${quick ? `<p class="brief-text">${t.subtitle} Six riders. One finish line. Earn credits, chase your personal best, and make the next garage visit count.</p><div class="quick-tracks">${TRACKS.map((t, i) => `<button class="chip ${selected === i ? 'selected' : ''}" data-quicktrack="${i}">${t.location}</button>`).join('')}</div><label class="lap-select">RACE LENGTH <select id="laps" aria-label="Race length"><option value="1" ${laps === 1 ? 'selected' : ''}>1 lap · Sprint</option><option value="2" ${laps === 2 ? 'selected' : ''}>2 laps · Main event</option></select></label>` : `<div class="radio-message"><span class="radio-avatar">${c.contact[0]}</span><div><span class="eyebrow">${c.contact}</span><p>${c.text}</p></div></div>`}${difficultyPicker()}${quick ? nightPicker() : world.night ? '<div class="night-label">DAYTONA AFTER DARK · RGB NIGHT RUN</div>' : ''}<div class="race-detail"><div><small>OBJECTIVE</small><strong>${quick ? 'Race for the podium' : c.goal}</strong></div><div><small>${quick ? 'PERSONAL BEST' : 'SPONSOR BONUS'}</small><strong>${quick ? (personalBest() ? formatTime(personalBest()) : 'SET YOUR FIRST TIME') : `◈ ${c.reward.toLocaleString()} CR`}</strong></div></div><button class="primary" data-action="race">LET’S RIDE ${icons.arrow}</button><div class="brief-controls"><kbd>A</kbd><kbd>D</kbd> STEER <span>·</span> <kbd>SPACE</kbd> DRIFT <span>·</span> <kbd>SHIFT</kbd> BOOST</div></main><div class="brief-map">${trackMap(selected)}<span>${(circuits[selected].length / 1000).toFixed(2)} KM / LAP</span></div></div>`;
+  const t = TRACKS[selected],
+    solo = quick && playMode !== 'race';
+  const description =
+    playMode === 'free'
+      ? 'Your build. Your pace. Drive this closed course without rivals or a clock. Collect all 12 gold route tokens to top up your boost. Tokens reset each session; no campaign credits.'
+      : playMode === 'drift'
+        ? '90 seconds. Carry speed through a controlled slide, then straighten for 1.15 seconds to bank. Build up to a 5× combo. Impacts, off-road driving, reversing or spins lose the unbanked combo.'
+        : `${t.subtitle} Six riders. One finish line. Earn credits and chase your personal best.`;
+  const best = save.driftBests[driftKey(t.id, save.settings.difficulty, world.night)];
+  app.innerHTML = `<div class="menu-screen sub-screen">${header('tour')}<main class="briefing">
+    <button class="back" data-action="home">← BACK TO THE TOUR</button><div class="eyebrow">${quick ? 'PICK YOUR PLAYGROUND' : `CHAPTER ${String(Math.min(save.chapter + 1, 8)).padStart(2, '0')} / 08`}</div>
+    <h1>${quick ? t.name : c.title}</h1><div class="location-line">${t.location.toUpperCase()} <span>/</span> ${t.state}</div>
+    ${
+      quick
+        ? `<div class="play-modes" role="group" aria-label="Play mode">${(['race', 'drift', 'free'] as PlayMode[]).map((mode, i) => `<button data-mode="${mode}" aria-pressed="${playMode === mode}"><b>${['QUICK RACE', 'DRIFT ATTACK', 'FREE RIDE'][i]}</b><small>${['CHASE THE PODIUM', '90 SECONDS / BIG COMBOS', 'NO CLOCK / ROUTE TOKENS'][i]}</small></button>`).join('')}</div>
+    <p class="brief-text">${description}</p><div class="quick-tracks">${TRACKS.map((track, i) => `<button class="chip ${selected === i ? 'selected' : ''}" data-quicktrack="${i}">${track.location}${i === 5 ? ' / NEW' : ''}</button>`).join('')}</div>
+    ${!solo ? `<label class="lap-select">RACE LENGTH <select id="laps" aria-label="Race length"><option value="1" ${laps === 1 ? 'selected' : ''}>1 lap · Sprint</option><option value="2" ${laps === 2 ? 'selected' : ''}>2 laps · Main event</option></select></label>` : ''}`
+        : `<div class="radio-message"><span class="radio-avatar">${c.contact[0]}</span><div><span class="eyebrow">${c.contact}</span><p>${c.text}</p></div></div>`
+    }
+    ${difficultyPicker()}${quick ? nightPicker() : ''}<div class="race-detail"><div><small>OBJECTIVE</small><strong>${!quick ? c.goal : playMode === 'free' ? 'Explore the course' : playMode === 'drift' ? 'BANK YOUR BEST SCORE' : 'Race for the podium'}</strong></div><div><small>${playMode === 'free' ? 'SESSION CHALLENGE' : quick ? 'PERSONAL BEST' : 'SPONSOR BONUS'}</small><strong>${playMode === 'free' ? '12 BOOST TOKENS' : playMode === 'drift' ? (best ? best.toLocaleString() + ' PTS' : 'SET YOUR FIRST SCORE') : quick ? (personalBest() ? formatTime(personalBest()) : 'SET YOUR FIRST TIME') : `◈ ${c.reward.toLocaleString()} CR`}</strong></div></div>
+    <button class="primary" data-action="race">${playMode === 'free' ? 'EXPLORE THE COURSE' : playMode === 'drift' ? 'START DRIFT ATTACK' : 'LET’S RIDE'} ${icons.arrow}</button>
+    <div class="brief-controls"><kbd>A</kbd><kbd>D</kbd> STEER <span>·</span> <kbd>SPACE</kbd> DRIFT <span>·</span> <kbd>SHIFT</kbd> BOOST${playMode === 'free' ? ' <span>·</span> W / GAS TO ACCELERATE' : ''}</div>
+  </main><div class="brief-map">${trackMap(selected)}<span>${(circuits[selected].length / 1000).toFixed(2)} KM / LAP</span></div></div>`;
 }
+
 function productTile(p: Product) {
   return `<a class="product-tile" href="${p.url}" target="_blank" rel="noopener noreferrer"><div class="product-photo"><img src="${p.image}" alt="${p.shortName}" loading="lazy"></div><small>${p.brand}</small><h3>${p.shortName}</h3><span>${p.fitment}</span><b>VIEW ON SLINGMODS ↗</b></a>`;
 }
@@ -206,7 +235,7 @@ function modal(type: 'help' | 'settings' | 'pause' | 'reset') {
         : type === 'reset'
           ? 'START FRESH?'
           : 'TAKE A BREATHER.';
-  node.innerHTML = `<section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><button class="close" data-action="close" aria-label="Close dialog">×</button><span class="eyebrow">THREE-WHEEL TOUR</span><h2 id="dialog-title">${title}</h2>${type === 'help' ? `<p>Finish races to earn credits. Install garage upgrades and work your way through eight chapters across the original four destinations, plus a Miami quick-race circuit.</p><div class="control-grid"><span><kbd>A</kbd> <kbd>D</kbd> / <kbd>←</kbd> <kbd>→</kbd></span><strong>Steer left / right</strong><span><kbd>S</kbd> / <kbd>↓</kbd></span><strong>Brake for tight corners</strong><span><kbd>SPACE</kbd></span><strong>Hold while steering to drift</strong><span><kbd>SHIFT</kbd></span><strong>Hold for boost</strong><span><kbd>W</kbd> / <kbd>↑</kbd></span><strong>Accelerate (auto-accelerate off)</strong><span><kbd>ESC</kbd> / <kbd>P</kbd></span><strong>Pause the race</strong><span><kbd>R</kbd></span><strong>Recover to last checkpoint · C changes camera · Q/E manual gears</strong></div><p class="tip">Auto-accelerate is on by default. Follow a rival closely to draft and refill boost. Drifting earns style credits. Grass slows you down.</p><p class="muted">Touch: on-screen steering, brake, drift, and boost. Standard gamepad: left stick, LT brake, A drift, RB boost, RT throttle, Menu pause.</p><button class="primary" data-action="close">GOT IT ${icons.arrow}</button>` : type === 'settings' ? `<div class="settings-list"><label><span>Master audio</span><input type="checkbox" data-setting="sound" ${save.settings.sound ? 'checked' : ''}></label><label><span>Original driving soundtrack</span><input type="checkbox" data-setting="music" ${save.settings.music ? 'checked' : ''}></label><label><span>Crew radio</span><input type="checkbox" data-setting="voice" ${save.settings.voice ? 'checked' : ''}></label>${(['effectsVolume', 'musicVolume', 'voiceVolume'] as const).map((k, i) => `<label><span>${['Engine & effects level', 'Music level', 'Radio level'][i]}</span><input type="range" min="0" max="1" step="0.05" value="${save.settings[k]}" data-setting="${k}" aria-label="${['Engine and effects volume', 'Music volume', 'Radio volume'][i]}"></label>`).join('')}<label><span>Auto-accelerate</span><input type="checkbox" data-setting="autoThrottle" ${save.settings.autoThrottle ? 'checked' : ''}></label><label><span>Camera motion & speed effects</span><input type="checkbox" data-setting="motion" ${save.settings.motion ? 'checked' : ''}></label><label><span>Graphics quality</span><select data-setting="quality"><option value="auto" ${save.settings.quality === 'auto' ? 'selected' : ''}>Adaptive</option><option value="high" ${save.settings.quality === 'high' ? 'selected' : ''}>High</option><option value="low" ${save.settings.quality === 'low' ? 'selected' : ''}>Performance</option></select></label></div><button class="text-button" data-action="help">HOW TO PLAY ↗</button><p class="muted">Progress stays in this browser. No account, tracking, or real-money purchases. Renderer: ${world.backend}.</p><button class="danger-link" data-action="reset-dialog">Reset saved progress</button>` : type === 'reset' ? `<p>This removes your tour progress, credits, upgrades, and best times from this browser. It cannot be undone.</p><button class="primary" data-action="reset-confirm">RESET PROGRESS</button><button class="text-button" data-action="close">KEEP MY BUILD</button>` : `<p>The road will still be here.</p><button class="primary" data-action="close">BACK TO THE RACE ${icons.arrow}</button><button class="secondary" data-action="restart">RESTART RACE</button><button class="text-button" data-action="home">LEAVE RACE</button>`}</section>`;
+  node.innerHTML = `<section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><button class="close" data-action="close" aria-label="Close dialog">×</button><span class="eyebrow">THREE-WHEEL TOUR</span><h2 id="dialog-title">${title}</h2>${type === 'help' ? `<p>Finish races to earn credits. Install garage upgrades and work your way through eight chapters across the original four destinations, plus Miami and Harbor Run bonus circuits. Quick Race also offers Drift Attack and Free Ride. In Free Ride, use W / GAS to accelerate; collect tokens for a session boost refill.</p><div class="control-grid"><span><kbd>A</kbd> <kbd>D</kbd> / <kbd>←</kbd> <kbd>→</kbd></span><strong>Steer left / right</strong><span><kbd>S</kbd> / <kbd>↓</kbd></span><strong>Brake for tight corners</strong><span><kbd>SPACE</kbd></span><strong>Hold while steering to drift</strong><span><kbd>SHIFT</kbd></span><strong>Hold for boost</strong><span><kbd>W</kbd> / <kbd>↑</kbd></span><strong>Accelerate (auto-accelerate off)</strong><span><kbd>ESC</kbd> / <kbd>P</kbd></span><strong>Pause the race</strong><span><kbd>R</kbd></span><strong>Recover to last checkpoint · C changes camera · Q/E manual gears</strong></div><p class="tip">Auto-accelerate is on by default. Follow a rival closely to draft and refill boost. Drifting earns style credits. Grass slows you down.</p><p class="muted">Touch: on-screen steering, brake, drift, and boost. Standard gamepad: left stick, LT brake, A drift, RB boost, RT throttle, Menu pause.</p><button class="primary" data-action="close">GOT IT ${icons.arrow}</button>` : type === 'settings' ? `<div class="settings-list"><label><span>Master audio</span><input type="checkbox" data-setting="sound" ${save.settings.sound ? 'checked' : ''}></label><label><span>Original driving soundtrack</span><input type="checkbox" data-setting="music" ${save.settings.music ? 'checked' : ''}></label><label><span>Crew radio</span><input type="checkbox" data-setting="voice" ${save.settings.voice ? 'checked' : ''}></label>${(['effectsVolume', 'musicVolume', 'voiceVolume'] as const).map((k, i) => `<label><span>${['Engine & effects level', 'Music level', 'Radio level'][i]}</span><input type="range" min="0" max="1" step="0.05" value="${save.settings[k]}" data-setting="${k}" aria-label="${['Engine and effects volume', 'Music volume', 'Radio volume'][i]}"></label>`).join('')}<label><span>Auto-accelerate</span><input type="checkbox" data-setting="autoThrottle" ${save.settings.autoThrottle ? 'checked' : ''}></label><label><span>Camera motion & speed effects</span><input type="checkbox" data-setting="motion" ${save.settings.motion ? 'checked' : ''}></label><label><span>Graphics quality</span><select data-setting="quality"><option value="auto" ${save.settings.quality === 'auto' ? 'selected' : ''}>Adaptive</option><option value="high" ${save.settings.quality === 'high' ? 'selected' : ''}>High</option><option value="low" ${save.settings.quality === 'low' ? 'selected' : ''}>Performance</option></select></label></div><button class="text-button" data-action="help">HOW TO PLAY ↗</button><p class="muted">Progress stays in this browser. No account, tracking, or real-money purchases. Renderer: ${world.backend}.</p><button class="danger-link" data-action="reset-dialog">Reset saved progress</button>` : type === 'reset' ? `<p>This removes your tour progress, credits, upgrades, and best times from this browser. It cannot be undone.</p><button class="primary" data-action="reset-confirm">RESET PROGRESS</button><button class="text-button" data-action="close">KEEP MY BUILD</button>` : `<p>The road will still be here.</p><button class="primary" data-action="close">BACK TO THE RACE ${icons.arrow}</button><button class="secondary" data-action="restart">RESTART RACE</button><button class="text-button" data-action="home">LEAVE RACE</button>`}</section>`;
   app.append(node);
   node.querySelector<HTMLElement>('button')?.focus();
 }
@@ -225,6 +254,7 @@ function closeModal() {
 function startRace(restart = false) {
   audio.start();
   audio.stopVoice();
+  if (tab === 'tour') playMode = 'race';
   if (!restart) {
     raceDifficulty = save.settings.difficulty;
     raceNight = world.night;
@@ -253,7 +283,12 @@ function startRace(restart = false) {
     skill: 1 - i * 0.036,
     done: 0,
   }));
-  countdown = 3.5;
+  if (playMode !== 'race') opponents = [];
+  countdown = playMode === 'free' ? 0 : 3.5;
+  driftAttack = new DriftAttack();
+  routeTokens = playMode === 'free' ? RouteTokens.forCircuit(world.circuit) : undefined;
+  world.setTokens(routeTokens);
+  world.showCheckpoints = playMode === 'race';
   lastCount = 4;
   raceTime = 0;
   currentLap = 1;
@@ -264,7 +299,12 @@ function startRace(restart = false) {
   clock.reset();
   raceId = crypto.randomUUID();
   progress = [player, ...opponents].map(
-    () => new RaceProgress(makeGates(world.circuit), laps, world.circuit.length),
+    () =>
+      new RaceProgress(
+        makeGates(world.circuit),
+        playMode === 'race' ? laps : 999999,
+        world.circuit.length,
+      ),
   );
   spawnVehicle(player, world.circuit, 0, -2.5);
   opponents.forEach((o, i) => spawnVehicle(o, world.circuit, 11 + i * 7, i % 2 ? -3 : 3));
@@ -272,10 +312,12 @@ function startRace(restart = false) {
   taps.clear();
   touch.clear();
   renderHUD();
+  if (playMode === 'free') notify('FREE RIDE · W / GAS TO ACCELERATE · COLLECT 12 TOKENS', 5);
 }
 function renderHUD() {
-  app.innerHTML = `<div class="race-screen"><div class="race-top"><div class="race-position"><span id="position">6</span><small>/ 6<br>POSITION</small></div><div class="race-event"><span class="eyebrow">${raceChapter !== null ? `CHAPTER ${raceChapter + 1} · ${CHAPTERS[raceChapter].goal}` : 'QUICK RACE'} · ${raceDifficulty.toUpperCase()}${raceNight ? ' / NIGHT' : ''}</span><strong>${TRACKS[selected].name}</strong><span id="lap">LAP 1 / ${laps}</span></div><div class="timing"><strong id="time">0:00.00</strong><span>RACE TIME</span><button class="icon-button" data-action="pause" aria-label="Pause race">Ⅱ</button></div></div><div id="leaderboard" class="leaderboard"></div><div id="race-notice" class="race-notice"></div><div id="crew-subtitle" class="crew-subtitle" aria-live="polite"></div><div id="countdown" class="countdown">3</div><div class="race-bottom"><div class="minimap-wrap"><canvas id="minimap" width="240" height="220" aria-label="Circuit map with racers"></canvas><span>${TRACKS[selected].location.toUpperCase()}</span></div><div class="race-tips"><span><kbd>A</kbd><kbd>D</kbd> STEER</span><span><kbd>SPACE</kbd> DRIFT</span><span><kbd>SHIFT</kbd> BOOST</span><span><kbd>S</kbd> BRAKE</span><span><kbd>R</kbd> RECOVER</span><span><kbd>C</kbd> CAMERA</span><span><kbd>Q</kbd><kbd>E</kbd> SHIFT</span></div><div class="speedometer"><div class="speed-read"><span id="speed">0</span><small>MPH<br><b id="gear">N</b></small></div><div class="tachometer" aria-label="Engine RPM"><i id="rpm-fill"></i></div><div class="rpm-label"><span id="rpm-value">1200 RPM</span><span>REDLINE 8500</span></div><div class="boost-label"><span>ϟ TOUR BOOST</span><strong id="boost-value">100%</strong></div><div class="boost-bar"><i id="boost-bar"></i></div><div class="style-line"><span id="style">0 STYLE</span><span id="drive-state">READY TO RIDE</span></div></div></div><div class="touch-controls"><div><button data-touch="left" aria-label="Steer left">◀</button><button data-touch="right" aria-label="Steer right">▶</button></div><div><button data-action="camera" aria-label="Change camera">VIEW</button><button data-action="recover">RESET</button>${save.transmission === 'manual' ? '<button data-action="shift-down">− GEAR</button><button data-action="shift-up">+ GEAR</button>' : ''}<button data-touch="throttle" class="touch-throttle" aria-label="Accelerate">GAS</button><button data-touch="brake">BRAKE</button><button data-touch="drift">DRIFT</button><button data-touch="boost" class="touch-boost">ϟ BOOST</button></div></div><div class="speed-vignette" id="speed-vignette"></div></div>`;
+  app.innerHTML = `<div class="race-screen"><div class="race-top"><div class="race-position"><span id="position">${playMode === 'race' ? '6' : playMode === 'drift' ? '1×' : '0'}</span><small>${playMode === 'race' ? '/ 6<br>POSITION' : playMode === 'drift' ? 'COMBO' : '/ 12<br>TOKENS'}</small></div><div class="race-event"><span class="eyebrow">${raceChapter !== null ? `CHAPTER ${raceChapter + 1} · ${CHAPTERS[raceChapter].goal}` : playMode === 'drift' ? 'DRIFT ATTACK' : playMode === 'free' ? 'FREE RIDE' : 'QUICK RACE'} · ${raceDifficulty.toUpperCase()}${raceNight ? ' / NIGHT' : ''}</span><strong>${TRACKS[selected].name}</strong><span id="lap">LAP 1 / ${laps}</span></div><div class="timing"><strong id="time">0:00.00</strong><span>${playMode === 'free' ? 'TAKE YOUR TIME' : playMode === 'drift' ? 'TIME LEFT' : 'RACE TIME'}</span><button class="icon-button" data-action="pause" aria-label="Pause race">Ⅱ</button></div></div><div id="leaderboard" class="leaderboard"></div><div id="race-notice" class="race-notice"></div><div id="crew-subtitle" class="crew-subtitle" aria-live="polite"></div><div id="countdown" class="countdown">3</div><div class="race-bottom"><div class="minimap-wrap"><canvas id="minimap" width="240" height="220" aria-label="Circuit map with racers"></canvas><span>${TRACKS[selected].location.toUpperCase()}</span></div><div class="race-tips"><span><kbd>A</kbd><kbd>D</kbd> STEER</span><span><kbd>SPACE</kbd> DRIFT</span><span><kbd>SHIFT</kbd> BOOST</span><span><kbd>S</kbd> BRAKE</span><span><kbd>R</kbd> RECOVER</span><span><kbd>C</kbd> CAMERA</span><span><kbd>Q</kbd><kbd>E</kbd> SHIFT</span></div><div class="speedometer"><div class="speed-read"><span id="speed">0</span><small>MPH<br><b id="gear">N</b></small></div><div class="tachometer" aria-label="Engine RPM"><i id="rpm-fill"></i></div><div class="rpm-label"><span id="rpm-value">1200 RPM</span><span>REDLINE 8500</span></div><div class="boost-label"><span>ϟ TOUR BOOST</span><strong id="boost-value">100%</strong></div><div class="boost-bar"><i id="boost-bar"></i></div><div class="style-line"><span id="style">0 STYLE</span><span id="drive-state">READY TO RIDE</span></div></div></div><div class="touch-controls"><div><button data-touch="left" aria-label="Steer left">◀</button><button data-touch="right" aria-label="Steer right">▶</button></div><div><button data-action="camera" aria-label="Change camera">VIEW</button><button data-action="recover">RESET</button>${save.transmission === 'manual' ? '<button data-action="shift-down">− GEAR</button><button data-action="shift-up">+ GEAR</button>' : ''}<button data-touch="throttle" class="touch-throttle" aria-label="Accelerate">GAS</button><button data-touch="brake">BRAKE</button><button data-touch="drift">DRIFT</button><button data-touch="boost" class="touch-boost">ϟ BOOST</button></div></div><div class="speed-vignette" id="speed-vignette"></div></div>`;
   setupTouch();
+  updateHud();
 }
 function rank() {
   return [
@@ -300,20 +342,34 @@ function notify(msg: string, time = 2) {
 function updateHud() {
   if (screen !== 'race') return;
   const position = rank().findIndex((r) => r.name === 'YOU') + 1;
-  $('position').textContent = String(position);
+  $('position').textContent =
+    playMode === 'race'
+      ? String(position)
+      : playMode === 'drift'
+        ? `${driftAttack.combo}×`
+        : String(routeTokens?.collected.size || 0);
   $('crew-subtitle').textContent = audio.activeSubtitle;
-  $('time').textContent = formatTime(raceTime);
+  $('time').textContent =
+    playMode === 'free' ? '∞' : formatTime(playMode === 'drift' ? driftAttack.remaining : raceTime);
   $('speed').textContent = String(Math.round(Math.abs(player.speed) * 2.237));
   const telemetry = engineMix(player.telemetry);
   $('gear').textContent = telemetry.gear < 0 ? 'R' : String(telemetry.gear);
   $('rpm-fill').style.transform = `scaleX(${telemetry.redline})`;
   $('rpm-value').textContent = `${Math.round(telemetry.rpm / 100) * 100} RPM`;
   $('rpm-fill').classList.toggle('redline', telemetry.redline > 0.88);
-  $('lap').textContent = `LAP ${Math.min(laps, currentLap)} / ${laps}`;
+  $('lap').textContent =
+    playMode === 'race'
+      ? `LAP ${Math.min(laps, currentLap)} / ${laps}`
+      : playMode === 'drift'
+        ? `${driftAttack.banked.toLocaleString()} PTS BANKED`
+        : 'CLOSED-COURSE EXPLORATION';
   const boost = (player.boost / (100 + save.upgrades.boost * 24)) * 100;
   $('boost-value').textContent = `${Math.floor(boost)}%`;
   $('boost-bar').style.transform = `scaleX(${boost / 100})`;
-  $('style').textContent = `${Math.floor(player.style).toLocaleString()} STYLE`;
+  $('style').textContent =
+    playMode === 'drift'
+      ? `+${Math.floor(driftAttack.pending * driftAttack.combo).toLocaleString()} UNBANKED`
+      : `${Math.floor(player.style).toLocaleString()} STYLE`;
   $('drive-state').textContent = player.boosting
     ? 'BOOST ACTIVE'
     : player.drift > 0.1
@@ -326,16 +382,19 @@ function updateHud() {
   $('race-notice').textContent =
     countdown > 0
       ? ''
-      : progress[0]?.wrongWay
+      : playMode !== 'free' && progress[0]?.wrongWay
         ? 'WRONG WAY · TURN AROUND OR PRESS R'
         : noticeTime > 0
           ? notice
-          : player.drift > 0.3
-            ? `DRIFT +${Math.floor(player.drift * 65)}`
-            : player.draft > 0
-              ? 'SLIPSTREAM · BOOST RECHARGING'
-              : '';
+          : playMode === 'drift'
+            ? driftAttack.feedback
+            : player.drift > 0.3
+              ? `DRIFT +${Math.floor(player.drift * 65)}`
+              : player.draft > 0
+                ? 'SLIPSTREAM · BOOST RECHARGING'
+                : '';
   $('speed-vignette').classList.toggle('boosting', player.boosting && save.settings.motion);
+  $('leaderboard').style.display = playMode === 'race' ? '' : 'none';
   $('leaderboard').innerHTML = rank()
     .map(
       (r, i) =>
@@ -397,12 +456,13 @@ function input() {
       axis,
     ),
     throttle:
-      save.settings.autoThrottle ||
+      (playMode !== 'free' && save.settings.autoThrottle) ||
       held('KeyW') ||
       held('ArrowUp') ||
       touchHeld('throttle') ||
-      !!gp?.buttons[7]?.pressed,
-    brake: held('KeyS') || held('ArrowDown') || touchHeld('brake') || !!gp?.buttons[6]?.pressed,
+      gp?.buttons[7]?.value ||
+      0,
+    brake: held('KeyS') || held('ArrowDown') || touchHeld('brake') || gp?.buttons[6]?.value || 0,
     drift: held('Space') || touchHeld('drift') || !!gp?.buttons[0]?.pressed,
     boost:
       held('ShiftLeft') || held('ShiftRight') || touchHeld('boost') || !!gp?.buttons[5]?.pressed,
@@ -443,6 +503,7 @@ function step(dt: number) {
   const racers = [player, ...opponents];
   racers.forEach((p, i) => {
     if (progress[i].finishedAt !== null) return;
+    const oldDistance = p.distance;
     const from = positionOf(p),
       controls =
         i === 0
@@ -471,6 +532,21 @@ function step(dt: number) {
       notify('BARRIER CONTACT · EASE IT BACK', 1);
       audio.effect('impact', 0.35);
     }
+    if (i === 0 && playMode === 'drift')
+      driftAttack.step(p, p.distance - oldDistance, dt, progress[0].wrongWay);
+    if (i === 0 && routeTokens) {
+      const hits = routeTokens.collect(from, positionOf(p));
+      if (hits.length) {
+        player.boost = clamp(player.boost + hits.length * 24, 0, 100 + save.upgrades.boost * 24);
+        audio.tone(760, 0.12, 0.1);
+        notify(
+          routeTokens.collected.size === 12
+            ? 'ALL TOKENS FOUND · NICE TOUR!'
+            : `TOKEN ${routeTokens.collected.size} / 12 · +24 BOOST`,
+          1.8,
+        );
+      }
+    }
     if (i > 0 && progress[i].finishedAt !== null) opponents[i - 1].done = progress[i].finishedAt!;
   });
   // Chassis contact between racers; no position or pace teleporting.
@@ -494,6 +570,11 @@ function step(dt: number) {
         }
       }
     }
+  if (playMode === 'drift' && driftAttack.done) {
+    finishDrift();
+    return;
+  }
+  if (playMode !== 'race') return;
   const newLap = progress[0].lap + 1;
   if (newLap > currentLap) {
     currentLap = newLap;
@@ -507,6 +588,20 @@ function step(dt: number) {
     finishPlace = 1 + opponents.filter((o) => o.done > 0 && o.done <= raceTime).length;
     finishRace();
   }
+}
+function finishDrift() {
+  finish = true;
+  screen = 'results';
+  const key = driftKey(TRACKS[selected].id, raceDifficulty, raceNight),
+    score = driftAttack.banked;
+  const previous = save.driftBests[key] || 0,
+    isBest = score > previous;
+  if (isBest) {
+    save.driftBests[key] = score;
+    persist();
+  }
+  audio.tone(659, 0.3, 0.12);
+  app.innerHTML = `<div class="results-screen">${header()}<main class="results"><div class="eyebrow">DRIFT ATTACK / ${TRACKS[selected].location}</div><h1>${isBest ? 'NEW HIGH SCORE.' : 'ONE MORE SLIDE.'}</h1><div class="attack-score">${score.toLocaleString()} <small>POINTS BANKED</small></div><p class="result-story">${isBest ? 'Your new personal best is saved.' : `Personal best: ${previous.toLocaleString()} points.`} Link controlled slides for a bigger multiplier. Straighten to bank; an impact loses the current combo.</p><div class="result-actions"><button class="primary" data-action="restart">RUN IT AGAIN ${icons.arrow}</button><button class="secondary" data-action="quick">CHANGE COURSE / MODE</button><button class="text-button" data-action="home">THE TOUR ↗</button></div><p class="muted">Drift scores are separate from race records and campaign credits.</p></main></div>`;
 }
 function finishRace() {
   finish = true;
@@ -531,7 +626,13 @@ function finishRace() {
   app.innerHTML = `<div class="results-screen">${header()}<main class="results"><div class="eyebrow">${lastReward.complete ? 'CHAPTER COMPLETE' : finishPlace === 1 ? 'FIRST TO THE FLAG' : 'RACE COMPLETE'}</div><h1>${finishPlace === 1 ? 'WHAT. A. RIDE.' : finishPlace <= 3 ? 'PODIUM ENERGY.' : 'KEEP CHASING.'}</h1><div class="result-position"><strong>${finishPlace}<sup>${['ST', 'ND', 'RD', 'TH', 'TH', 'TH'][finishPlace - 1]}</sup></strong><div><span>${TRACKS[selected].location}</span><b>${formatTime(raceTime)}</b><small>${isBest ? 'NEW PERSONAL BEST' : `BEST ${formatTime(save.bests[key])}`}</small></div></div><p class="result-story">${lastReward.complete ? c!.after : c ? `The crew is still with you. ${c.goal} to move the story forward. Spend your winnings on an upgrade and take another run.` : 'Another finish. Another step toward your perfect build. Spend your credits in the SlingMods garage or chase a faster time.'}</p><div class="earnings"><div><span>RACE PURSE${raceDifficulty === 'hard' ? ' +30%' : ''}</span><b>+${lastReward.base}</b></div><div><span>STYLE BONUS</span><b>+${lastReward.bonus}</b></div><div><span>SPONSOR BONUS</span><b>+${lastReward.sponsor}</b></div><div class="total"><span>CREDITS EARNED</span><b>◈ ${lastReward.total.toLocaleString()}</b></div></div><div class="result-actions"><button class="primary" data-action="garage">VISIT THE GARAGE ${icons.arrow}</button><button class="secondary" data-action="${lastReward.complete && save.chapter < 8 ? 'campaign' : 'restart'}">${lastReward.complete && save.chapter < 8 ? 'NEXT CHAPTER' : 'RACE AGAIN'}</button><button class="text-button" data-action="home">THE TOUR ↗</button></div></main></div>`;
 }
 function recover() {
-  spawnVehicle(player, world.circuit, progress[0].recoveryDistance, 0);
+  if (playMode === 'drift') driftAttack.breakCombo();
+  spawnVehicle(
+    player,
+    world.circuit,
+    playMode === 'free' ? player.distance : progress[0].recoveryDistance,
+    0,
+  );
   progress[0].resets++;
   world.cameraReady = false;
   notify('RECOVERED TO LAST VALID CHECKPOINT', 2);
@@ -562,6 +663,11 @@ app.addEventListener('click', async (e) => {
   audio.start();
   audio.click();
   const action = b.dataset.action;
+  if (b.dataset.mode) {
+    playMode = b.dataset.mode as PlayMode;
+    briefing(true);
+    return;
+  }
   if (b.dataset.difficulty) {
     save.settings.difficulty = b.dataset.difficulty as Difficulty;
     persist();
@@ -846,7 +952,7 @@ function frame(now: number) {
       screen === 'race' && !paused && countdown <= 0,
       save.settings,
       !$('overlay'),
-      ['coast', 'miami'].includes(TRACKS[selected].id),
+      ['coast', 'miami', 'harbor'].includes(TRACKS[selected].id),
     );
   }
   requestAnimationFrame(frame);
@@ -870,7 +976,12 @@ void boot();
 // Read-only diagnostics for QA; no race completion, economy, or input shortcuts.
 Object.defineProperty(window, '__tour', {
   get: () => ({
-    build: '0.4.1-visual-finish',
+    build: '0.5.0-playground-preview',
+    playMode,
+    driftAttack: { ...driftAttack },
+    tokens: routeTokens
+      ? { collected: routeTokens.collected.size, total: routeTokens.points.length }
+      : null,
     night: world.night,
     difficulty: raceDifficulty,
     audio: {
@@ -882,6 +993,19 @@ Object.defineProperty(window, '__tour', {
     rgb: save.rgb,
     camera: world.camera.position.toArray(),
     car: world.cars[0]?.position.toArray(),
+    wheelCenters: world.cars[0]?.userData.pivots.map((p: { matrixWorld: { elements: number[] } }) =>
+      p.matrixWorld.elements.slice(12, 15),
+    ),
+    guide: world.circuit
+      ? {
+          point: world.circuit
+            .at(player.distance + Math.max(12, Math.abs(player.speed) * 0.75))
+            .p.toArray(),
+          bend: Math.max(
+            ...[12, 28, 48, 70].map((d) => Math.abs(world.circuit.at(player.distance + d).curve)),
+          ),
+        }
+      : null,
     carScreen: world.cars[0]?.position.clone().project(world.camera).toArray(),
     vehicleUpY: world.cars.map((car) => car.matrixWorld.elements[5]),
     triangles: world.renderer.info.render.triangles,

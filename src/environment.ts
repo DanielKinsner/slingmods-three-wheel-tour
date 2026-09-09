@@ -1,3 +1,4 @@
+import { buildHarbor } from './harbor';
 import * as T from 'three/webgpu';
 import {
   positionLocal,
@@ -145,6 +146,7 @@ export function buildEnvironment(
   collision: CollisionWorld,
   night = false,
 ) {
+  if (data.id === 'harbor') return buildHarbor(root, circuit, collision, night);
   const streetLights: T.Vector3[] = [];
   const random = rng(714 + data.id.length),
     coast = data.id === 'coast' || data.id === 'miami',

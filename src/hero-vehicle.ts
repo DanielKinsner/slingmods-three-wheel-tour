@@ -30,10 +30,18 @@ function contactShadow() {
     c.fillRect(0, 0, 128, 128);
     contactMap = new T.CanvasTexture(canvas);
   }
-  const shadow = new T.Mesh(new T.PlaneGeometry(2.15, 3.55), new T.MeshBasicMaterial({
-    map: contactMap, transparent: true, opacity: 0.38, depthWrite: false,
-    polygonOffset: true, polygonOffsetFactor: -1, toneMapped: false,
-  }));
+  const shadow = new T.Mesh(
+    new T.PlaneGeometry(2.15, 3.55),
+    new T.MeshBasicMaterial({
+      map: contactMap,
+      transparent: true,
+      opacity: 0.38,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      toneMapped: false,
+    }),
+  );
   shadow.name = 'Soft underbody contact';
   shadow.rotation.x = -Math.PI / 2;
   shadow.position.set(0, 0.018, 0.04);
@@ -110,7 +118,7 @@ export function makeHeroVehicle(
   const paint = materials.get('BodyPaint')!;
   paint.color.set(color);
   paint.metalness = 0.32;
-  paint.roughness = 0.30;
+  paint.roughness = 0.3;
   if (paint instanceof T.MeshPhysicalMaterial) {
     paint.clearcoat = 1;
     paint.clearcoatRoughness = 0.16;
@@ -121,6 +129,18 @@ export function makeHeroVehicle(
     upholstery.roughness = 0.91;
     upholstery.envMapIntensity = 0.45;
   }
+  // Tire rubber is a separate finish even where the authored atlas is shared with trim.
+  for (let i = 0; i < 3; i++)
+    group.getObjectByName(`Wheel_${i}`)?.traverse((o) => {
+      if (o instanceof T.Mesh && (o.material as T.Material).name === 'TexturedTrim') {
+        const rubber = (o.material as T.MeshStandardMaterial).clone();
+        rubber.color.set('#171b20');
+        rubber.metalness = 0;
+        rubber.roughness = 0.94;
+        rubber.envMapIntensity = 0.28;
+        o.material = rubber;
+      }
+    });
   group.add(contactShadow());
   const frontLamp = materials.get('FrontLamp')!;
   frontLamp.toneMapped = false;

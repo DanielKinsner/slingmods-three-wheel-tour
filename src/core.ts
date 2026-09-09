@@ -15,6 +15,7 @@ export interface Save {
   rgb: number;
   rgbCycle: boolean;
   bests: Record<string, number>;
+  driftBests: Record<string, number>;
   races: number;
   wins: number;
   settings: {
@@ -44,6 +45,7 @@ export const freshSave = (): Save => ({
   rgb: 0,
   rgbCycle: false,
   bests: {},
+  driftBests: {},
   races: 0,
   wins: 0,
   settings: {
@@ -95,7 +97,7 @@ export function sanitizeSave(raw: unknown): Save {
   if (r.bests && typeof r.bests === 'object')
     for (const [k, v] of Object.entries(r.bests))
       if (
-        /^(smokies|coast|texas|desert|miami)-(1|2)(-(easy|hard)-(day|night))?(-owner-v1)?$/.test(
+        /^(smokies|coast|texas|desert|miami|harbor)-(1|2)(-(easy|hard)-(day|night))?(-(owner-v1|playground-v2))?$/.test(
           k,
         ) &&
         typeof v === 'number' &&
@@ -103,6 +105,15 @@ export function sanitizeSave(raw: unknown): Save {
         v > 0
       )
         s.bests[k] = v;
+  if (r.driftBests && typeof r.driftBests === 'object')
+    for (const [key, value] of Object.entries(r.driftBests))
+      if (
+        /^(smokies|coast|texas|desert|miami|harbor)-(easy|hard)-(day|night)-drift-v1$/.test(key) &&
+        typeof value === 'number' &&
+        Number.isFinite(value) &&
+        value >= 0
+      )
+        s.driftBests[key] = Math.floor(clamp(value, 0, 99999999));
   if (r.settings && typeof r.settings === 'object') {
     for (const key of ['sound', 'music', 'autoThrottle', 'motion', 'night', 'voice'] as const)
       if (typeof r.settings[key] === 'boolean') s.settings[key] = r.settings[key];
@@ -167,8 +178,8 @@ export interface Driver {
 }
 export interface Input {
   steer: number;
-  throttle: boolean;
-  brake: boolean;
+  throttle: boolean | number;
+  brake: boolean | number;
   drift: boolean;
   boost: boolean;
 }

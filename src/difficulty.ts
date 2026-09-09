@@ -3,7 +3,7 @@ export type Difficulty = 'easy' | 'hard';
 export const DIFFICULTIES = {
   easy: {
     name: 'EASY',
-    description: 'Steering and corner-braking assist · relaxed rivals · quick boost recovery',
+    description: 'Stable grip and corner-braking assist · relaxed rivals · quick boost recovery',
     cornerForce: 0.7,
     boostDrain: 20,
     boostRegen: 1.3,

@@ -1,3 +1,5 @@
+import { buildRoadDetails } from './road-details';
+import { RouteTokens } from './playground';
 import { loadHeroAsset, makeHeroVehicle } from './hero-vehicle';
 import { buildMiami } from './miami';
 import * as T from 'three/webgpu';
@@ -183,10 +185,11 @@ export class Circuit {
     const distance = Math.sqrt(closest),
       fade = clamp((distance - 13) / 65, 0, 1);
     let height = y - 1.1 + (Math.sin(x * 0.022) * 5 + Math.cos(z * 0.018) * 4) * fade;
-    if (this.data.id === 'miami') {
+    if (this.data.id === 'miami' || this.data.id === 'harbor') {
       height = y - 1.1;
       if (z < -185 && distance > 23) height += (-2 - height) * clamp((distance - 23) / 10, 0, 1);
     }
+    if (this.data.id === 'harbor' && x > 500) height = -2;
     if (this.data.id === 'coast' && x < -95) height -= Math.min(9, (-95 - x) * 0.13);
     return { height, distance };
   }
@@ -232,6 +235,7 @@ export class World {
   photoPending = false;
   studioMood = 'studio';
   checkpointDistance = 0;
+  showCheckpoints = true;
   checkpointMarker?: T.Group;
   miami?: ReturnType<typeof buildMiami>;
   orbitAngle = 0;
@@ -242,6 +246,10 @@ export class World {
   particles: { p: T.Vector3; life: number; size: number }[] = [];
   effectClock = 0;
   qualityClock = 0;
+  tokenState?: RouteTokens;
+  tokenMeshes: T.Mesh[] = [];
+  cameraLead = 0;
+  cameraSurge = 0;
   night = false;
   rgb = 0;
   rgbCycle = false;
@@ -299,7 +307,7 @@ export class World {
     this.resize();
   }
   load(data: Track, paint: string, night = false) {
-    night = night && ['coast', 'miami'].includes(data.id);
+    night = night && ['coast', 'miami', 'harbor'].includes(data.id);
     if (this.circuit?.data === data && this.cars.length && this.night === night) {
       this.repaint(paint);
       this.cameraReady = false;
@@ -346,10 +354,14 @@ export class World {
     this.circuit = new Circuit(data);
     this.scene.background = new T.Color(data.sky);
     this.scene.fog = new T.FogExp2(night ? 0x0a1424 : data.fog, night ? 0.0015 : 0.00065);
-    const hemi = new T.HemisphereLight(night ? 0x829acb : 0xc7dfee, 0x242537, night ? 0.4 : 1.05);
+    const hemi = new T.HemisphereLight(
+      night ? 0x829acb : 0xc7dfee,
+      0x242537,
+      night ? (data.id === 'harbor' ? 0.6 : 0.4) : 1.05,
+    );
     this.root.add(hemi);
     this.sun = new T.DirectionalLight(
-      night ? 0x94b8fa : ['coast', 'miami'].includes(data.id) ? 0xffd6ad : 0xfff0d8,
+      night ? 0x94b8fa : ['coast', 'miami', 'harbor'].includes(data.id) ? 0xffd6ad : 0xfff0d8,
       night ? 0.45 : 2.85,
     );
     this.sun.position.set(-140, 180, 80);
@@ -402,6 +414,7 @@ export class World {
     this.outdoorEnvironment = this.scene.environment!;
     this.studioEnvironment = environmentTexture(true);
     this.buildRoad(data);
+    buildRoadDetails(this.root, this.circuit);
     this.environment = buildEnvironment(this.root, this.circuit, data, this.collision, night);
     this.miami =
       data.id === 'miami' ? buildMiami(this.root, this.circuit, night, this.collision) : undefined;
@@ -451,6 +464,8 @@ export class World {
     for (let i = 0; i < 70; i++) this.smoke.setMatrixAt(i, zero);
     for (let i = 0; i < 400; i++) this.skids.setMatrixAt(i, zero);
     this.root.add(this.smoke, this.skids);
+    this.tokenState = undefined;
+    this.tokenMeshes = [];
     this.skidIndex = 0;
     this.particleIndex = 0;
   }
@@ -482,12 +497,25 @@ export class World {
     const shoulder = this.ribbon(-15, 15, -0.16, data.ground);
     shoulder.material.dispose();
     shoulder.material = surface(
-      ['coast', 'miami'].includes(data.id) ? 'sand' : data.id === 'desert' ? 'stone' : 'grass',
+      ['coast', 'miami', 'harbor'].includes(data.id)
+        ? 'sand'
+        : data.id === 'desert'
+          ? 'stone'
+          : 'grass',
     );
     this.collision.addGround(shoulder);
     const road = this.ribbon(-8.5, 8.5, 0.015, 0x444846);
     road.material.dispose();
     road.material = surface('asphalt');
+    road.material.vertexColors = true;
+    const roadColors = [];
+    for (let i = 0; i < road.geometry.getAttribute('position').count; i++) {
+      const d = (Math.floor(i / 2) * this.circuit.length) / 800;
+      const variation =
+        0.88 + 0.055 * Math.sin(d * 0.083) + 0.035 * Math.sin(d * 0.021 + (i % 2) * 1.9);
+      roadColors.push(variation, variation, variation);
+    }
+    road.geometry.setAttribute('color', new T.Float32BufferAttribute(roadColors, 3));
     this.collision.setRoad(road);
     this.ribbon(-8.52, -8.39, 0.04, 0xf0e8ce);
     this.ribbon(8.39, 8.52, 0.04, 0xf0e8ce);
@@ -517,7 +545,11 @@ export class World {
     ground.setIndex(idx);
     ground.computeVertexNormals();
     const groundmat = surface(
-      ['coast', 'miami'].includes(data.id) ? 'sand' : data.id === 'desert' ? 'stone' : 'grass',
+      ['coast', 'miami', 'harbor'].includes(data.id)
+        ? 'sand'
+        : data.id === 'desert'
+          ? 'stone'
+          : 'grass',
     );
     groundmat.side = T.DoubleSide;
     this.collision.addGround(mesh(ground, groundmat, this.root));
@@ -649,6 +681,26 @@ export class World {
         box(arch, material((x + z) % 2 ? 0x222925 : 0xe7e4d8), 1, 0.025, 1, x - 8.5, 0.06, z - 1);
     this.root.add(arch);
   }
+  setTokens(tokens?: RouteTokens) {
+    this.tokenMeshes.forEach((m) => m.removeFromParent());
+    this.tokenMeshes = [];
+    this.tokenState = tokens;
+    if (!tokens) return;
+    const geo = new T.TorusGeometry(0.65, 0.095, 6, 24),
+      mat = new T.MeshStandardMaterial({
+        color: 0xf9c65f,
+        emissive: 0xf9a837,
+        emissiveIntensity: 1.5,
+        metalness: 0.35,
+        roughness: 0.4,
+      });
+    for (const p of tokens.points) {
+      const token = new T.Mesh(geo, mat);
+      token.position.set(p.x, p.y + 1.15, p.z);
+      this.root.add(token);
+      this.tokenMeshes.push(token);
+    }
+  }
   placeCar(car: T.Group, distance: number, lane: number, yaw: number, wheelSpin: number) {
     const a = this.circuit.at(distance);
     const slipAngle = clamp(yaw, -0.55, 0.55);
@@ -663,6 +715,7 @@ export class World {
     wheels.forEach((w, i) => {
       w.rotation.x = wheelSpin;
       const pivot = (car.userData.pivots as T.Group[])[i];
+      if (pivot.userData.rest) pivot.position.copy(pivot.userData.rest);
       if (i < 2) pivot.rotation.y = slipAngle * 1.4;
     });
   }
@@ -686,9 +739,16 @@ export class World {
       t = p.telemetry;
     car.position.set(pose.x, pose.y + 0.02, pose.z);
     const slope = this.circuit.at(p.distance).t.y;
+    const contacts = t.contacts;
+    const gradePitch =
+      contacts.length === 3
+        ? Math.atan2((contacts[0].y + contacts[1].y) / 2 - contacts[2].y, 2.667)
+        : Math.asin(clamp(slope, -0.18, 0.18));
+    const bank = contacts.length === 3 ? Math.atan2(contacts[1].y - contacts[0].y, 1.755) : 0;
     car.rotation.set(0, pose.yaw, 0);
-    car.rotateX(-Math.asin(clamp(slope, -0.18, 0.18)));
-    car.rotateZ(clamp(-p.speed * pose.yawRate * 0.0018, -0.035, 0.035));
+    car.rotateX(clamp(-gradePitch + t.bodyPitch, -0.2, 0.2));
+    car.rotateZ(clamp(bank + t.bodyRoll, -0.12, 0.12));
+    car.updateMatrixWorld(true);
     car.userData.steering.rotation.z = -t.steeringAngle * 8;
     if (car.userData.rpmNeedle)
       car.userData.rpmNeedle.rotation.z = -clamp(t.rpm / 8500, 0, 1) * Math.PI * 1.5;
@@ -697,7 +757,26 @@ export class World {
         -clamp((Math.abs(p.speed) * 2.237) / 160, 0, 1) * Math.PI * 1.5;
     (car.userData.wheels as T.Object3D[]).forEach((wheel, i) => {
       wheel.rotation.x = t.wheelAngles[i];
-      if (i < 2) car.userData.pivots[i].rotation.y = t.steeringAngle;
+      const pivot = car.userData.pivots[i] as T.Object3D;
+      if (!pivot.userData.rest) pivot.userData.rest = pivot.position.clone();
+      if (contacts[i]) {
+        const contact = new T.Vector3(
+          contacts[i].x,
+          contacts[i].y + (i === 2 ? 0.354 : 0.333),
+          contacts[i].z,
+        );
+        // Correct render interpolation translation before converting to the rolled chassis frame.
+        contact.x += pose.x - p.pose!.x;
+        contact.z += pose.z - p.pose!.z;
+        const local = car.worldToLocal(contact);
+        pivot.position.copy(local);
+      }
+      if (i < 2) {
+        const turnRadius = 2.667 / Math.max(0.001, Math.abs(t.steeringAngle));
+        const inner = (i === 0 ? -1 : 1) === Math.sign(t.steeringAngle);
+        pivot.rotation.y =
+          Math.sign(t.steeringAngle) * Math.atan2(2.667, turnRadius + (inner ? -0.8775 : 0.8775));
+      }
     });
   }
   setStudioMood(mood: string) {
@@ -732,7 +811,7 @@ export class World {
     this.cpu.environment = performance.now() - start;
     const race = mode === 'race' || mode === 'finish';
     if (this.checkpointMarker) {
-      this.checkpointMarker.visible = race;
+      this.checkpointMarker.visible = race && this.showCheckpoints;
       const gate = this.circuit.at(this.checkpointDistance);
       this.checkpointMarker.position.copy(gate.p);
       roadOrientation(gate.t, this.checkpointMarker.quaternion);
@@ -759,8 +838,8 @@ export class World {
       this.cameraReady = false;
     }
     this.cars.slice(1).forEach((c, i) => {
-      c.visible = race;
-      if (race) this.placeSimCar(c, ai[i]);
+      c.visible = race && !!ai[i];
+      if (race && ai[i]) this.placeSimCar(c, ai[i]);
     });
     const a = garage
       ? { p: new T.Vector3(), t: new T.Vector3(0, 0, 1), r: new T.Vector3(1, 0, 0), curve: 0 }
@@ -790,22 +869,33 @@ export class World {
       desired = new T.Vector3();
     if (race) {
       const forward = new T.Vector3(Math.sin(player.pose!.yaw), 0, Math.cos(player.pose!.yaw));
-      target.copy(this.cars[0].position).addScaledVector(forward, 8);
+      this.cameraLead +=
+        ((motion ? clamp(player.pose!.yawRate * 0.65, -0.18, 0.18) : 0) - this.cameraLead) *
+        (1 - Math.exp(-dt * 4));
+      this.cameraSurge +=
+        ((motion
+          ? clamp(player.telemetry.acceleration * 0.05, -0.35, 0.4) + (player.boosting ? 0.3 : 0)
+          : 0) -
+          this.cameraSurge) *
+        (1 - Math.exp(-dt * 5));
+      const look = forward.clone().applyAxisAngle(UP, this.cameraLead);
+      target.copy(this.cars[0].position).addScaledVector(look, 10);
       target.y += 1.1;
       desired
         .copy(this.cars[0].position)
-        .addScaledVector(forward, -8.6 - Math.abs(player.speed) * 0.02);
-      desired.y += 3.3 + Math.abs(player.speed) * 0.008;
+        .addScaledVector(forward, -7.8 - Math.abs(player.speed) * 0.012 - this.cameraSurge);
+      desired.y += 2.8 + Math.abs(player.speed) * 0.005;
       if (this.cockpit) {
         desired
           .copy(this.cars[0].position)
           .add(new T.Vector3(0.365, 1.07, -0.57).applyQuaternion(this.cars[0].quaternion));
-        target.copy(desired).addScaledVector(forward, 30);
+        target.copy(desired).addScaledVector(forward.clone().lerp(look, 0.25), 30);
         target.y -= 2.5;
       }
       const fov = this.cockpit
         ? 76
-        : 54 + (motion ? player.speed * 0.09 + (player.boosting ? 5 : 0) : 0);
+        : 54 +
+          (motion ? Math.min(4, Math.abs(player.speed) * 0.08) + (player.boosting ? 2.5 : 0) : 0);
       this.camera.fov += (fov - this.camera.fov) * Math.min(1, dt * 4);
     } else {
       this.orbitAngle +=
@@ -857,29 +947,60 @@ export class World {
     this.camera.updateProjectionMatrix();
     this.lastRace = race;
     this.effectClock += dt;
-    if (
-      race &&
-      this.effectClock > 0.045 &&
-      player.speed > 12 &&
-      (player.drift > 0.1 || Math.abs(player.lane) > 8.2)
-    ) {
+    this.tokenMeshes.forEach((m, i) => {
+      m.visible = race && !this.tokenState?.collected.has(i);
+      if (motion) {
+        m.rotation.y = this.elapsed * 0.9;
+        m.position.y =
+          (this.tokenState?.points[i].y || 0) + 1.15 + Math.sin(this.elapsed * 2 + i) * 0.12;
+      }
+    });
+    if (race && this.effectClock > 0.05 && Math.abs(player.speed) > 5) {
       this.effectClock = 0;
-      const particle = this.particles[this.particleIndex++ % this.particles.length];
-      particle.p.copy(this.cars[0].position).addScaledVector(a.t, -2);
-      particle.p.y += 0.45;
-      particle.life = 1.3;
-      particle.size = 0.2 + Math.random() * 0.25;
-      if (player.drift > 0.1) {
-        for (const side of [-1, 1]) {
+      const t = player.telemetry;
+      t.contacts.forEach((contact, i) => {
+        if (!t.grounded[i] || t.normalLoads[i] < 350) return;
+        const dust = t.wheelSurfaces[i] === 'shoulder',
+          slip = t.wheelSlip[i];
+        if (!dust && slip < 0.13) return;
+        const particle = this.particles[this.particleIndex++ % this.particles.length];
+        particle.p.set(contact.x, contact.y + 0.12, contact.z);
+        particle.life = 1.3;
+        particle.size = dust ? 0.14 : 0.09;
+        this.smoke.setColorAt(
+          (this.particleIndex - 1) % this.particles.length,
+          new T.Color(dust ? 0x9d896e : 0xc4cbcd),
+        );
+        if (!dust && slip > 0.15) {
           const d = new T.Object3D();
-          d.position.copy(this.cars[0].position).addScaledVector(a.r, side * 0.88);
-          d.position.y += 0.07;
-          d.rotation.set(-Math.PI / 2, 0, -Math.atan2(a.t.x, a.t.z));
+          d.position.set(contact.x, contact.y + 0.03, contact.z);
+          const yaw = player.pose!.yaw + Math.atan2(player.velocity, Math.max(1, player.speed));
+          const normal = new T.Vector3(
+            t.contacts[0].x - t.contacts[2].x,
+            t.contacts[0].y - t.contacts[2].y,
+            t.contacts[0].z - t.contacts[2].z,
+          )
+            .cross(
+              new T.Vector3(
+                t.contacts[1].x - t.contacts[2].x,
+                t.contacts[1].y - t.contacts[2].y,
+                t.contacts[1].z - t.contacts[2].z,
+              ),
+            )
+            .normalize();
+          if (normal.y < 0) normal.negate();
+          const along = new T.Vector3(Math.sin(yaw), 0, Math.cos(yaw))
+            .projectOnPlane(normal)
+            .normalize();
+          const right = new T.Vector3().crossVectors(along, normal).normalize();
+          d.quaternion.setFromRotationMatrix(new T.Matrix4().makeBasis(right, along, normal));
+          d.scale.set(i === 2 ? 1.25 : 1, Math.max(0.25, Math.abs(player.speed) * 0.055) / 1.2, 1);
           d.updateMatrix();
           this.skids.setMatrixAt(this.skidIndex++ % 400, d.matrix);
+          this.skids.instanceMatrix.needsUpdate = true;
         }
-        this.skids.instanceMatrix.needsUpdate = true;
-      }
+      });
+      if (this.smoke.instanceColor) this.smoke.instanceColor.needsUpdate = true;
     }
     const puff = new T.Object3D();
     this.particles.forEach((p, i) => {
@@ -894,7 +1015,13 @@ export class World {
     this.smoke.instanceMatrix.needsUpdate = true;
     this.sun.position
       .copy(a.p)
-      .add(new T.Vector3(-130, ['coast', 'miami'].includes(this.circuit.data.id) ? 62 : 140, 85));
+      .add(
+        new T.Vector3(
+          -130,
+          ['coast', 'miami', 'harbor'].includes(this.circuit.data.id) ? 62 : 140,
+          85,
+        ),
+      );
     this.sun.target.position.copy(a.p);
     const renderStart = performance.now();
     this.renderer.render(this.scene, this.camera);

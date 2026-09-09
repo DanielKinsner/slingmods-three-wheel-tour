@@ -358,7 +358,7 @@ function roadFixture(route: Circuit, withBarriers = true) {
 
 describe('actual triangle-road contacts and swept barrier recovery', () => {
   for (const track of TRACKS)
-    it(`Easy full throttle without steering completes ${track.id} validly`, () => {
+    it(`Easy assisted driving completes ${track.id} validly`, () => {
       const route = new Circuit(track),
         fixture = roadFixture(route),
         driver = newDriver();
@@ -372,7 +372,7 @@ describe('actual triangle-road contacts and swept barrier recovery', () => {
         const before = positionOf(driver);
         simulateVehicle(
           driver,
-          { ...neutral, throttle: true },
+          aiInput(driver, route, [], 1, 'easy', 0),
           route,
           upgrades,
           SIM_STEP,

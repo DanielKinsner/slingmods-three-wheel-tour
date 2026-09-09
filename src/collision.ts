@@ -137,14 +137,24 @@ export class CollisionWorld {
           pose.x += normal.x * depth;
           pose.z += normal.z * depth;
           center.addScaledVector(normal, depth);
-          const incoming =
-            (Math.sin(pose.yaw) * normal.x + Math.cos(pose.yaw) * normal.z) * p.speed;
-          if (incoming < 0 && p.hit <= 0) {
-            p.speed *= 0.58;
-            p.velocity *= 0.35;
-            p.hit = 0.35;
-            this.contacts++;
-            touched = true;
+          const sin = Math.sin(pose.yaw),
+            cos = Math.cos(pose.yaw);
+          let vx = sin * p.speed + cos * p.velocity;
+          let vz = cos * p.speed - sin * p.velocity;
+          const incoming = vx * normal.x + vz * normal.z;
+          if (incoming < 0) {
+            // Resolve only the normal component; glancing scrapes keep their tangent speed.
+            vx -= normal.x * incoming * 1.04;
+            vz -= normal.z * incoming * 1.04;
+            const friction = 1 - Math.min(0.09, Math.abs(incoming) * 0.004);
+            p.speed = (vx * sin + vz * cos) * friction;
+            p.velocity = (vx * cos - vz * sin) * friction;
+            pose.yawRate *= 0.8;
+            if (p.hit <= 0 && incoming < -0.5) {
+              this.contacts++;
+              touched = true;
+            }
+            if (incoming < -0.5) p.hit = 0.3;
           }
           return false;
         },

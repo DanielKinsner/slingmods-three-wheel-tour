@@ -1,4 +1,4 @@
-export type Region = 'smokies' | 'coast' | 'texas' | 'desert' | 'miami';
+export type Region = 'smokies' | 'coast' | 'texas' | 'desert' | 'miami' | 'harbor';
 export interface Track {
   id: Region;
   name: string;
@@ -142,6 +142,32 @@ export const TRACKS: Track[] = [
       [210, 3, -200],
       [40, 3, -170],
       [-80, 3, -70],
+    ],
+  },
+  {
+    id: 'harbor',
+    name: 'HARBOR RUN',
+    location: 'Harbor Run',
+    state: 'BONUS / FLORIDA',
+    subtitle: 'Freight lights. Bay sweepers. One more run.',
+    character: 'Port district · Covered lane · Waterfront',
+    color: '#edbd6d',
+    sky: 0xa7c7d2,
+    fog: 0xa8bdc4,
+    ground: 0x75858a,
+    trees: 0x487166,
+    points: [
+      [0, 3, 0],
+      [0, 3, 180],
+      [20, 3, 350],
+      [110, 4, 480],
+      [280, 4, 490],
+      [420, 3, 370],
+      [440, 3, 150],
+      [380, 3, -30],
+      [260, 3, -145],
+      [90, 3, -190],
+      [-55, 3, -105],
     ],
   },
 ];

@@ -1,7 +1,7 @@
 import { rewardRace, type Save } from './core';
 import type { Difficulty } from './difficulty';
 import { Vector3 } from 'three/webgpu';
-export const RULES_VERSION = 'owner-v1';
+export const RULES_VERSION = 'playground-v2';
 export interface RaceResult {
   id: string;
   place: number;

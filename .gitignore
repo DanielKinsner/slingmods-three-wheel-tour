@@ -8,3 +8,5 @@ __pycache__/
 evidence/captures/*.webm
 
 .vercel
+
+evidence/playground/raw/

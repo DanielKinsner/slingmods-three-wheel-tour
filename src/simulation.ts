@@ -18,6 +18,8 @@ export function spawnVehicle(p: Driver, circuit: Circuit, distance = 0, lane = 0
   p.pose = { x: v.x, y: v.y, z: v.z, yaw: Math.atan2(a.t.x, a.t.z), yawRate: 0 };
   p.previousPose = { ...p.pose };
   p.telemetry.steeringAngle = 0;
+  p.telemetry.contacts = [];
+  p.telemetry.driftGrip = p.telemetry.slipAngle = 0;
 }
 export function steeringLimit(speed: number) {
   return 0.49 / (1 + Math.abs(speed) * 0.055);
@@ -48,54 +50,97 @@ export function simulateVehicle(
   if (!p.pose) spawnVehicle(p, circuit, p.distance, p.lane);
   p.previousPose = { ...p.pose! };
   const pose = p.pose!,
-    t = p.telemetry;
-  const road = circuit.at(p.distance);
-  let steer = input.steer;
-  if (mode === 'easy' && Math.abs(steer) < 0.02 && p.speed >= 0) {
-    steer = steeringForTarget(p, circuit.at(p.distance + Math.max(12, p.speed * 0.65)).p);
-  }
-  t.steeringAngle += (steer * steeringLimit(p.speed) - t.steeringAngle) * (1 - Math.exp(-dt * 9));
-  t.surface = Math.abs(p.lane) <= 8.4 ? 'road' : 'shoulder';
-  const mu = (t.surface === 'road' ? 1.08 : 0.58) * (1 + upgrades.grip * 0.07);
-  const accelerating = t.acceleration;
+    t = p.telemetry,
+    road = circuit.at(p.distance);
+  // Wheel queries are shared by grip, ground attitude, animation and tire effects.
+  const sampleContacts = () => {
+    const samples = [
+      [-0.8775, 1.197],
+      [0.8775, 1.197],
+      [0, -1.47],
+    ];
+    return samples.map(([x, z], i) => {
+      const wx = pose.x + Math.cos(pose.yaw) * x + Math.sin(pose.yaw) * z;
+      const wz = pose.z - Math.sin(pose.yaw) * x + Math.cos(pose.yaw) * z;
+      const roadH = collision?.roadHeight(wx, wz, pose.y);
+      const groundH = roadH ?? collision?.groundHeight(wx, wz, pose.y);
+      const localLane = p.lane + x;
+      t.wheelSurfaces[i] = (collision ? roadH !== undefined : Math.abs(localLane) < 8.5)
+        ? 'road'
+        : 'shoulder';
+      t.grounded[i] = groundH !== undefined || !collision;
+      const ground =
+        groundH ?? (collision ? circuit.terrainAt(wx, wz).height : circuit.at(p.distance + z).p.y);
+      t.contacts[i] = { x: wx, y: ground, z: wz };
+      return ground;
+    });
+  };
+  sampleContacts();
+  const wheelMu = t.wheelSurfaces.map(
+    (s) => (s === 'road' ? 1.12 : 0.63) * (1 + upgrades.grip * 0.07),
+  );
+  const mu = (wheelMu[0] + wheelMu[1] + wheelMu[2]) / 3;
+  t.surface = t.wheelSurfaces.filter((s) => s === 'shoulder').length >= 2 ? 'shoulder' : 'road';
+  // Easy stabilizes slip and limits corner entry speed, never steers toward the spline.
+  const steer = clamp(input.steer, -1, 1);
+  t.steeringAngle +=
+    (steer * steeringLimit(p.speed) - t.steeringAngle) *
+    (1 - Math.exp(-dt * (Math.abs(steer) < 0.02 ? 7 : 11)));
   const rearLoad =
-    POWERTRAIN.mass * 9.81 * 0.43 + (POWERTRAIN.mass * accelerating * 0.34) / POWERTRAIN.wheelbase;
+    POWERTRAIN.mass * 9.81 * 0.43 +
+    (POWERTRAIN.mass * t.acceleration * 0.34) / POWERTRAIN.wheelbase;
   const transfer = (POWERTRAIN.mass * p.speed * pose.yawRate * 0.34) / POWERTRAIN.frontTrack;
   t.normalLoads = [
     clamp((POWERTRAIN.mass * 9.81 - rearLoad) / 2 - transfer, 350, 6500),
     clamp((POWERTRAIN.mass * 9.81 - rearLoad) / 2 + transfer, 350, 6500),
     clamp(rearLoad, 1000, 6500),
   ];
-  const onRoad = t.surface === 'road';
-  p.boosting = input.boost && p.boost > 1 && p.speed > 10 && onRoad;
-  const gripDemand = Math.abs(p.speed * pose.yawRate) / (9.81 * mu);
+  t.driftGrip +=
+    ((input.drift && p.speed > 9 ? 1 : 0) - t.driftGrip) *
+    (1 - Math.exp(-dt * (input.drift ? 4 : 2.8)));
+  const lateralUse = clamp(Math.abs(p.speed * pose.yawRate) / (mu * 9.81), 0, 0.95);
   const bend = Math.max(...[15, 35, 60].map((d) => Math.abs(circuit.at(p.distance + d).curve)));
-  const assistBrake = mode === 'easy' && p.speed > Math.sqrt(7 / Math.max(0.002, bend)) * 1.04;
+  const safeSpeed = Math.sqrt(7 / Math.max(0.002, bend));
+  const assistBrake =
+    mode === 'easy' && !input.drift ? clamp((p.speed - safeSpeed * 1.05) / 8, 0, 0.7) : 0;
+  const brake = Math.max(Number(input.brake), assistBrake);
+  p.boosting =
+    input.boost && p.boost > 1 && p.speed > 10 && t.wheelSurfaces[2] === 'road' && brake < 0.1;
+  const grade = road.t.y * Math.cos(pose.yaw - Math.atan2(road.t.x, road.t.z));
   p.speed = stepPowertrain(
     t,
     p.speed,
-    input.throttle && !assistBrake,
-    input.brake || assistBrake,
+    Number(input.throttle) * (1 - assistBrake),
+    brake,
     dt,
     upgrades.power,
     automatic,
     p.boosting,
-    mu * Math.sqrt(Math.max(0.1, 1 - Math.min(0.95, gripDemand) ** 2)),
+    wheelMu[2] * Math.sqrt(Math.max(0.18, 1 - lateralUse * lateralUse)),
+    mu * Math.sqrt(Math.max(0.22, 1 - lateralUse * lateralUse)),
+    grade,
   );
-  if (!onRoad) p.speed *= Math.exp(-dt * 0.5);
+  // Rolling resistance blends per contact. Crossing the paint never destroys speed.
+  const shoulderFraction = t.wheelSurfaces.filter((s) => s === 'shoulder').length / 3;
+  p.speed *= Math.exp(-dt * shoulderFraction * 0.095);
+  const maxYaw =
+    (mu * 9.81 * Math.sqrt(Math.max(0.3, 1 - (brake * 0.8) ** 2))) / Math.max(4, Math.abs(p.speed));
   const desiredYaw = (p.speed / POWERTRAIN.wheelbase) * Math.tan(t.steeringAngle);
-  const maxYaw = (mu * 9.81) / Math.max(3, Math.abs(p.speed));
-  // Combined braking/cornering limit, with a recoverable rear-slip response.
-  const brakeGrip = input.brake ? 0.76 : 1;
-  const drift = input.drift && Math.abs(p.speed) > 12 && Math.abs(steer) > 0.2;
-  const targetYaw = clamp(desiredYaw, -maxYaw * brakeGrip, maxYaw * brakeGrip) * (drift ? 1.12 : 1);
-  pose.yawRate += (targetYaw - pose.yawRate) * (1 - Math.exp(-dt * (drift ? 4 : 9)));
-  const lateralTarget = drift
-    ? steer * Math.min(4, Math.abs(p.speed) * 0.075)
-    : t.slipRatio * steer * 0.7;
-  p.velocity += (lateralTarget - p.velocity) * (1 - Math.exp(-dt * (drift ? 3 : 7)));
-  pose.yaw += pose.yawRate * dt;
-  const steps = Math.max(1, Math.ceil((Math.abs(p.speed) * dt) / 0.45));
+  const targetYaw = clamp(desiredYaw, -maxYaw, maxYaw) * (1 + t.driftGrip * 0.1);
+  pose.yawRate += (targetYaw - pose.yawRate) * (1 - Math.exp(-dt * (8 - t.driftGrip * 3)));
+  const yawStep = pose.yawRate * dt;
+  // Rotate the existing velocity into the new body frame: inertial slide, no lateral shove.
+  const forward = p.speed * Math.cos(yawStep) + p.velocity * Math.sin(yawStep);
+  p.velocity = p.velocity * Math.cos(yawStep) - p.speed * Math.sin(yawStep);
+  p.speed = forward;
+  pose.yaw += yawStep;
+  const response = (mode === 'easy' ? 10 : 9) * (1 - t.driftGrip * 0.85);
+  const sideGrip = mu * 9.81 * Math.sqrt(Math.max(0.28, 1 - (brake * 0.8) ** 2));
+  const recovery = -p.velocity * response;
+  p.velocity += clamp(recovery, -sideGrip, sideGrip) * dt;
+  if (Math.abs(p.speed) < 2) p.velocity *= Math.exp(-dt * 5);
+  t.slipAngle = Math.atan2(p.velocity, Math.max(1, Math.abs(p.speed)));
+  const steps = Math.max(1, Math.ceil((Math.hypot(p.speed, p.velocity) * dt) / 0.45));
   for (let i = 0; i < steps; i++) {
     pose.x += ((Math.sin(pose.yaw) * p.speed + Math.cos(pose.yaw) * p.velocity) * dt) / steps;
     pose.z += ((Math.cos(pose.yaw) * p.speed - Math.sin(pose.yaw) * p.velocity) * dt) / steps;
@@ -104,25 +149,29 @@ export function simulateVehicle(
   const projected = circuit.project(new Vector3(pose.x, pose.y, pose.z), p.distance);
   p.distance = projected.distance;
   p.lane = projected.lane;
-  const samples = [
-    [-0.8775, 1.197],
-    [0.8775, 1.197],
-    [0, -1.47],
-  ];
-  const heights = samples.map(([x, z], i) => {
-    const wx = pose.x + Math.cos(pose.yaw) * x + Math.sin(pose.yaw) * z,
-      wz = pose.z - Math.sin(pose.yaw) * x + Math.cos(pose.yaw) * z;
-    const h = collision?.groundHeight(wx, wz, pose.y);
-    t.grounded[i] = h !== undefined || !collision;
-    const ground = h ?? (collision ? circuit.terrainAt(wx, wz).height : projected.point.p.y);
-    const travel = clamp(ground - pose.y, -0.09, 0.09);
-    t.suspension[i] += (travel - t.suspension[i]) * (1 - Math.exp(-dt * 14));
-    return ground;
-  });
+  const heights = sampleContacts();
   pose.y += (heights.reduce((a, b) => a + b, 0) / 3 - pose.y) * (1 - Math.exp(-dt * 20));
+  t.suspension = heights.map((h) => clamp(h - pose.y, -0.09, 0.09)) as [number, number, number];
+  t.bodyRoll +=
+    (clamp(-p.speed * pose.yawRate * 0.0045, -0.055, 0.055) - t.bodyRoll) * (1 - Math.exp(-dt * 7));
+  t.bodyPitch +=
+    (clamp(-t.acceleration * 0.004, -0.035, 0.045) - t.bodyPitch) * (1 - Math.exp(-dt * 6));
+  // Contact slip is local to each axle; front scrub and rear wheelspin are distinct.
+  const v = Math.max(3, Math.abs(p.speed));
+  const frontSlip = Math.abs(Math.atan2(p.velocity + pose.yawRate * 1.197, v) - t.steeringAngle);
+  const rearSlip = Math.abs(Math.atan2(p.velocity - pose.yawRate * 1.47, v));
+  t.wheelSlip = [frontSlip, frontSlip, Math.max(rearSlip, t.slipRatio * 0.23)];
+  for (let i = 0; i < 2; i++)
+    t.wheelSpeeds[i] = (p.speed + pose.yawRate * (i ? 0.8775 : -0.8775)) / POWERTRAIN.wheelRadius;
   p.hit = Math.max(0, p.hit - dt);
-  p.drift = drift && onRoad ? p.drift + dt : 0;
-  if (p.drift > 0) p.style += dt * 35;
+  const controlled =
+    p.speed > 9 &&
+    Math.abs(t.slipAngle) > 0.095 &&
+    Math.abs(t.slipAngle) < 0.65 &&
+    p.hit <= 0 &&
+    t.surface === 'road';
+  p.drift = controlled ? p.drift + dt : 0;
+  if (controlled) p.style += dt * 25 * clamp(Math.abs(t.slipAngle) * 5, 0.5, 2);
   const rules = DIFFICULTIES[mode];
   p.boost = clamp(
     p.boost + dt * (p.boosting ? -rules.boostDrain : rules.boostRegen * (4 + upgrades.boost)),
@@ -131,6 +180,7 @@ export function simulateVehicle(
   );
   return road;
 }
+
 export function aiInput(
   p: Driver,
   circuit: Circuit,

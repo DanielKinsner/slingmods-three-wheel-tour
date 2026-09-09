@@ -31,6 +31,13 @@ export interface Drivetrain {
   normalLoads: [number, number, number];
   surface: 'road' | 'shoulder';
   reverseHold: number;
+  driftGrip: number;
+  slipAngle: number;
+  bodyRoll: number;
+  bodyPitch: number;
+  wheelSurfaces: ('road' | 'shoulder')[];
+  wheelSlip: number[];
+  contacts: { x: number; y: number; z: number }[];
 }
 export const newDrivetrain = (): Drivetrain => ({
   rpm: 1100,
@@ -51,6 +58,13 @@ export const newDrivetrain = (): Drivetrain => ({
   normalLoads: [2500, 2500, 3240],
   surface: 'road',
   reverseHold: 0,
+  driftGrip: 0,
+  slipAngle: 0,
+  bodyRoll: 0,
+  bodyPitch: 0,
+  wheelSurfaces: ['road', 'road', 'road'],
+  wheelSlip: [0, 0, 0],
+  contacts: [],
 });
 export function torqueAt(rpm: number) {
   const points = [
@@ -81,18 +95,22 @@ export function shift(t: Drivetrain, direction: number) {
 export function stepPowertrain(
   t: Drivetrain,
   speed: number,
-  throttle: boolean,
-  brake: boolean,
+  throttle: boolean | number,
+  brake: boolean | number,
   dt: number,
   power = 0,
   automatic = true,
   boost = false,
   traction = 1,
+  brakeTraction = traction,
+  grade = 0,
 ) {
+  const gasInput = bound(Number(throttle), 0, 1),
+    brakeInput = bound(Number(brake), 0, 1);
   t.shiftRemaining = Math.max(0, t.shiftRemaining - dt);
   t.shiftCooldown = Math.max(0, t.shiftCooldown - dt);
   // Brake-to-reverse requires holding the brake almost stationary for .65 s.
-  t.reverseHold = brake && Math.abs(speed) < 0.45 ? t.reverseHold + dt : 0;
+  t.reverseHold = brakeInput > 0.5 && Math.abs(speed) < 0.45 ? t.reverseHold + dt : 0;
   if (t.reverseHold > 0.65 && t.gear > 0) {
     t.gear = -1;
     t.reverseHold = 0;
@@ -104,9 +122,9 @@ export function stepPowertrain(
     t.shiftSerial++;
   }
   const reverse = t.gear < 0,
-    gas = reverse ? brake : throttle && !brake;
-  t.throttle = gas ? 1 : 0;
-  t.brake = reverse ? (throttle && !brake ? 1 : 0) : brake ? 1 : 0;
+    gas = reverse ? brakeInput : gasInput * (1 - brakeInput);
+  t.throttle = gas;
+  t.brake = reverse ? gasInput * (1 - brakeInput) : brakeInput;
   const ratio =
     (reverse ? POWERTRAIN.reverseRatio : POWERTRAIN.ratios[t.gear - 1]) * POWERTRAIN.finalDrive;
   const wheelRpm = ((Math.abs(speed) / POWERTRAIN.wheelRadius) * 60) / (2 * Math.PI);
@@ -127,10 +145,10 @@ export function stepPowertrain(
       shift(t, -1);
   }
   const cut = t.shiftRemaining > 0 || t.rpm >= POWERTRAIN.redline;
-  t.load += (Number(gas && !cut) - t.load) * (1 - Math.exp(-dt * 12));
+  t.load += ((cut ? 0 : gas) - t.load) * (1 - Math.exp(-dt * 12));
   const raw =
     gas && !cut
-      ? (torqueAt(t.rpm) * ratio * 0.86 * (1 + power * 0.1) * (boost ? 1.36 : 1)) /
+      ? (gas * torqueAt(t.rpm) * ratio * 0.86 * (1 + power * 0.1) * (boost ? 1.36 : 1)) /
         POWERTRAIN.wheelRadius
       : 0;
   // Only the single rear contact supplies engine torque. Its load limits traction.
@@ -141,8 +159,9 @@ export function stepPowertrain(
     (1 - Math.exp(-dt * 10));
   const drag = 0.5 * 1.225 * 0.75 * speed * Math.abs(speed) + Math.sign(speed) * 125;
   const engineBrake = !gas ? (Math.sign(speed) * ratio * 12) / POWERTRAIN.wheelRadius : 0;
-  const braking = t.brake * POWERTRAIN.mass * 10 * Math.sign(speed);
-  let acceleration = ((reverse ? -force : force) - drag - engineBrake - braking) / POWERTRAIN.mass;
+  const braking = t.brake * POWERTRAIN.mass * Math.min(11, 9.81 * brakeTraction) * Math.sign(speed);
+  let acceleration =
+    ((reverse ? -force : force) - drag - engineBrake - braking) / POWERTRAIN.mass - 9.81 * grade;
   if (t.brake && Math.abs(speed) < Math.abs(acceleration * dt)) acceleration = -speed / dt;
   if (!gas && Math.abs(speed) < 0.05) acceleration = -speed / dt;
   t.acceleration = acceleration;
