@@ -1,6 +1,7 @@
 import { newDrivetrain, type Drivetrain } from './drivetrain';
 import { CHAPTERS, UPGRADES, PAINTS } from './content';
 import { DIFFICULTIES, assistedSteer, type Difficulty } from './difficulty';
+import { WHEELS, LIGHTING_PRICE } from './parts';
 export type UpgradeId = 'power' | 'grip' | 'boost';
 export interface Save {
   version: 2;
@@ -11,6 +12,12 @@ export interface Save {
   credits: number;
   chapter: number;
   upgrades: Record<UpgradeId, number>;
+  /** Index into WHEELS; 0 is the factory wheel. */
+  wheels: number;
+  /** Wheel designs already paid for, so a player can switch back without re-buying. */
+  ownedWheels: number[];
+  /** 1 once the underglow kit is installed; the picker stays locked until then. */
+  lighting: number;
   paint: number;
   rgb: number;
   rgbCycle: boolean;
@@ -41,6 +48,9 @@ export const freshSave = (): Save => ({
   credits: 0,
   chapter: 0,
   upgrades: { power: 0, grip: 0, boost: 0 },
+  wheels: 0,
+  ownedWheels: [0],
+  lighting: 0,
   paint: 0,
   rgb: 0,
   rgbCycle: false,
@@ -94,6 +104,19 @@ export function sanitizeSave(raw: unknown): Save {
   s.wins = num(r.wins, s.races);
   for (const key of ['power', 'grip', 'boost'] as const)
     s.upgrades[key] = num(r.upgrades?.[key], 3);
+  s.ownedWheels = [
+    ...new Set([
+      0,
+      ...(Array.isArray(r.ownedWheels) ? r.ownedWheels : [])
+        .filter((w) => typeof w === 'number' && Number.isFinite(w) && w > 0 && w < WHEELS.length)
+        .map((w) => Math.floor(w)),
+    ]),
+  ];
+  s.wheels = num(r.wheels, WHEELS.length - 1);
+  if (!s.ownedWheels.includes(s.wheels)) s.wheels = 0;
+  // Saves from before the lighting kit existed already had free underglow; players who
+  // had actually raced keep it rather than losing a feature to an update.
+  s.lighting = r.lighting === undefined ? (s.races > 0 ? 1 : 0) : num(r.lighting, 1);
   if (r.bests && typeof r.bests === 'object')
     for (const [k, v] of Object.entries(r.bests))
       if (
@@ -133,6 +156,25 @@ export function buyUpgrade(save: Save, id: UpgradeId): boolean {
   if (!u || stage >= 3 || save.credits < u.prices[stage]) return false;
   save.credits -= u.prices[stage];
   save.upgrades[id]++;
+  return true;
+}
+export function buyWheels(save: Save, index: number): boolean {
+  const design = WHEELS[index];
+  if (!design) return false;
+  if (save.ownedWheels.includes(index)) {
+    save.wheels = index;
+    return true;
+  }
+  if (save.credits < design.price) return false;
+  save.credits -= design.price;
+  save.ownedWheels.push(index);
+  save.wheels = index;
+  return true;
+}
+export function buyLighting(save: Save): boolean {
+  if (save.lighting >= 1 || save.credits < LIGHTING_PRICE) return false;
+  save.credits -= LIGHTING_PRICE;
+  save.lighting = 1;
   return true;
 }
 export function rewardRace(
