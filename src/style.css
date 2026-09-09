@@ -3255,3 +3255,98 @@ h1 em {
 .track-list{grid-template-columns:repeat(6,minmax(0,1fr))}.briefing .brief-text{font-size:15px;line-height:1.6;margin-top:12px}.briefing .play-modes+ .brief-text{max-width:610px}
 @media(max-width:1100px){.track-list{grid-template-columns:repeat(3,minmax(0,1fr))}.track-card strong{font-size:22px}}
 @media(max-width:600px){.track-list{grid-template-columns:repeat(2,minmax(0,1fr))}.play-modes{gap:4px}.play-modes button{padding:10px 8px}.play-modes b{font-size:11px}.play-modes small{font-size:8px}.attack-score{font-size:60px}}
+
+/* Real parts on the build */
+.wheel-picker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 10px 0 8px;
+}
+.wheel-picker button {
+  display: grid;
+  gap: 3px;
+  text-align: left;
+  padding: 10px 12px;
+  background: #151b23;
+  border: 1px solid #3a434d;
+  color: #e9edf4;
+  font-family: inherit;
+  cursor: pointer;
+}
+.wheel-picker button b {
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.wheel-picker button small {
+  font-size: 9px;
+  color: #aab1ba;
+}
+.wheel-picker button strong {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #f8b4bd;
+}
+.wheel-picker button[aria-pressed='true'] {
+  border-color: #f12b47;
+  background: #241419;
+}
+.wheel-picker button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.wheel-picker button:not(:disabled):hover {
+  border-color: #8b95a1;
+}
+.fitted-parts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0 4px;
+}
+.fitted-parts .eyebrow {
+  margin-right: 6px;
+}
+.fitted-parts i {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  padding: 4px 8px;
+  border: 1px solid #46505b;
+  border-radius: 999px;
+  color: #dfe4ea;
+}
+.fitted-parts i.muted {
+  border-style: dashed;
+  color: #9aa2ab;
+}
+.rgb-picker.locked > div {
+  opacity: 0.35;
+  pointer-events: none;
+}
+.lighting-buy {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin: 8px 0;
+  padding: 9px 12px;
+  background: #cf102d;
+  border: 0;
+  color: #fff;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.lighting-buy:disabled {
+  background: #3a3f47;
+  color: #aab1ba;
+  cursor: not-allowed;
+}
+@media (max-width: 800px) {
+  .wheel-picker {
+    grid-template-columns: 1fr;
+  }
+}

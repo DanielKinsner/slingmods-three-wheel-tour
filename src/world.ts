@@ -1,6 +1,7 @@
 import { buildRoadDetails } from './road-details';
 import { RouteTokens } from './playground';
 import { loadHeroAsset, makeHeroVehicle } from './hero-vehicle';
+import { applyBuild, type BuildSpec } from './parts';
 import { buildMiami } from './miami';
 import * as T from 'three/webgpu';
 import { makeVehicle } from './vehicle';
@@ -863,7 +864,8 @@ export class World {
     this.carLights.forEach((l, i) => {
       const c = new T.Color(RGB_COLORS[i ? i % 6 : this.rgb].color);
       if (!i && this.rgbCycle && motion) c.setHSL((this.elapsed * 0.035) % 1, 0.95, 0.55);
-      l.update(c, true, this.night || garage);
+      // The hero's underglow is a real kit now: dark until the TricLED stage is installed.
+      l.update(c, i > 0 || this.cars[0].userData.lightingKit !== false, this.night || garage);
     });
     this.updateStreetLights?.(dt, this.cars[0].position, !garage);
     this.cars[0].userData.flame.visible = race && player.boosting;
@@ -1062,7 +1064,19 @@ export class World {
     this.cpu.render = performance.now() - renderStart;
     this.cpu.frame = performance.now() - start;
   }
-  repaint(color: string) {
-    (this.cars[0].userData.paint as T.MeshStandardMaterial).color.set(color);
+  repaint(color: string, finish = '') {
+    const paint = this.cars[0].userData.paint as T.MeshPhysicalMaterial;
+    paint.color.set(color);
+    // Crystal/pearl factory finishes read as a deeper, glassier clearcoat than flat gloss.
+    const crystal = finish === 'crystal';
+    paint.metalness = crystal ? 0.55 : 0.32;
+    paint.roughness = crystal ? 0.22 : 0.3;
+    if ('clearcoatRoughness' in paint) paint.clearcoatRoughness = crystal ? 0.08 : 0.16;
+  }
+  /** Bolt the save's earned parts onto the hero. Safe to call after every load or purchase. */
+  applyBuild(spec: Omit<BuildSpec, 'quality'>) {
+    const hero = this.cars[0];
+    if (!hero) return;
+    applyBuild(hero, { ...spec, quality: this.quality === 'low' ? 'low' : 'full' });
   }
 }

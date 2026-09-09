@@ -14,6 +14,8 @@ import {
   freshSave,
   sanitizeSave,
   buyUpgrade,
+  buyWheels,
+  buyLighting,
   rewardRace,
   formatTime,
   newDriver,
@@ -28,6 +30,7 @@ import { FixedClock, simulateVehicle, aiInput, spawnVehicle, positionOf } from '
 import { RaceProgress, makeGates, commitRace, RULES_VERSION } from './race-rules';
 import { DIFFICULTIES, rivalTarget, bestKey, type Difficulty } from './difficulty';
 import { PRODUCTS, stageProduct, type Product } from './catalog';
+import { WHEELS, LIGHTING_PRICE, installFor, installedParts } from './parts';
 import { RGB_COLORS } from './lighting';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -91,7 +94,31 @@ function loadTrack(night = save.settings.night && [1, 4, 5].includes(selected)) 
   world.rgb = save.rgb;
   world.rgbCycle = save.rgbCycle;
   world.load(TRACKS[selected], PAINTS[save.paint].color, night);
+  world.repaint(PAINTS[save.paint].color, PAINTS[save.paint].finish);
   world.customize(save.rims, save.exhaust);
+  world.applyBuild(buildSpec());
+}
+/** What the save has earned, in the shape the parts module bolts onto the car. */
+const buildSpec = () => ({
+  upgrades: save.upgrades,
+  wheels: save.wheels,
+  lighting: save.lighting,
+  rims: save.rims,
+});
+function wheelPicker() {
+  return `<article class="upgrade wheels"><div class="upgrade-head"><span class="upgrade-icon">◎</span><div><h2>WHEEL SET</h2><small>${WHEELS[save.wheels].name.toUpperCase()} FITTED</small></div></div><div class="wheel-picker" role="group" aria-label="Wheel designs">${WHEELS.map(
+    (w, i) => {
+      const owned = save.ownedWheels.includes(i),
+        fitted = save.wheels === i;
+      return `<button data-wheel="${i}" aria-pressed="${fitted}" ${!owned && save.credits < w.price ? 'disabled' : ''}><b>${w.name}</b><small>${w.note}</small><strong>${fitted ? 'FITTED ✓' : owned ? 'FIT IT' : `◈ ${w.price.toLocaleString()} CR`}</strong></button>`;
+    },
+  ).join('')}</div><p>Original in-game wheel designs. Buy once, swap any time.</p></article>`;
+}
+function fittedParts() {
+  const ids = installedParts(buildSpec());
+  const names: string[] = ids.flatMap((id) => PRODUCTS.find((p) => p.id === id)?.shortName ?? []);
+  if (save.wheels > 0) names.push(`${WHEELS[save.wheels].name} wheels`);
+  return `<div class="fitted-parts"><span class="eyebrow">ON THE CAR</span>${names.length ? names.map((n) => `<i>${n}</i>`).join('') : '<i class="muted">Stock. Win races, then come back.</i>'}</div>`;
 }
 function difficultyPicker() {
   return `<div class="difficulty-picker" role="group" aria-label="Race difficulty">${(['easy', 'hard'] as const).map((d) => `<button data-difficulty="${d}" aria-pressed="${save.settings.difficulty === d}"><b>${DIFFICULTIES[d].name}</b><small>${d === 'hard' ? (playMode === 'race' ? '+30% RACE PURSE' : 'FULL CONTROL') : 'GRIP ASSIST'}</small></button>`).join('')}</div><p class="mode-description">${DIFFICULTIES[save.settings.difficulty].description}</p>`;
@@ -206,8 +233,9 @@ function garage() {
   finish = false;
   world.rgb = save.rgb;
   world.rgbCycle = save.rgbCycle;
-  world.repaint(PAINTS[save.paint].color);
+  world.repaint(PAINTS[save.paint].color, PAINTS[save.paint].finish);
   world.customize(save.rims, save.exhaust);
+  world.applyBuild(buildSpec());
   app.innerHTML = `<div class="menu-screen garage-screen">${header('garage')}<main class="garage-main"><div class="garage-heading"><button class="back" data-action="home">← BACK TO THE TOUR</button><div class="eyebrow">SLINGMODS / PERFORMANCE STUDIO</div><h1>BUILT<br><em>BY YOU.</em></h1><p>Real parts. Your signature.</p><button class="night-drive-link" data-action="night-drive">TAKE IT OUT AFTER DARK ↗</button></div><section class="garage-shop" aria-label="Vehicle upgrades"><div class="garage-tabs" role="group" aria-label="Garage panels"><button data-garagetab="build" aria-pressed="${garageTab === 'build'}">YOUR BUILD <span>${save.upgrades.power + save.upgrades.grip + save.upgrades.boost}/9</span></button><button data-garagetab="catalog" aria-pressed="${garageTab === 'catalog'}">REAL PARTS <span>06</span></button></div>${
     garageTab === 'catalog'
       ? `<div class="catalog-grid">${PRODUCTS.map(productTile).join('')}</div>`
@@ -217,8 +245,8 @@ function garage() {
             max = level === 3,
             p = stageProduct(u.id, Math.min(level, 2));
           return `<article class="upgrade"><div class="upgrade-head"><span class="upgrade-icon">${u.icon}</span><div><h2>${u.name}</h2><small>${max ? 'BUILD COMPLETE' : `STAGE ${level + 1} / 3`}</small></div><span class="level">${[0, 1, 2].map((i) => `<i class="${i < level ? 'filled' : ''}"></i>`).join('')}</span></div>${p ? `<a class="featured-part" href="${p.url}" target="_blank" rel="noopener noreferrer"><img src="${p.image}" alt="${p.shortName}"><span><small>${p.brand}</small><strong>${p.shortName}</strong><em>${p.fitment}</em><b>REAL PRODUCT ↗</b></span></a>` : `<p>${u.id === 'power' ? 'Crew calibration · a fictional game upgrade.' : u.description}</p>`}<button class="upgrade-buy" data-upgrade="${u.id}" ${max || save.credits < cost ? 'disabled' : ''}><span>${max ? 'INSTALLED' : `INSTALL STAGE ${level + 1}`}</span><strong>${max ? '✓' : `◈ ${cost.toLocaleString()} CR`}</strong></button></article>`;
-        }).join('')
-  }<div class="garage-note">Credits and performance boosts are game values. Photos and links feature actual SlingMods products. Check each product page for current fitment, requirements, and pricing.</div></section><div class="vehicle-customization"><div class="photo-tools"><button data-action="photo">SAVE BUILD PHOTO ↗</button><select aria-label="Studio lighting" data-studio><option value="studio" ${world.studioMood === 'studio' ? 'selected' : ''}>STUDIO LIGHT</option><option value="warm" ${world.studioMood === 'warm' ? 'selected' : ''}>WARM LIGHT</option><option value="night" ${world.studioMood === 'night' ? 'selected' : ''}>RGB NIGHT</option></select></div><div class="owner-spec"><label>TRANSMISSION<select data-owner="transmission"><option value="automatic" ${save.transmission === 'automatic' ? 'selected' : ''}>Automatic</option><option value="manual" ${save.transmission === 'manual' ? 'selected' : ''}>Manual · Q / E</option></select></label><label>WHEEL FINISH<select data-owner="rims">${['graphite', 'silver', 'bronze'].map((v) => `<option ${save.rims === v ? 'selected' : ''}>${v}</option>`).join('')}</select></label><label>EXHAUST FINISH<select data-owner="exhaust">${['standard', 'sport'].map((v) => `<option ${save.exhaust === v ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div><div class="vehicle-views" role="group" aria-label="Vehicle views"><button aria-pressed="${world.vehicleView === 0}" data-view="0">FRONT ¾</button><button aria-pressed="${world.vehicleView === 0.9}" data-view="0.9">SIDE</button><button aria-pressed="${world.vehicleView === 2.1}" data-view="2.1">REAR ¾</button></div><div class="paint-picker"><span class="eyebrow">BODY COLOR</span><div>${PAINTS.map((p, i) => `<button aria-label="${p.name}" aria-pressed="${save.paint === i}" class="swatch ${save.paint === i ? 'selected' : ''}" data-paint="${i}" style="--paint:${p.color}"></button>`).join('')}</div><span>${PAINTS[save.paint].name}</span></div><div class="rgb-picker"><span class="eyebrow">RGB UNDERGLOW <small>FREE IN GAME</small></span><div>${RGB_COLORS.map((p, i) => `<button aria-label="${p.name} underglow" aria-pressed="${save.rgb === i && !save.rgbCycle}" data-rgb="${i}" style="--paint:${p.color}" class="swatch ${save.rgb === i && !save.rgbCycle ? 'selected' : ''}"></button>`).join('')}<button class="rgb-cycle" data-action="rgb-cycle" aria-pressed="${save.rgbCycle}">SPECTRUM</button></div><a href="${PRODUCTS.find((p) => p.id === 'rgb')!.url}" target="_blank" rel="noopener noreferrer">INSPIRED BY TRICLED · SHOP THE KIT ↗</a></div></div></main></div>`;
+        }).join('') + wheelPicker()
+  }${fittedParts()}<div class="garage-note">Credits and performance boosts are game values. Photos and links feature actual SlingMods products. Check each product page for current fitment, requirements, and pricing.</div></section><div class="vehicle-customization"><div class="photo-tools"><button data-action="photo">SAVE BUILD PHOTO ↗</button><select aria-label="Studio lighting" data-studio><option value="studio" ${world.studioMood === 'studio' ? 'selected' : ''}>STUDIO LIGHT</option><option value="warm" ${world.studioMood === 'warm' ? 'selected' : ''}>WARM LIGHT</option><option value="night" ${world.studioMood === 'night' ? 'selected' : ''}>RGB NIGHT</option></select></div><div class="owner-spec"><label>TRANSMISSION<select data-owner="transmission"><option value="automatic" ${save.transmission === 'automatic' ? 'selected' : ''}>Automatic</option><option value="manual" ${save.transmission === 'manual' ? 'selected' : ''}>Manual · Q / E</option></select></label><label>WHEEL FINISH<select data-owner="rims">${['graphite', 'silver', 'bronze'].map((v) => `<option ${save.rims === v ? 'selected' : ''}>${v}</option>`).join('')}</select></label><label>EXHAUST FINISH<select data-owner="exhaust">${['standard', 'sport'].map((v) => `<option ${save.exhaust === v ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div><div class="vehicle-views" role="group" aria-label="Vehicle views"><button aria-pressed="${world.vehicleView === 0}" data-view="0">FRONT ¾</button><button aria-pressed="${world.vehicleView === 0.9}" data-view="0.9">SIDE</button><button aria-pressed="${world.vehicleView === 2.1}" data-view="2.1">REAR ¾</button></div><div class="paint-picker"><span class="eyebrow">BODY COLOR</span><div>${PAINTS.map((p, i) => `<button aria-label="${p.name}" aria-pressed="${save.paint === i}" class="swatch ${save.paint === i ? 'selected' : ''}" data-paint="${i}" style="--paint:${p.color}"></button>`).join('')}</div><span>${PAINTS[save.paint].name} · ${PAINTS[save.paint].trim}</span></div><div class="rgb-picker ${save.lighting ? '' : 'locked'}"><span class="eyebrow">RGB UNDERGLOW <small>${save.lighting ? 'TRICLED KIT INSTALLED' : 'REAL KIT · NOT INSTALLED'}</small></span>${save.lighting ? '' : `<button class="lighting-buy" data-action="buy-lighting" ${save.credits < LIGHTING_PRICE ? 'disabled' : ''}><span>INSTALL UNDERGLOW KIT</span><strong>◈ ${LIGHTING_PRICE.toLocaleString()} CR</strong></button>`}<div>${RGB_COLORS.map((p, i) => `<button aria-label="${p.name} underglow" aria-pressed="${save.rgb === i && !save.rgbCycle}" data-rgb="${i}" style="--paint:${p.color}" class="swatch ${save.rgb === i && !save.rgbCycle ? 'selected' : ''}"></button>`).join('')}<button class="rgb-cycle" data-action="rgb-cycle" aria-pressed="${save.rgbCycle}">SPECTRUM</button></div><a href="${PRODUCTS.find((p) => p.id === 'rgb')!.url}" target="_blank" rel="noopener noreferrer">INSPIRED BY TRICLED · SHOP THE KIT ↗</a></div></div></main></div>`;
 }
 function modal(type: 'help' | 'settings' | 'pause' | 'reset') {
   if (screen === 'race') paused = true;
@@ -730,11 +758,32 @@ app.addEventListener('click', async (e) => {
     return;
   }
   if (b.dataset.upgrade) {
-    if (buyUpgrade(save, b.dataset.upgrade as UpgradeId)) {
+    const id = b.dataset.upgrade as UpgradeId;
+    if (buyUpgrade(save, id)) {
       persist();
-      garage();
-      audio.effect('install', 0.55);
-      toast('STAGE INSTALLED. LET’S FEEL THE DIFFERENCE.');
+      installMoment(installFor(id, save.upgrades[id] - 1));
+    }
+    return;
+  }
+  if (b.dataset.wheel !== undefined) {
+    const index = Number(b.dataset.wheel);
+    const bought = !save.ownedWheels.includes(index);
+    if (buyWheels(save, index)) {
+      persist();
+      if (bought)
+        installMoment({
+          id: 'wheels',
+          label: `${WHEELS[index].name.toUpperCase()} WHEELS FITTED.`,
+          view: 0.9,
+        });
+      else garage();
+    }
+    return;
+  }
+  if (action === 'buy-lighting') {
+    if (buyLighting(save)) {
+      persist();
+      installMoment(installFor('lighting', 0));
     }
     return;
   }
@@ -800,6 +849,7 @@ app.addEventListener('change', (e) => {
   if (owner) {
     persist();
     world.customize(save.rims, save.exhaust);
+    world.applyBuild(buildSpec());
   }
   const k = target.dataset.setting;
   if (k) {
@@ -821,6 +871,18 @@ app.addEventListener('change', (e) => {
     briefing(true);
   }
 });
+/** The payoff for winning: swing the camera to the new part and name the real product. */
+function installMoment(step: ReturnType<typeof installFor>) {
+  if (step?.mood === 'night') world.setStudioMood('night');
+  if (step) world.vehicleView = step.view;
+  garage();
+  audio.effect('install', 0.55);
+  toast(
+    step?.product
+      ? `${step.product.shortName.toUpperCase()} INSTALLED.`
+      : step?.label || 'STAGE INSTALLED.',
+  );
+}
 function toast(text: string) {
   $('toast')?.remove();
   const el = document.createElement('div');
