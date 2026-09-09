@@ -1,0 +1,78 @@
+{
+  "version": "0.4.1",
+  "productionUrl": "https://slingmods-three-wheel-tour.vercel.app/",
+  "deploymentId": "dpl_BDutzGXHPPjyH9WMYh1a1poXHTxn",
+  "deploymentUrl": "https://slingmods-three-wheel-tour-6ofvno1ev-daniel-kinsners-projects.vercel.app",
+  "sourcePreviewId": "dpl_AFGdWQAQcS8pcvzZXgtGc75966ei",
+  "previousProductionId": "dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o",
+  "target": "production",
+  "status": "Ready",
+  "verifiedAt": "2026-09-09T21:56:09.006200+00:00",
+  "authorization": "User explicitly approved production promotion on September 9, 2026.",
+  "anonymousAssetChecks": [
+    {
+      "path": "index.html",
+      "httpStatus": 200,
+      "anonymous": true,
+      "bytes": 2162,
+      "sha256": "4e30a04c46aa20e5ce4c2fd5cd45a7208e5af4f938a940098b682d5850dec9ed",
+      "matchesLocalBuild": true,
+      "finalUrl": "https://slingmods-three-wheel-tour.vercel.app/index.html"
+    },
+    {
+      "path": "assets/index-If2CvfA4.js",
+      "httpStatus": 200,
+      "anonymous": true,
+      "bytes": 1164509,
+      "sha256": "7d272706bbf0cfbd1907f56e8e8abe98b617c24fabf2a2a6740c9e7598c393be",
+      "matchesLocalBuild": true,
+      "finalUrl": "https://slingmods-three-wheel-tour.vercel.app/assets/index-If2CvfA4.js"
+    },
+    {
+      "path": "assets/index-8L4ugj--.css",
+      "httpStatus": 200,
+      "anonymous": true,
+      "bytes": 43642,
+      "sha256": "872db00a529c18fa2bb0135f9925161a5c1548ff725181616a83e47141926c45",
+      "matchesLocalBuild": true,
+      "finalUrl": "https://slingmods-three-wheel-tour.vercel.app/assets/index-8L4ugj--.css"
+    },
+    {
+      "path": "models/slingshot-r-hero.glb",
+      "httpStatus": 200,
+      "anonymous": true,
+      "bytes": 2343704,
+      "sha256": "f6fba56ef0d23821018e116da63e0880855fc5f29c1d9ffc582d35587b5f1683",
+      "matchesLocalBuild": true,
+      "finalUrl": "https://slingmods-three-wheel-tour.vercel.app/models/slingshot-r-hero.glb"
+    },
+    {
+      "path": "models/slingshot-r-lod.glb",
+      "httpStatus": 200,
+      "anonymous": true,
+      "bytes": 1227008,
+      "sha256": "de60eb0beb4beeb6bc360cbae6700fbe94c29ee3ad7c52b1967063f5ce193ca6",
+      "matchesLocalBuild": true,
+      "finalUrl": "https://slingmods-three-wheel-tour.vercel.app/models/slingshot-r-lod.glb"
+    },
+    {
+      "path": "textures/miami/window-interiors.webp",
+      "httpStatus": 200,
+      "anonymous": true,
+      "bytes": 13338,
+      "sha256": "e8c23f0fc99b50660cdfc8e1c553fe86a9a86a40b3fea2daf40565a95f516b83",
+      "matchesLocalBuild": true,
+      "finalUrl": "https://slingmods-three-wheel-tour.vercel.app/textures/miami/window-interiors.webp"
+    }
+  ],
+  "browserVerification": {
+    "platform": "Windows Chrome/WebGPU desktop",
+    "displayedVersion": "0.4.1",
+    "ownerSavePreserved": {
+      "credits": 8,
+      "displayedChapter": "06/08"
+    },
+    "consoleErrorsObserved": 0,
+    "physicalMobileTest": false
+  }
+}

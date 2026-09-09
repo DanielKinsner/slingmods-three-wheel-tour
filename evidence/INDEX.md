@@ -1,5 +1,7 @@
 # Review evidence
 
+Current release: [v0.4.1 visual finish and production checks](visual-finish/README.md).
+
 Latest art follow-up: [owner-angle refinement, before/after and live captures](reference-refinement/README.md).
 
 - [Original Daytona gameplay](baseline-daytona.mp4) and [baseline profile](baseline-daytona-profile.json).

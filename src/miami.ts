@@ -16,9 +16,10 @@ export function loadMiamiAssets() {
         ['color', 'normal', 'roughness'].map((m) => `${f}-${m}`),
       ),
       'storefront-atlas',
+      'window-interiors',
     ].map(async (name) => {
       const texture = await new T.TextureLoader().loadAsync(`./textures/miami/${name}.webp`);
-      if (name.endsWith('color') || name === 'storefront-atlas')
+      if (name.endsWith('color') || name === 'storefront-atlas' || name === 'window-interiors')
         texture.colorSpace = T.SRGBColorSpace;
       sources.set(name, texture);
     }),
@@ -121,12 +122,25 @@ export function buildMiami(
     clearcoat: 0.7,
   });
   const warm = new T.MeshStandardMaterial({
-    color: 0x817c69,
+    color: 0xffffff,
+    map: texture('window-interiors'),
+    emissiveMap: texture('window-interiors'),
     emissive: 0xffd69c,
-    emissiveIntensity: night ? 0.95 : 0.04,
+    emissiveIntensity: night ? 0.8 : 0.025,
     roughness: 0.45,
     metalness: 0.25,
   });
+  const roomGlass = new T.MeshPhysicalMaterial({
+    color: 0xa0b6bd, map: texture('window-interiors'),
+    metalness: 0.18, roughness: 0.24, clearcoat: 0.65, clearcoatRoughness: 0.18,
+  });
+  function roomPane(w: number, h: number, variant: number) {
+    const g = new T.PlaneGeometry(w, h), uv = g.getAttribute('uv');
+    for (let i = 0; i < uv.count; i++)
+      uv.setXY(i, ((variant % 4) + 0.015 + uv.getX(i) * 0.97) / 4,
+        (Math.floor(variant / 4) + 0.015 + uv.getY(i) * 0.97) / 2);
+    return g;
+  }
   const strip = new T.MeshStandardMaterial({
     color: 0xefdfbf,
     emissive: 0xf9d9a3,
@@ -203,8 +217,8 @@ export function buildMiami(
       for (let c = 0; c < Math.floor(w / 3.1); c++) {
         const x = -w / 2 + 1.8 + c * 3.1;
         mesh(
-          new T.PlaneGeometry(2.2, 2.15),
-          (index + c * 7 + floor * 3) % 5 < 2 ? warm : glass,
+          roomPane(2.2, 2.15, (index + c * 3 + floor * 5) % 8),
+          (index + c * 7 + floor * 3) % 5 < 2 ? warm : roomGlass,
           g,
           x,
           y,

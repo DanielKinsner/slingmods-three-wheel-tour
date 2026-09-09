@@ -1,4 +1,15 @@
-# Owner-driving upgrade — review branch
+# SlingMods Three-Wheel Tour — v0.4.1 live
+
+
+## Current release — September 9 visual finish
+
+[Play the current game](https://slingmods-three-wheel-tour.vercel.app/). The owner explicitly approved production promotion. Vercel reports production Ready at `dpl_BDutzGXHPPjyH9WMYh1a1poXHTxn`, promoted from verified preview `dpl_AFGdWQAQcS8pcvzZXgtGc75966ei`. Anonymous GETs of HTML, JS, CSS, both vehicle meshes and the new window atlas all returned 200 and byte-matched the local build. See PRODUCTION-DEPLOYMENT.json. The original permanent address is retained; no storefront changes.
+
+This bounded visual pass adds softer clearcoat reflections, less reflective upholstery, clearer non-shadow-casting windshield glass, soft underbody contact shading, a quieter night sky, warmer Miami coastal sunlight and eight illustrated window-interior variants with curtains, furniture and lamps. The new atlas is 13,338 bytes; existing geometry, paint/RGB choices, audio mix, race/save rules and all five destinations are retained. No paid generation or credential use this pass.
+
+Validation: TypeScript/Vite production build and all 99 tests pass. Actual Windows Chrome/WebGPU garage and Miami day/night views were inspected, including the uploaded preview; no console errors observed. Permanent production boot shows v0.4.1, five stops, and the existing owner save at chapter 06/08 with 8 credits. Evidence is indexed in evidence/visual-finish/README.md. These are real desktop checks, not physical-phone testing.
+
+This pass adds one soft-shadow draw per vehicle and a 512x384 room atlas; it adds no building triangles. No new sustained frame-rate or GPU timing claim. A background-tab race check auto-paused, so it does not establish a new completed-lap result. Earlier complete-lap and audio recordings below remain historical evidence. Human audio audition, physical mobile/controller checks, OEM validation and full manual campaign balancing are still open; promotion does not certify them.
 
 ## Owner-angle refinement — September 9 follow-up
 
@@ -6,9 +17,9 @@ Implemented from the owner's `D:\slingshot angles` R references: contoured bucke
 
 Build and 99 tests pass; GLB structure, animation/customization contracts and wheel transforms validated. Actual WebGPU garage paint/RGB changes, rear lights and moving night-race cockpit were inspected without console errors. Before/after frames are under evidence/reference-refinement. This art follow-up does not renew the older full Miami performance claim; a short gameplay clip includes a background/long-frame pause and is visual evidence only. Updated preview model hashes match local assets. See docs/owner-angle-refinements.md.
 
-Production is frozen at v0.3.2. No production promotion or storefront modification is authorized.
+Historical preview boundary: production stayed at v0.3.2 until the owner explicitly approved promotion on September 9. The current production release is documented above. The real storefront remains unchanged.
 
-## Verified baseline
+## Historical verified v0.3.2 baseline
 
 The live JS/CSS bytes match this workspace. Actual stack: TypeScript, Three.js 0.186.0, Vite 8.2.2. No Vue dependency. Four preserved tracks: smokies, coast, texas, desert. Eight chapters and existing real product links remain authoritative. Miami will be an explicitly new fifth destination. The brief's Ozarks/Sturgis/Vue findings do not match the inspected code.
 
@@ -26,9 +37,9 @@ Live browser testing caught a shoulder-height bug absent from the center-road fi
 
 Physical iPhone/Safari, controller hardware and human speaker/headphone audition are not available/verified. Do not infer them from viewport or software checks.
 
-## Final review deployment and evidence
+## Historical review deployment and evidence
 
-[Play preview](https://slingmods-three-wheel-tour-riwaaa1fb-daniel-kinsners-projects.vercel.app/). Existing Vercel protection requires an authorized account. Verified in the owner's signed-in Chrome session; anonymous requests redirect to Vercel login. Protection was not changed. JS/CSS hashes match the local build (PREVIEW-DEPLOYMENT.json). Production remains deployment dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o. No storefront changes or production promotion.
+[Play preview](https://slingmods-three-wheel-tour-riwaaa1fb-daniel-kinsners-projects.vercel.app/). Existing Vercel protection requires an authorized account. Verified in the owner's signed-in Chrome session; anonymous requests redirect to Vercel login. Protection was not changed. JS/CSS hashes match the local build (PREVIEW-DEPLOYMENT.json). At this review checkpoint production remained dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o; the later owner-approved release above supersedes that state.
 
 Actual baseline Daytona, full Miami night and garage customization videos, comparable garage frames, downloaded owner photo, neutral vehicle views/turntable and engine/gameplay A/B are delivered. Canvas videos omit the DOM HUD; actual UI was inspected in browser screenshots. New preview origin correctly starts at zero credits; production progress is not copied.
 
@@ -42,6 +53,6 @@ The first capture harness held mutable CPU/nested telemetry references; those ea
 
 ## Partial and deferred
 
-Owner/OEM proportion and upholstery/panel-curvature review remain. Drivetrain calibration is provisional, not OEM validated. All chapters remain reachable in tests, but the full manual eight-chapter balance playthrough is unfinished. Physical iPhone/Safari/controller testing, human mix audition, inherited asset commercial entitlement review and broader hardware/GPU profiling remain release gates. Ghosts, multiplayer, remapping, jumps and KTX2/Draco are deferred.
+Owner/OEM proportion and upholstery/panel-curvature review remain. Drivetrain calibration is provisional, not OEM validated. All chapters remain reachable in tests, but the full manual eight-chapter balance playthrough is unfinished. Physical iPhone/Safari/controller testing, human mix audition, inherited asset commercial entitlement review and broader hardware/GPU profiling remain open validation gaps and have not been certified by the production promotion. Ghosts, multiplayer, remapping, jumps and KTX2/Draco are deferred.
 
 Reproduce: `npm ci`, `npm test`, `npm run build`, `npm run preview -- --port 4173`. Editable asset masters and generation scripts are included. Source checkpoints: 1106826 baseline, fd5bdba integration; final evidence checkpoint is in git history.

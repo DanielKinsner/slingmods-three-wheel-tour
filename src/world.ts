@@ -346,11 +346,11 @@ export class World {
     this.circuit = new Circuit(data);
     this.scene.background = new T.Color(data.sky);
     this.scene.fog = new T.FogExp2(night ? 0x0a1424 : data.fog, night ? 0.0015 : 0.00065);
-    const hemi = new T.HemisphereLight(night ? 0x829acb : 0xc7dfee, 0x242537, night ? 0.4 : 1.25);
+    const hemi = new T.HemisphereLight(night ? 0x829acb : 0xc7dfee, 0x242537, night ? 0.4 : 1.05);
     this.root.add(hemi);
     this.sun = new T.DirectionalLight(
-      night ? 0x94b8fa : data.id === 'coast' ? 0xffd9b2 : 0xfff0d8,
-      night ? 0.45 : 3.5,
+      night ? 0x94b8fa : ['coast', 'miami'].includes(data.id) ? 0xffd6ad : 0xfff0d8,
+      night ? 0.45 : 2.85,
     );
     this.sun.position.set(-140, 180, 80);
     this.sun.castShadow = true;
@@ -894,7 +894,7 @@ export class World {
     this.smoke.instanceMatrix.needsUpdate = true;
     this.sun.position
       .copy(a.p)
-      .add(new T.Vector3(-130, this.circuit.data.id === 'coast' ? 62 : 140, 85));
+      .add(new T.Vector3(-130, ['coast', 'miami'].includes(this.circuit.data.id) ? 62 : 140, 85));
     this.sun.target.position.copy(a.p);
     const renderStart = performance.now();
     this.renderer.render(this.scene, this.camera);

@@ -16,6 +16,30 @@ export const HERO_MODEL = {
 type Quality = 'full' | 'low';
 const templates = new Map<Quality, T.Group>();
 const pending = new Map<Quality, Promise<boolean>>();
+let contactMap: T.CanvasTexture | undefined;
+function contactShadow() {
+  if (!contactMap) {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 128;
+    const c = canvas.getContext('2d')!;
+    const fade = c.createRadialGradient(64, 64, 9, 64, 64, 62);
+    fade.addColorStop(0, 'rgba(0,0,0,.75)');
+    fade.addColorStop(0.55, 'rgba(0,0,0,.4)');
+    fade.addColorStop(1, 'rgba(0,0,0,0)');
+    c.fillStyle = fade;
+    c.fillRect(0, 0, 128, 128);
+    contactMap = new T.CanvasTexture(canvas);
+  }
+  const shadow = new T.Mesh(new T.PlaneGeometry(2.15, 3.55), new T.MeshBasicMaterial({
+    map: contactMap, transparent: true, opacity: 0.38, depthWrite: false,
+    polygonOffset: true, polygonOffsetFactor: -1, toneMapped: false,
+  }));
+  shadow.name = 'Soft underbody contact';
+  shadow.rotation.x = -Math.PI / 2;
+  shadow.position.set(0, 0.018, 0.04);
+  shadow.renderOrder = 1;
+  return shadow;
+}
 
 /** Cache each tier once. A failed/missing optional GLB leaves the existing mesh usable. */
 export function loadHeroAsset(quality: Quality = 'full'): Promise<boolean> {
@@ -74,14 +98,30 @@ export function makeHeroVehicle(
     if (original.name === 'WheelFinish') rims.push(object);
     if (original.name === 'ExhaustFinish') exhaustTips.push(object);
     if (original.name === 'Windscreen') {
+      object.castShadow = false;
       object.material.transparent = true;
-      object.material.opacity = 0.27;
+      object.material.opacity = 0.16;
+      object.material.roughness = 0.16;
+      object.material.envMapIntensity = 0.32;
       object.material.depthWrite = false;
       object.material.side = T.DoubleSide;
     }
   });
   const paint = materials.get('BodyPaint')!;
   paint.color.set(color);
+  paint.metalness = 0.32;
+  paint.roughness = 0.30;
+  if (paint instanceof T.MeshPhysicalMaterial) {
+    paint.clearcoat = 1;
+    paint.clearcoatRoughness = 0.16;
+  }
+  const upholstery = materials.get('Upholstery');
+  if (upholstery) {
+    upholstery.color.set('#272b30');
+    upholstery.roughness = 0.91;
+    upholstery.envMapIntensity = 0.45;
+  }
+  group.add(contactShadow());
   const frontLamp = materials.get('FrontLamp')!;
   frontLamp.toneMapped = false;
   const wheels = [0, 1, 2].map((i) => group.getObjectByName(`Wheel_${i}`)!);

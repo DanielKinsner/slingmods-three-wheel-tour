@@ -82,20 +82,28 @@ export function environmentTexture(studio = false) {
   x.fillStyle = g;
   x.fillRect(0, 0, 1024, 512);
   if (studio) {
-    x.fillStyle = '#ffffff';
-    x.fillRect(120, 100, 170, 40);
-    x.fillRect(590, 145, 240, 25);
+    // Broad softboxes trace the sculpted panels without razor-thin white streaks.
+    for (const [cx, cy, w, h] of [[200, 115, 220, 70], [705, 155, 280, 60]]) {
+      const soft = x.createLinearGradient(0, cy - h / 2, 0, cy + h / 2);
+      soft.addColorStop(0, 'rgba(238,246,255,0)');
+      soft.addColorStop(0.3, 'rgba(238,246,255,.85)');
+      soft.addColorStop(0.7, 'rgba(238,246,255,.85)');
+      soft.addColorStop(1, 'rgba(238,246,255,0)');
+      x.fillStyle = soft;
+      x.fillRect(cx - w / 2, cy - h / 2, w, h);
+    }
     x.fillStyle = '#d52543';
     x.fillRect(840, 210, 110, 16);
   } else {
     const r = rng(875);
-    for (let i = 0; i < 850; i++) {
-      x.fillStyle = `rgba(190,215,255,${r() * 0.6})`;
-      x.fillRect(r() * 1024, r() * 220, 1 + r(), 1 + r());
+    for (let i = 0; i < 300; i++) {
+      x.fillStyle = `rgba(190,215,255,${0.12 + r() * 0.22})`;
+      const size = 0.3 + r() * 0.5;
+      x.fillRect(r() * 1024, r() * 185, size, size);
     }
     x.fillStyle = '#fff2d7';
     x.beginPath();
-    x.arc(760, 125, 5, 0, Math.PI * 2);
+    x.arc(760, 125, 1.8, 0, Math.PI * 2);
     x.fill();
   }
   const t = new T.CanvasTexture(c);

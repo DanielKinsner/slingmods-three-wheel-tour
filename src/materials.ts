@@ -148,7 +148,7 @@ export function surface(kind: 'asphalt' | 'grass' | 'sand' | 'stone' | 'concrete
   map.wrapS = map.wrapT = T.RepeatWrapping;
   map.repeat.set(repeat, repeat);
   map.anisotropy = 16;
-  const normalMap = normals(map, kind === 'asphalt' ? 1.6 : 1);
+  const normalMap = normals(map, kind === 'asphalt' ? 0.8 : 1);
   normalMap.repeat.copy(map.repeat);
   return new T.MeshStandardMaterial({
     map,

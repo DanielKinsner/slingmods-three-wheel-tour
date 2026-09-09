@@ -143,6 +143,20 @@
       ],
       "bytes": 58560,
       "sha256": "0ec04bf92183107bd2e1358892b2e8344e6a593a1ac26d5fcfb6865731bdffd5"
+    },
+    {
+      "id": "miami-window-interiors",
+      "path": "textures/miami/window-interiors.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "Eight original illustrated room-depth tiles with curtains, furniture and lamp details; approximate distant interiors",
+      "dimensions": [
+        512,
+        384
+      ],
+      "bytes": 13338,
+      "sha256": "e8c23f0fc99b50660cdfc8e1c553fe86a9a86a40b3fea2daf40565a95f516b83"
     }
   ]
 }

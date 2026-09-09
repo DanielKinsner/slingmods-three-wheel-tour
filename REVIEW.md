@@ -1,4 +1,4 @@
-# Owner Tour v0.4 — review candidate
+# Owner Tour — review history and v0.4.1 release
 
 This evolves the deployed game; it does not replace it with Apex Tour. Source inspection found TypeScript/Three.js/Vite and four existing circuits, not the brief's Vue/five-track description. Those four IDs and all eight chapters are preserved. Miami is a new fifth quick-race destination.
 
@@ -34,4 +34,4 @@ For local evidence capture: run `python scripts/capture-server.py`, visit `http:
 
 Vehicle authoring: Blender 4.5 LTS, `blender --background --python scripts/build-hero.py`. Miami textures: `python scripts/generate-miami-assets.py`. Sound beds: `python scripts/build-surface-audio.py`. Asset/hash/secret-pattern inventory: `python scripts/asset-manifest.py`. The ElevenLabs generator defaults to a no-network dry run and requires its documented secure environment and explicit budget before any request.
 
-Deployment is a [separate Vercel preview](https://slingmods-three-wheel-tour-riwaaa1fb-daniel-kinsners-projects.vercel.app/) only. Existing Vercel protection requires an authorized account; verified in the owner's signed-in Chrome session. Anonymous requests redirect to Vercel login. Production and the real SlingMods storefront remain unchanged. See STATUS.md for final measured results and evidence/INDEX.md for recordings, comparison frames and the audio A/B.
+The owner subsequently approved production. The current visual-finish build, v0.4.1, is live at [the permanent game address](https://slingmods-three-wheel-tour.vercel.app/). Its anonymous public assets byte-match the local build; see PRODUCTION-DEPLOYMENT.json and evidence/visual-finish/README.md. Earlier protected previews remain historical review snapshots. The real SlingMods storefront is unchanged. See STATUS.md for final measured results and evidence/INDEX.md for recordings, comparison frames and the audio A/B.

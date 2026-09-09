@@ -85,6 +85,38 @@ for i,(name,sub,bg,fg) in enumerate(names):
     draw.line((x+390,y+155,x+634,y+155), fill=fg,width=2)
     draw.text((x+512,y+194),sub,font=small,anchor='mm',fill=fg)
 save(atlas,'storefront-atlas.webp','Eight original fictional storefront and circuit wayfinding decals; not actual business branding')
+# Eight painted room-depth variations for distant facade windows. These are
+# intentionally illustrated interiors, not PBR surface scans or true parallax.
+rooms=Image.new('RGB',(512,384))
+for i in range(8):
+    room=Image.new('RGB',(128,192),'#16232b'); d=ImageDraw.Draw(room)
+    warm=i%3!=0
+    for y in range(14,176):
+        shade=1-abs(y-98)/210
+        base=(122,103,78) if warm else (48,67,77)
+        d.line((8,y,120,y),fill=tuple(int(c*shade) for c in base))
+    d.polygon([(8,14),(120,14),(102,35),(26,35)],fill='#303536')
+    d.polygon([(8,176),(120,176),(101,146),(26,146)],fill='#393b3a')
+    d.polygon([(8,14),(26,35),(26,146),(8,176)],fill='#454744')
+    d.polygon([(120,14),(102,35),(102,146),(120,176)],fill='#55534b')
+    # Curtain folds, recessed jambs, a restrained framed picture and furniture.
+    for x in range(12,33,4):
+        d.rectangle((x,19,x+2,165),fill=('#8b8270' if warm else '#465a62'))
+    for x in range(99,117,4):
+        d.rectangle((x,19,x+2,165),fill=('#70695f' if warm else '#374a56'))
+    if i%2:
+        for y in range(24,94,7):d.line((30,y,98,y),fill='#817a69',width=2)
+    else:
+        d.rectangle((47,57,78,94),fill='#373c3c',outline='#aa9779',width=2)
+        d.rectangle((51,61,74,90),fill=('#687269' if warm else '#45616b'))
+    d.rounded_rectangle((36,127,92,150),radius=4,fill='#303838')
+    d.rectangle((40,121,86,137),fill='#48504a')
+    d.line((88,111,88,145),fill='#272d30',width=3)
+    d.polygon([(79,103),(94,103),(99,117),(74,117)],fill=('#e7c88e' if warm else '#657c86'))
+    d.rectangle((4,8,124,183),outline='#16252c',width=5)
+    d.line((8,15,118,15),fill='#7b9096',width=2)
+    rooms.paste(room,((i%4)*128,(i//4)*192))
+save(rooms,'window-interiors.webp','Eight original illustrated room-depth tiles with curtains, furniture and lamp details; approximate distant interiors')
 (ROOT/'MIAMI-ASSET-MANIFEST.json').write_text(json.dumps({'generator':'scripts/generate-miami-assets.py','seed':20260909,
     'generated':'2026-09-09','commercialClaims':'Original fictional architecture and signs; not an exact Miami street recreation.',
     'assets':records},indent=2)+'\n', encoding='utf-8')

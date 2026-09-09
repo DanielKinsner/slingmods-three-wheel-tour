@@ -26,7 +26,7 @@ for package in ['barlow','barlow-condensed']:
  if license_file:
   target=ROOT/'docs/licenses'/f'{package}-LICENSE';target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(license_file.read_bytes())
  assets.append(dict(package='@fontsource/'+package,origin='https://fontsource.org/fonts/'+package,usage='SIL Open Font License 1.1; see docs/licenses',files='Bundled Latin weights from package-lock.json'))
-(ROOT/'ASSET_MANIFEST.json').write_text(json.dumps({'version':'0.4.0-review','assets':assets},indent=2)+'\n')
+(ROOT/'ASSET_MANIFEST.json').write_text(json.dumps({'version':'0.4.1','assets':assets},indent=2)+'\n',encoding='utf-8',newline='\n')
 matches=[]
 for base in [ROOT/'src',ROOT/'public',ROOT/'dist',ROOT/'scripts']:
  for f in base.rglob('*'):

@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0-review",
+  "version": "0.4.1",
   "assets": [
     {
       "file": "public/audio/brief-0.mp3",
@@ -327,6 +327,13 @@
       "file": "public/textures/miami/terrazzo-roughness.webp",
       "bytes": 64660,
       "sha256": "f69d191f75237e19f0b845e405cf8bdfac25d0dd56faaf8f9beebf32d2fc3eeb",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/window-interiors.webp",
+      "bytes": 13338,
+      "sha256": "e8c23f0fc99b50660cdfc8e1c553fe86a9a86a40b3fea2daf40565a95f516b83",
       "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
       "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
     },
