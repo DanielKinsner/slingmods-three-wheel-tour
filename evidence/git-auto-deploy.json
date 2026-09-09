@@ -1,0 +1,48 @@
+{
+  "repository": "https://github.com/DanielKinsner/slingmods-three-wheel-tour",
+  "private": true,
+  "productionBranch": "main",
+  "projectId": "prj_8GgNcjmAI4DbJjUjV9JmaF8etKVT",
+  "verifiedCommit": "23c2d526d36428ca0dbc3cbf1b61764b9a2bbd3f",
+  "verifiedDeployment": "dpl_4uC1CDVB9tZccFivCYLtuwWaoma4",
+  "source": "git",
+  "target": "production",
+  "status": "READY",
+  "githubStatus": "success",
+  "buildCommand": "npm test && npm run build",
+  "testsPassedOnVercel": 99,
+  "publicUrl": "https://slingmods-three-wheel-tour.vercel.app/",
+  "anonymousAssetChecks": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "sha256": "4e30a04c46aa20e5ce4c2fd5cd45a7208e5af4f938a940098b682d5850dec9ed",
+      "matchesVerifiedVisualBuild": true
+    },
+    {
+      "path": "assets/index-If2CvfA4.js",
+      "status": 200,
+      "sha256": "7d272706bbf0cfbd1907f56e8e8abe98b617c24fabf2a2a6740c9e7598c393be",
+      "matchesVerifiedVisualBuild": true
+    },
+    {
+      "path": "assets/index-8L4ugj--.css",
+      "status": 200,
+      "sha256": "872db00a529c18fa2bb0135f9925161a5c1548ff725181616a83e47141926c45",
+      "matchesVerifiedVisualBuild": true
+    },
+    {
+      "path": "models/slingshot-r-hero.glb",
+      "status": 200,
+      "sha256": "f6fba56ef0d23821018e116da63e0880855fc5f29c1d9ffc582d35587b5f1683",
+      "matchesVerifiedVisualBuild": true
+    },
+    {
+      "path": "textures/miami/window-interiors.webp",
+      "status": 200,
+      "sha256": "e8c23f0fc99b50660cdfc8e1c553fe86a9a86a40b3fea2daf40565a95f516b83",
+      "matchesVerifiedVisualBuild": true
+    }
+  ],
+  "note": "First automatic Git push deployment evidence; later commits create new deployments."
+}

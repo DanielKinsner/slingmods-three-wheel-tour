@@ -3,7 +3,7 @@
 
 ## Git delivery — September 9 follow-up
 
-Private repository created at https://github.com/DanielKinsner/slingmods-three-wheel-tour with the existing source history and `main` default branch. Connected to the existing Vercel project; its Git settings confirm `productionBranch: main`. `vercel.json` now gates automatic publishing on all tests and the TypeScript/Vite build. The first post-connection push is the end-to-end deployment check; use the live Vercel/GitHub commit status to confirm completion. Historical deployment IDs below refer to the earlier visual-finish promotion, not later Git rebuilds. See DEPLOYMENT.md for updates and rollback.
+Private repository created at https://github.com/DanielKinsner/slingmods-three-wheel-tour with the existing source history and `main` default branch. Connected to the existing Vercel project; its Git settings confirm `productionBranch: main`. `vercel.json` now gates automatic publishing on all tests and the TypeScript/Vite build. End-to-end verified: push `23c2d52` automatically created production deployment `dpl_4uC1CDVB9tZccFivCYLtuwWaoma4` with source `git`; all 99 tests passed on Vercel, TypeScript/Vite built successfully, and GitHub reported success. The permanent URL resolved to that deployment and its public game assets matched the verified visual build. See evidence/git-auto-deploy.json. Historical deployment IDs below refer to the earlier visual-finish promotion, not later Git rebuilds. See DEPLOYMENT.md for updates and rollback.
 
 ## Current release — September 9 visual finish
 
