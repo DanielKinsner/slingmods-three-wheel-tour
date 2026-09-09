@@ -1,5 +1,27 @@
 # SlingMods Three-Wheel Tour — Playground live
 
+## In progress — `feature/legit-slingshot` (branch only, not merged)
+
+Goal, per the owner on September 9: build the game out for fun. Make the hero read as a real 2025 Slingshot R and have actual SlingMods products bolt onto the car as races are won. Store integration, embedding and coupons are out of scope.
+
+Done on the branch so far (all tests and the TypeScript/Vite build pass; commits pushed):
+
+- **Factory paint palette.** The paint picker now lists the 2025 Polaris trim colors by name (Slingshot Red, Jet Black, Liquid Lime, Graphite Gloss, Royal Red, Royal Red Crystal, Nightfall) with SlingMods red kept first. Crystal finishes get a glassier clearcoat.
+- **Real parts on the car** (`src/parts.ts`). Buying Power stage 2 hides the stock exhaust and bolts on a Thermal-style dual rear-exit; Apex stages 1–3 add sway bar brackets, billet end links and DDMWorks-style coilovers (front pair behind the tires, rear beside the wheel). The cold air intake stays a stat plus product card because it lives under the closed hood.
+- **Wheel sets.** New garage section with four original designs (stock, six-spoke, mesh, concave). Buy once, swap free; drawn inside the GLB wheel nodes so they roll and steer.
+- **Underglow is now the TricLED kit.** The RGB picker is locked until the kit is bought (450 CR). Saves that had already raced keep it free.
+- **Install moment.** Every purchase swings the garage camera to the part and names the real product. Parts persist into races.
+- `scripts/capture-build.mjs` seeds a full build and screenshots the garage headlessly; `.claude/launch.json` starts the Vite dev server for browser checks.
+
+Verified: 122 tests, typecheck and production build; headless WebGL garage captures at 1920×1080 (front, side, rear, RGB night) show the parts with no console errors. Not verified: WebGPU desktop look, physical phone, race-time visuals of the parts by a human.
+
+Open and blocked on the owner:
+
+- **Body accuracy is gated on Blender.** `C:\Program Files\Blender Foundation\Blender 4.5` has no executable on this machine and `work/blender-runtime` is absent. Reshaping the nose, fenders and side blades against `D:\slingshot angles` needs a portable Blender download (about 300 MB from blender.org) or a purchased game-ready Slingshot model. Awaiting the owner's go-ahead on either.
+- Wheel designs are original in-game art; real SlingMods wheel products need links and photos from the owner before they can be named.
+- Headless WebGL renders the studio darker than the WebGPU desktop path; part materials were tuned to read in both, but the final look should be judged in Chrome.
+
+
 
 ## Owner-approved production merge — September 9
 
