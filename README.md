@@ -14,6 +14,8 @@ Current vehicle, Miami, saved-progress and validation notes are in [STATUS.md](S
 
 ## Playground expansion
 
+**Play this branch:** [Playground preview](https://slingmods-three-wheel-tour-git-156a60-daniel-kinsners-projects.vercel.app/) (existing Vercel sign-in protection). The permanent public URL remains the earlier production release.
+
 Open **Quick Race**, then choose **Quick Race / Drift Attack / Free Ride**. All six routes are available. **Harbor Run** is a new 1.93 km bonus circuit with freight yards, a covered inspection lane, tank farms, cranes, a cargo ship, and waterfront skyline. Sunset and After Dark lighting are available.
 
 Drift Attack runs for 90 seconds. Controlled forward slides build a multiplier up to 5×; straighten for 1.15 seconds to bank. Impacts, leaving asphalt, reversing, wrong-way driving and spins break the unbanked combo. Personal bests are saved separately from race times and do not award campaign money.
