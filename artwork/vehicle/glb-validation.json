@@ -1,0 +1,20 @@
+[
+  {
+    "tier": "hero",
+    "nodes": 63,
+    "embeddedImages": 3,
+    "validHeaderLength": true,
+    "animationContract": true,
+    "wheelTransforms": true,
+    "manifestHash": true
+  },
+  {
+    "tier": "lod",
+    "nodes": 63,
+    "embeddedImages": 3,
+    "validHeaderLength": true,
+    "animationContract": true,
+    "wheelTransforms": true,
+    "manifestHash": true
+  }
+]

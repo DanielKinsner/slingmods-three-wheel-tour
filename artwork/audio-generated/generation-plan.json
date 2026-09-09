@@ -1,0 +1,38 @@
+{
+  "mode": "dry-run",
+  "secretName": "ELEVENLABS_API_KEY",
+  "secretConfigured": false,
+  "maxRequestsIncludingReruns": 2,
+  "hardMaximumRequests": 24,
+  "maxCredits": 0,
+  "pricingEvidence": "",
+  "concurrency": 1,
+  "automaticRetries": 0,
+  "jobs": [
+    {
+      "id": "coastal-marina-audition",
+      "request": {
+        "text": "Seamless quiet waterfront marina ambience: soft seawater lapping against a concrete quay, gentle distant coastal air. Dry natural perspective, no voices, no boat engines, no music, no dramatic gusts.",
+        "duration_seconds": 8,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2",
+        "prompt_influence": 0.35
+      },
+      "cacheKey": "94a9b985bfb4e1d51f5f04449d86d9c27167befd12dfbca86a209a0000727903",
+      "creditReservation": 0
+    },
+    {
+      "id": "garage-latch-audition",
+      "request": {
+        "text": "A single close mechanical garage tool drawer latch: restrained metal click and short soft rubber damped closure, no slam, no voices, no music, dry small room.",
+        "duration_seconds": 1.2,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2",
+        "prompt_influence": 0.35
+      },
+      "cacheKey": "9712762107e5b8ee190e67c4ac444f965d93e46649e47cd3674c692d80f72a17",
+      "creditReservation": 0
+    }
+  ],
+  "note": "Generated audition masters are not integrated or approved automatically."
+}

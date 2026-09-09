@@ -1,4 +1,4 @@
-export type Region = 'smokies' | 'coast' | 'texas' | 'desert';
+export type Region = 'smokies' | 'coast' | 'texas' | 'desert' | 'miami';
 export interface Track {
   id: Region;
   name: string;
@@ -117,6 +117,12 @@ export const TRACKS: Track[] = [
       [-150, 5, 10],
       [-55, 6, -80],
     ],
+  },
+  {
+    id: 'miami', name: 'BISCAYNE STREET CIRCUIT', location: 'Miami', state: 'FLORIDA',
+    subtitle: 'From the hotel district to the bay.', character: 'Coastal city · Marina sweepers',
+    color:'#58d6d0',sky:0xb6d8e8,fog:0xbed2d7,ground:0xb9b4a2,trees:0x527e48,
+    points:[[0,3,0],[0,3,230],[35,3,380],[180,4,420],[320,5,360],[340,6,200],[270,6,80],[340,4,-80],[210,3,-200],[40,3,-170],[-80,3,-70]],
   },
 ];
 export const CHAPTERS = [

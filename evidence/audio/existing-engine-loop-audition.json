@@ -1,0 +1,20 @@
+[
+  {
+    "id": "engine-idle",
+    "startSeconds": 0.0,
+    "durationSeconds": 17.64,
+    "description": "Original delivered band, three full decoded loop repetitions."
+  },
+  {
+    "id": "engine-mid",
+    "startSeconds": 18.64,
+    "durationSeconds": 17.64,
+    "description": "Original delivered band, three full decoded loop repetitions."
+  },
+  {
+    "id": "engine-high",
+    "startSeconds": 37.28,
+    "durationSeconds": 17.64,
+    "description": "Original delivered band, three full decoded loop repetitions."
+  }
+]

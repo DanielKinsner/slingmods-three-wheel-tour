@@ -1,0 +1,148 @@
+{
+  "generator": "scripts/generate-miami-assets.py",
+  "seed": 20260909,
+  "generated": "2026-09-09",
+  "commercialClaims": "Original fictional architecture and signs; not an exact Miami street recreation.",
+  "assets": [
+    {
+      "id": "miami-limewash-color",
+      "path": "textures/miami/limewash-color.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "limewash neutral albedo; no perspective, cast shadows or reflections",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 18822,
+      "sha256": "4109224fd9efc3d6f576df2b67c2d37c9a3eded5abf8c8f42d49785b69c7dc39"
+    },
+    {
+      "id": "miami-limewash-normal",
+      "path": "textures/miami/limewash-normal.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "Tangent-space normal from authored limewash micro-height field",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 73494,
+      "sha256": "6bcc231ee6a07b4173ed76d6171a1c81b365b0e2992538b8fa1e41f418a56724"
+    },
+    {
+      "id": "miami-limewash-roughness",
+      "path": "textures/miami/limewash-roughness.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "Authored limewash roughness, independent of color luminance",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 48570,
+      "sha256": "c0e712fb78037c0310a0d311e231614156079e7c3e59d5519c6f72bcb719e6ba"
+    },
+    {
+      "id": "miami-pavers-color",
+      "path": "textures/miami/pavers-color.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "pavers neutral albedo; no perspective, cast shadows or reflections",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 35734,
+      "sha256": "3b9d77a55d65ae6a72ff6521b2a84fa7e0848e18df52bfa44e46369854c44658"
+    },
+    {
+      "id": "miami-pavers-normal",
+      "path": "textures/miami/pavers-normal.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "Tangent-space normal from authored pavers micro-height field",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 18318,
+      "sha256": "5a0c8d0bf9589bd6c8c03d759378660f0211eeb2b9fe420cc4a042a53a97f973"
+    },
+    {
+      "id": "miami-pavers-roughness",
+      "path": "textures/miami/pavers-roughness.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "Authored pavers roughness, independent of color luminance",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 55660,
+      "sha256": "d5572f7d18a75b4aa42bc6aef644da3735b635bb551a7202528b28af65bb2f64"
+    },
+    {
+      "id": "miami-terrazzo-color",
+      "path": "textures/miami/terrazzo-color.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "terrazzo neutral albedo; no perspective, cast shadows or reflections",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 129540,
+      "sha256": "5e6971811ea9676586efdd37afc64fe9d4194d4d58699ed71c37476411a6f44b"
+    },
+    {
+      "id": "miami-terrazzo-normal",
+      "path": "textures/miami/terrazzo-normal.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "Tangent-space normal from authored terrazzo micro-height field",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 812,
+      "sha256": "be54981b2c8b8f4d8218c0cc0ac4ac3f809cd63d567dc5a8658f07af651c1adb"
+    },
+    {
+      "id": "miami-terrazzo-roughness",
+      "path": "textures/miami/terrazzo-roughness.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "Authored terrazzo roughness, independent of color luminance",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 64660,
+      "sha256": "f69d191f75237e19f0b845e405cf8bdfac25d0dd56faaf8f9beebf32d2fc3eeb"
+    },
+    {
+      "id": "miami-storefront-atlas",
+      "path": "textures/miami/storefront-atlas.webp",
+      "classification": "original-procedural",
+      "source": "scripts/generate-miami-assets.py",
+      "license": "Original project asset; available to the project owner for game redistribution.",
+      "purpose": "Eight original fictional storefront and circuit wayfinding decals; not actual business branding",
+      "dimensions": [
+        2048,
+        1024
+      ],
+      "bytes": 58560,
+      "sha256": "0ec04bf92183107bd2e1358892b2e8344e6a593a1ac26d5fcfb6865731bdffd5"
+    }
+  ]
+}

@@ -147,7 +147,7 @@ export function buildEnvironment(
 ) {
   const streetLights: T.Vector3[] = [];
   const random = rng(714 + data.id.length),
-    coast = data.id === 'coast',
+    coast = data.id === 'coast' || data.id === 'miami',
     desert = data.id === 'desert';
   const moving: T.Object3D[] = [],
     flags: T.Mesh[] = [];
@@ -306,7 +306,7 @@ export function buildEnvironment(
     }
     flatten(mountains);
   }
-  if (coast) {
+  if (data.id === 'coast') {
     // Four lanes of Florida architecture: Art Deco storefronts, balcony hotels,
     // glazed towers, roof plant, bus shelters and an ocean-side promenade.
     const city = new T.Group();

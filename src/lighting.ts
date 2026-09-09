@@ -21,11 +21,11 @@ export function glowTexture() {
 }
 
 /** Surface-aligned halos: always face the nose, never the camera or the rear of the car. */
-function frontLampHalo(width: number) {
+function frontLampHalo(width: number, hero=false) {
   const strips = [
     [
-      [-0.127, 0.518, 1.655],
-      [0.127, 0.518, 1.655],
+      [-0.127, hero ? .480 : .518, hero ? 1.844 : 1.655],
+      [0.127, hero ? .480 : .518, hero ? 1.844 : 1.655],
     ],
   ];
   for (const side of [-1, 1]) {
@@ -203,7 +203,7 @@ export function vehicleLighting(car: T.Group, main: boolean) {
     }),
   ];
   haloMaterials.forEach((material, i) => {
-    const halo = mesh(frontLampHalo(i === 0 ? 0.2 : 0.075), material, car);
+    const halo = mesh(frontLampHalo(i === 0 ? 0.2 : 0.075, !!car.userData.modelId), material, car);
     halo.name = i === 0 ? 'Front lamp soft bloom' : 'Front lamp luminous edge';
     halo.castShadow = false;
     halo.receiveShadow = false;

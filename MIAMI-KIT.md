@@ -1,0 +1,17 @@
+# Biscayne streetscape kit
+
+This is original fictional circuit architecture, not a reconstruction of actual Miami streets. The workspace initially had four routes; this kit is for the separately added `miami` route. Existing route IDs are unchanged.
+
+Implemented geometry: stepped Art Deco hotel/storefront facades, balcony hotels, contemporary glazed towers, human-scale doors and door handles, window mullions, roof plant, eyebrow canopies, sidewalk pavers, curbs, benches, planters, streetlights, approved-logo sponsor boards, a southern marina with finger piers and moored sailing boats, and a distant skyline. The three architecture families occupy successive route districts instead of being scattered at random. Water and boats animate; reduced-motion disables both. The imported generic coastal palm animation is separate.
+
+The kit uses eight spatial blocks, merged by material. Glazing panes use two-triangle surfaces instead of six-sided boxes. The distant skyline uses simplified meshes. There is no per-building real-time reflection capture and no additional shadow-casting light per window. Streetlight positions feed the existing bounded light pool. Window and sign emission are tuned independently for day/night; plaster remains rough and opaque.
+
+`scripts/generate-miami-assets.py` deterministically produces ten actual WebP assets (504,170 bytes): 512×512 neutral albedo, normal and roughness maps for limewash, paving and terrazzo, plus a 2048×1024 storefront atlas. These are procedural material approximations, not scans. Normals and roughness come from explicit authored surface fields rather than converting a lit photograph. The storefront artwork is original and fictional. Lettering was rasterized using the installed Windows Bahnschrift font; no font file is redistributed. No generation service, secret, or runtime asset-generation API is involved.
+
+`MIAMI-ASSET-MANIFEST.json` contains individual dimensions, SHA-256, origin and project redistribution status. Sponsor boards load the existing approved `public/slingmods-logo.png`; the wordmark was not redrawn or generated.
+
+Integration: await `loadMiamiAssets()` during asset loading, then call `buildMiami(root, circuit, night, collision)`. Merge its `streetLights` into the existing pool and call `update(elapsed, motion)` once per rendered frame. Scene disposal is handled by the current world resource collector. Keep generic coastal sky/water/palms, but omit generic coastal buildings/fixtures for this route. The south marina needs terrain below water away from the road; the route integration carves the bay while retaining the safe racing corridor.
+
+Validation: `npx vitest run src/miami.test.ts` constructs the real kit, verifies more than 25 buildings, fewer than 180 static meshes and 160,000 static triangles, checks every collision-shell corner against the complete route, and requires more than 10.5 m centerline clearance. It also checks reduced-motion resets boat bobbing. This is geometry validation, not a browser screenshot, GPU frame-rate result, or physical-device test. Browser visual/performance results belong in the parent milestone STATUS/QA evidence.
+
+Known scope limits: no imported GLB city kit, scanned photogrammetry, interiors, road traffic, individual moving spectators, or claim of exact real-world streets. The neutral generated textures augment real geometry; they are not concept images presented as delivered environment assets.

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "road-roll",
+      "path": "public/audio/road-roll.wav",
+      "classification": "original procedural sound design",
+      "generatedAt": "2026-09-09T21:00:03.944103+00:00",
+      "provider": "local NumPy deterministic DSP",
+      "model": null,
+      "seed": 911,
+      "description": "Broadband low rolling texture for dry road; level follows ground speed.",
+      "sampleRate": 44100,
+      "durationSeconds": 4,
+      "channels": 2,
+      "loopRegion": [
+        0,
+        4
+      ],
+      "loopMethod": "Periodic frequency-domain noise and periodic amplitude envelope; PCM WAV avoids MP3 padding.",
+      "sourceLicense": "Original project-authored signal; no source recording or third-party sample.",
+      "generationRequests": 0,
+      "bytes": 705644,
+      "sha256": "d007d4de9c0c1858ae70a38552e418db36f1c7d9822ed31cb29e83d18ac1cdd0",
+      "intendedMixGainMaximum": 0.18,
+      "auditionStatus": "Review alongside gameplay; never a verified OEM or location recording.",
+      "integratedLUFS": -30.58,
+      "truePeakDbTP": -20.89,
+      "wrapJumpDbFS": -54.322,
+      "measurementReport": "evidence/audio/decoded-audio-audit.json"
+    },
+    {
+      "id": "shoulder-roll",
+      "path": "public/audio/shoulder-roll.wav",
+      "classification": "original procedural sound design",
+      "generatedAt": "2026-09-09T21:00:03.987528+00:00",
+      "provider": "local NumPy deterministic DSP",
+      "model": null,
+      "seed": 912,
+      "description": "More irregular granular rolling texture for shoulder contact, not a tire squeal.",
+      "sampleRate": 44100,
+      "durationSeconds": 4,
+      "channels": 2,
+      "loopRegion": [
+        0,
+        4
+      ],
+      "loopMethod": "Periodic frequency-domain noise and periodic amplitude envelope; PCM WAV avoids MP3 padding.",
+      "sourceLicense": "Original project-authored signal; no source recording or third-party sample.",
+      "generationRequests": 0,
+      "bytes": 705644,
+      "sha256": "83dc8e791aefd8a50dac011715a070b99ebf7da8b4ab3071f9295cb507e7e178",
+      "intendedMixGainMaximum": 0.18,
+      "auditionStatus": "Review alongside gameplay; never a verified OEM or location recording.",
+      "integratedLUFS": -27.61,
+      "truePeakDbTP": -15.58,
+      "wrapJumpDbFS": -47.575,
+      "measurementReport": "evidence/audio/decoded-audio-audit.json"
+    },
+    {
+      "id": "coastal-air",
+      "path": "public/audio/coastal-air.wav",
+      "classification": "original procedural sound design",
+      "generatedAt": "2026-09-09T21:00:04.070809+00:00",
+      "provider": "local NumPy deterministic DSP",
+      "model": null,
+      "seed": 913,
+      "description": "Quiet synthetic coastal air bed; supplementary ambience, no real-world field recording.",
+      "sampleRate": 44100,
+      "durationSeconds": 8,
+      "channels": 2,
+      "loopRegion": [
+        0,
+        8
+      ],
+      "loopMethod": "Periodic frequency-domain noise and periodic amplitude envelope; PCM WAV avoids MP3 padding.",
+      "sourceLicense": "Original project-authored signal; no source recording or third-party sample.",
+      "generationRequests": 0,
+      "bytes": 1411244,
+      "sha256": "7dee03f34c29f7a902a7cf046f0d4d39e4e0765148dd6a06335a109f4ce6073a",
+      "intendedMixGainMaximum": 0.12,
+      "auditionStatus": "Review alongside gameplay; never a verified OEM or location recording.",
+      "integratedLUFS": -36.51,
+      "truePeakDbTP": -24.23,
+      "wrapJumpDbFS": -68.725,
+      "measurementReport": "evidence/audio/decoded-audio-audit.json"
+    }
+  ]
+}

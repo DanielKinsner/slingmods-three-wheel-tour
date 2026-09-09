@@ -1,0 +1,719 @@
+{
+  "method": "FFmpeg loudnorm/decoded PCM inspection; not a listening pass",
+  "auditionGain": 0.1595,
+  "assets": [
+    {
+      "id": "brief-0",
+      "file": "public/audio/brief-0.mp3",
+      "sha256": "e332814d83c83cdac0f5eead40533ac1f4f6dabcb5ce8f4e64a8a169027c8896",
+      "bytes": 137969,
+      "decodedSeconds": 8.544943310657596,
+      "decodedFrames": 376832,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.479,
+      "integratedLUFS": -20.54,
+      "truePeakDbTP": -6.47,
+      "loudnessRangeLU": 0.7,
+      "loop": false,
+      "wrapJumpDbFS": -91.566,
+      "inFileAdjacentDifferenceP999DbFS": -21.507,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -29.133,
+        -88.062
+      ],
+      "strongest35to800HzBins": [
+        176.0,
+        160.0,
+        146.0,
+        133.0,
+        366.0,
+        127.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "brief-1",
+      "file": "public/audio/brief-1.mp3",
+      "sha256": "01980e23b01498ef58ef45cb6b7a3ac394c495188331f120adcfb31e680bf385",
+      "bytes": 92412,
+      "decodedSeconds": 5.712108843537415,
+      "decodedFrames": 251904,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.346,
+      "integratedLUFS": -20.63,
+      "truePeakDbTP": -6.34,
+      "loudnessRangeLU": 0.4,
+      "loop": false,
+      "wrapJumpDbFS": -89.869,
+      "inFileAdjacentDifferenceP999DbFS": -20.595,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -27.888,
+        -87.39
+      ],
+      "strongest35to800HzBins": [
+        131.0,
+        133.0,
+        130.0,
+        149.0,
+        339.0,
+        138.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "brief-2",
+      "file": "public/audio/brief-2.mp3",
+      "sha256": "409d42a2b6dd2eac8646bed5ab17adffdc2704353924c008e983c9f9edc4b3d7",
+      "bytes": 120833,
+      "decodedSeconds": 7.476825396825397,
+      "decodedFrames": 329728,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.462,
+      "integratedLUFS": -20.51,
+      "truePeakDbTP": -6.45,
+      "loudnessRangeLU": 1.4,
+      "loop": false,
+      "wrapJumpDbFS": -90.371,
+      "inFileAdjacentDifferenceP999DbFS": -20.755,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -27.037,
+        -88.65
+      ],
+      "strongest35to800HzBins": [
+        179.0,
+        316.0,
+        73.0,
+        97.0,
+        134.0,
+        156.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "brief-3",
+      "file": "public/audio/brief-3.mp3",
+      "sha256": "4cc0423b4ad72c5f1efc14872a2d3bbdc8e87074decb56d780bb7780205f6a50",
+      "bytes": 117907,
+      "decodedSeconds": 7.291065759637188,
+      "decodedFrames": 321536,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.457,
+      "integratedLUFS": -20.82,
+      "truePeakDbTP": -6.46,
+      "loudnessRangeLU": 1.0,
+      "loop": false,
+      "wrapJumpDbFS": -93.1,
+      "inFileAdjacentDifferenceP999DbFS": -21.083,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -25.844,
+        -82.873
+      ],
+      "strongest35to800HzBins": [
+        516.0,
+        346.0,
+        139.0,
+        120.0,
+        127.0,
+        512.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "brief-4",
+      "file": "public/audio/brief-4.mp3",
+      "sha256": "1232691f1d9d816e06b4d6192494ca475f4da2f6dabefa79e49103893d3ebfad",
+      "bytes": 114563,
+      "decodedSeconds": 7.1053061224489795,
+      "decodedFrames": 313344,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.458,
+      "integratedLUFS": -21.09,
+      "truePeakDbTP": -6.45,
+      "loudnessRangeLU": 1.7,
+      "loop": false,
+      "wrapJumpDbFS": -91.844,
+      "inFileAdjacentDifferenceP999DbFS": -22.832,
+      "wrapToP999Ratio": 0.0004,
+      "firstLast100msRmsDbFS": [
+        -40.218,
+        -89.036
+      ],
+      "strongest35to800HzBins": [
+        139.0,
+        134.0,
+        136.0,
+        136.0,
+        146.0,
+        139.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "brief-5",
+      "file": "public/audio/brief-5.mp3",
+      "sha256": "32b8b662dab1e57852e009cfdb685ec31c4621116a1c8c85ee93ba379680d79d",
+      "bytes": 104532,
+      "decodedSeconds": 6.455147392290249,
+      "decodedFrames": 284672,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.432,
+      "integratedLUFS": -20.46,
+      "truePeakDbTP": -6.42,
+      "loudnessRangeLU": 1.0,
+      "loop": false,
+      "wrapJumpDbFS": -91.136,
+      "inFileAdjacentDifferenceP999DbFS": -21.822,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -28.46,
+        -87.949
+      ],
+      "strongest35to800HzBins": [
+        122.0,
+        174.0,
+        174.0,
+        131.0,
+        129.0,
+        129.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "brief-6",
+      "file": "public/audio/brief-6.mp3",
+      "sha256": "26666a3370bb5b084941e23451071768901ab53e9043bdb3e27aefa015204cf3",
+      "bytes": 116235,
+      "decodedSeconds": 7.198185941043084,
+      "decodedFrames": 317440,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.447,
+      "integratedLUFS": -20.78,
+      "truePeakDbTP": -6.44,
+      "loudnessRangeLU": 1.0,
+      "loop": false,
+      "wrapJumpDbFS": -93.681,
+      "inFileAdjacentDifferenceP999DbFS": -21.991,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -34.677,
+        -88.081
+      ],
+      "strongest35to800HzBins": [
+        156.0,
+        126.0,
+        662.0,
+        133.0,
+        125.0,
+        132.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "brief-7",
+      "file": "public/audio/brief-7.mp3",
+      "sha256": "5bcad28f0523f70ac68e8067578feed19c8253fd9497c36c47844aa7b2d70bf2",
+      "bytes": 104950,
+      "decodedSeconds": 6.501587301587302,
+      "decodedFrames": 286720,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.459,
+      "integratedLUFS": -21.18,
+      "truePeakDbTP": -6.45,
+      "loudnessRangeLU": 1.9,
+      "loop": false,
+      "wrapJumpDbFS": -92.645,
+      "inFileAdjacentDifferenceP999DbFS": -23.297,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -34.572,
+        -88.876
+      ],
+      "strongest35to800HzBins": [
+        333.0,
+        137.0,
+        140.0,
+        136.0,
+        141.0,
+        72.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "coastal-air",
+      "file": "public/audio/coastal-air.wav",
+      "sha256": "7dee03f34c29f7a902a7cf046f0d4d39e4e0765148dd6a06335a109f4ce6073a",
+      "bytes": 1411244,
+      "decodedSeconds": 8.0,
+      "decodedFrames": 352800,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -24.232,
+      "integratedLUFS": -36.51,
+      "truePeakDbTP": -24.23,
+      "loudnessRangeLU": 0.5,
+      "loop": true,
+      "wrapJumpDbFS": -68.725,
+      "inFileAdjacentDifferenceP999DbFS": -52.579,
+      "wrapToP999Ratio": 0.1558,
+      "firstLast100msRmsDbFS": [
+        -35.923,
+        -40.829
+      ],
+      "strongest35to800HzBins": [
+        109.0,
+        100.0,
+        104.0,
+        122.0,
+        120.0,
+        88.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "engine-high",
+      "file": "public/audio/engine-high.mp3",
+      "sha256": "3a046e819f7621c1ad9a068847dc6b194bb7b31b8b273825a4e9e09eebddf650",
+      "bytes": 95337,
+      "decodedSeconds": 5.88,
+      "decodedFrames": 259308,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -12.209,
+      "integratedLUFS": -21.1,
+      "truePeakDbTP": -12.15,
+      "loudnessRangeLU": 0.4,
+      "loop": true,
+      "wrapJumpDbFS": -33.445,
+      "inFileAdjacentDifferenceP999DbFS": -25.391,
+      "wrapToP999Ratio": 0.3956,
+      "firstLast100msRmsDbFS": [
+        -27.092,
+        -30.254
+      ],
+      "strongest35to800HzBins": [
+        238.0,
+        238.0,
+        238.0,
+        238.0,
+        239.0,
+        238.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "engine-idle",
+      "file": "public/audio/engine-idle.mp3",
+      "sha256": "23a9e757bb28086cd4f3e65d1c477895c464d8e1cc5dd05ad02a1b1a53e7b0e4",
+      "bytes": 95337,
+      "decodedSeconds": 5.88,
+      "decodedFrames": 259308,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -11.038,
+      "integratedLUFS": -21.65,
+      "truePeakDbTP": -11.03,
+      "loudnessRangeLU": 0.6,
+      "loop": true,
+      "wrapJumpDbFS": -36.114,
+      "inFileAdjacentDifferenceP999DbFS": -44.598,
+      "wrapToP999Ratio": 2.6559,
+      "firstLast100msRmsDbFS": [
+        -23.101,
+        -26.417
+      ],
+      "strongest35to800HzBins": [
+        67.0,
+        67.0,
+        67.0,
+        66.0,
+        64.0,
+        66.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "engine-mid",
+      "file": "public/audio/engine-mid.mp3",
+      "sha256": "6bba538d280fb7069329480669e2cf16e83ab6eae19696d3991e22c3cbcc7295",
+      "bytes": 95337,
+      "decodedSeconds": 5.88,
+      "decodedFrames": 259308,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -11.455,
+      "integratedLUFS": -21.08,
+      "truePeakDbTP": -11.39,
+      "loudnessRangeLU": 0.2,
+      "loop": true,
+      "wrapJumpDbFS": -37.318,
+      "inFileAdjacentDifferenceP999DbFS": -15.716,
+      "wrapToP999Ratio": 0.0832,
+      "firstLast100msRmsDbFS": [
+        -27.619,
+        -31.193
+      ],
+      "strongest35to800HzBins": [
+        113.0,
+        113.0,
+        114.0,
+        112.0,
+        113.0,
+        112.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "final-lap",
+      "file": "public/audio/final-lap.mp3",
+      "sha256": "4bacf8e2a81f4799ce0682829fc74424f300bd54276c632ea3d8b2e53eeb1862",
+      "bytes": 35151,
+      "decodedSeconds": 2.136235827664399,
+      "decodedFrames": 94208,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.478,
+      "integratedLUFS": -24.06,
+      "truePeakDbTP": -6.45,
+      "loudnessRangeLU": 0.0,
+      "loop": false,
+      "wrapJumpDbFS": -71.414,
+      "inFileAdjacentDifferenceP999DbFS": -22.742,
+      "wrapToP999Ratio": 0.0037,
+      "firstLast100msRmsDbFS": [
+        -36.657,
+        -91.706
+      ],
+      "strongest35to800HzBins": [
+        118.0,
+        140.0,
+        140.0,
+        134.0,
+        452.0,
+        147.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "finish",
+      "file": "public/audio/finish.mp3",
+      "sha256": "7f7c5535bfb43f08c75f4079fb742947762b219478c8d8a5f2aec2a2e75d1b4e",
+      "bytes": 55213,
+      "decodedSeconds": 3.3901133786848074,
+      "decodedFrames": 149504,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.363,
+      "integratedLUFS": -21.28,
+      "truePeakDbTP": -6.36,
+      "loudnessRangeLU": 0.8,
+      "loop": false,
+      "wrapJumpDbFS": -90.961,
+      "inFileAdjacentDifferenceP999DbFS": -19.27,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -31.243,
+        -86.786
+      ],
+      "strongest35to800HzBins": [
+        134.0,
+        161.0,
+        149.0,
+        282.0,
+        132.0,
+        155.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "green",
+      "file": "public/audio/green.mp3",
+      "sha256": "ab9cac54730dbf2ba7c684a3bd11cd17ae0fa4c28beb2ffd7435a4c4a024a156",
+      "bytes": 32225,
+      "decodedSeconds": 1.9504761904761905,
+      "decodedFrames": 86016,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -7.374,
+      "integratedLUFS": -20.43,
+      "truePeakDbTP": -7.35,
+      "loudnessRangeLU": 0.0,
+      "loop": false,
+      "wrapJumpDbFS": -95.29,
+      "inFileAdjacentDifferenceP999DbFS": -24.527,
+      "wrapToP999Ratio": 0.0003,
+      "firstLast100msRmsDbFS": [
+        -37.483,
+        -89.446
+      ],
+      "strongest35to800HzBins": [
+        133.0,
+        133.0,
+        172.0,
+        168.0,
+        167.0,
+        174.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "impact",
+      "file": "public/audio/impact.mp3",
+      "sha256": "403a4cfe13e4bcd8abb3a7484b6e62d816ac2e1ea9c8deb5dedecb88cf0256ff",
+      "bytes": 17179,
+      "decodedSeconds": 1.0,
+      "decodedFrames": 44100,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.48,
+      "integratedLUFS": -26.4,
+      "truePeakDbTP": -6.48,
+      "loudnessRangeLU": 0.0,
+      "loop": false,
+      "wrapJumpDbFS": -56.219,
+      "inFileAdjacentDifferenceP999DbFS": -42.217,
+      "wrapToP999Ratio": 0.1995,
+      "firstLast100msRmsDbFS": [
+        -17.469,
+        -76.974
+      ],
+      "strongest35to800HzBins": [
+        78.0,
+        78.0,
+        78.0,
+        78.0,
+        78.0,
+        78.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "install",
+      "file": "public/audio/install.mp3",
+      "sha256": "e83107908cb706d89c047f2bbbb609a75cc04ab8bd7fa739a0256a8b3b5d3171",
+      "bytes": 21358,
+      "decodedSeconds": 1.28,
+      "decodedFrames": 56448,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -9.785,
+      "integratedLUFS": -23.28,
+      "truePeakDbTP": -9.81,
+      "loudnessRangeLU": 0.0,
+      "loop": false,
+      "wrapJumpDbFS": -88.139,
+      "inFileAdjacentDifferenceP999DbFS": -13.169,
+      "wrapToP999Ratio": 0.0002,
+      "firstLast100msRmsDbFS": [
+        -26.965,
+        -78.479
+      ],
+      "strongest35to800HzBins": [
+        67.0,
+        56.0,
+        200.0,
+        200.0,
+        200.0,
+        200.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "road-roll",
+      "file": "public/audio/road-roll.wav",
+      "sha256": "d007d4de9c0c1858ae70a38552e418db36f1c7d9822ed31cb29e83d18ac1cdd0",
+      "bytes": 705644,
+      "decodedSeconds": 4.0,
+      "decodedFrames": 176400,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -20.895,
+      "integratedLUFS": -30.58,
+      "truePeakDbTP": -20.89,
+      "loudnessRangeLU": 0.1,
+      "loop": true,
+      "wrapJumpDbFS": -54.322,
+      "inFileAdjacentDifferenceP999DbFS": -44.872,
+      "wrapToP999Ratio": 0.3369,
+      "firstLast100msRmsDbFS": [
+        -32.607,
+        -32.479
+      ],
+      "strongest35to800HzBins": [
+        164.0,
+        257.0,
+        194.0,
+        110.0,
+        164.0,
+        295.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "shift",
+      "file": "public/audio/shift.mp3",
+      "sha256": "fa2a9c8d394cad4580b3dc503d6d7e23177b0c5e95f6fb2d56b55a0293f8852c",
+      "bytes": 8820,
+      "decodedSeconds": 0.48,
+      "decodedFrames": 21168,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -6.665,
+      "integratedLUFS": -23.35,
+      "truePeakDbTP": -6.63,
+      "loudnessRangeLU": 0.0,
+      "loop": false,
+      "wrapJumpDbFS": -39.411,
+      "inFileAdjacentDifferenceP999DbFS": -13.492,
+      "wrapToP999Ratio": 0.0506,
+      "firstLast100msRmsDbFS": [
+        -22.25,
+        -72.841
+      ],
+      "strongest35to800HzBins": [
+        466.7,
+        466.7,
+        466.7,
+        466.7,
+        466.7,
+        466.7
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "shoulder-roll",
+      "file": "public/audio/shoulder-roll.wav",
+      "sha256": "83dc8e791aefd8a50dac011715a070b99ebf7da8b4ab3071f9295cb507e7e178",
+      "bytes": 705644,
+      "decodedSeconds": 4.0,
+      "decodedFrames": 176400,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -15.583,
+      "integratedLUFS": -27.61,
+      "truePeakDbTP": -15.58,
+      "loudnessRangeLU": 0.1,
+      "loop": true,
+      "wrapJumpDbFS": -47.575,
+      "inFileAdjacentDifferenceP999DbFS": -36.793,
+      "wrapToP999Ratio": 0.289,
+      "firstLast100msRmsDbFS": [
+        -28.805,
+        -32.872
+      ],
+      "strongest35to800HzBins": [
+        262.0,
+        457.0,
+        350.0,
+        385.0,
+        331.0,
+        299.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "tire",
+      "file": "public/audio/tire.mp3",
+      "sha256": "1cbb7db7e005e54797e14f5ce9c9db82bfea865a66d9ade0b55cc9b407bb9a16",
+      "bytes": 47272,
+      "decodedSeconds": 2.88,
+      "decodedFrames": 127008,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -13.966,
+      "integratedLUFS": -23.39,
+      "truePeakDbTP": -13.77,
+      "loudnessRangeLU": 0.0,
+      "loop": true,
+      "wrapJumpDbFS": -25.235,
+      "inFileAdjacentDifferenceP999DbFS": -24.39,
+      "wrapToP999Ratio": 0.9073,
+      "firstLast100msRmsDbFS": [
+        -30.915,
+        -32.845
+      ],
+      "strongest35to800HzBins": [
+        747.0,
+        756.0,
+        697.0,
+        698.0,
+        777.0,
+        777.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "tour-music",
+      "file": "public/audio/tour-music.mp3",
+      "sha256": "5f599b08f6dc03934154ca46676b75944715839aa0eb734a2a9a638343195ebf",
+      "bytes": 710573,
+      "decodedSeconds": 44.33512471655329,
+      "decodedFrames": 1955179,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -12.373,
+      "integratedLUFS": -25.33,
+      "truePeakDbTP": -12.37,
+      "loudnessRangeLU": 0.8,
+      "loop": true,
+      "wrapJumpDbFS": -47.151,
+      "inFileAdjacentDifferenceP999DbFS": -23.921,
+      "wrapToP999Ratio": 0.0689,
+      "firstLast100msRmsDbFS": [
+        -30.853,
+        -34.163
+      ],
+      "strongest35to800HzBins": [
+        121.0,
+        122.0,
+        59.0,
+        123.0,
+        123.0,
+        123.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    },
+    {
+      "id": "wind",
+      "file": "public/audio/wind.mp3",
+      "sha256": "563f3cd43a3bb4ebe4c356f164d88a48f03a1b6056358135697b785716430c9b",
+      "bytes": 95337,
+      "decodedSeconds": 5.88,
+      "decodedFrames": 259308,
+      "sampleRate": 44100,
+      "channelsMeasured": 2,
+      "samplePeakDbFS": -12.147,
+      "integratedLUFS": -23.63,
+      "truePeakDbTP": -12.14,
+      "loudnessRangeLU": 0.4,
+      "loop": true,
+      "wrapJumpDbFS": -49.852,
+      "inFileAdjacentDifferenceP999DbFS": -35.575,
+      "wrapToP999Ratio": 0.1933,
+      "firstLast100msRmsDbFS": [
+        -25.076,
+        -28.795
+      ],
+      "strongest35to800HzBins": [
+        40.0,
+        39.0,
+        40.0,
+        40.0,
+        40.0,
+        39.0
+      ],
+      "auditoryApproval": "not performed; numerical inspection and playable audition only"
+    }
+  ]
+}
