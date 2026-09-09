@@ -1,0 +1,438 @@
+{
+  "errors": [],
+  "diagnostics": {
+    "build": "0.4.1-visual-finish",
+    "night": false,
+    "difficulty": "easy",
+    "audio": {
+      "loaded": 0,
+      "voice": false,
+      "peakDb": -120
+    },
+    "rgb": 0,
+    "camera": [
+      20.611357410140734,
+      5.586221532506357,
+      98.87926223389634
+    ],
+    "car": [
+      14.298449437592433,
+      3.378081166978176,
+      93.64606043253139
+    ],
+    "carScreen": [
+      0.23167842813287395,
+      -0.2008984993677712,
+      0.9522986085682483
+    ],
+    "vehicleUpY": [
+      0.9999906684103225,
+      0.9999972885626591,
+      0.9999985843563791,
+      0.9999993739557368,
+      0.9999998036810815,
+      0.9999999805626898
+    ],
+    "triangles": 2788215,
+    "cpu": {
+      "environment": 0.19999999925494194,
+      "render": 2.099999997764826,
+      "frame": 2.399999998509884
+    },
+    "pixelRatio": 1,
+    "contacts": 0,
+    "screen": "home",
+    "paused": false,
+    "countdown": 3.5,
+    "raceTime": 0,
+    "checkpoints": [],
+    "player": {
+      "telemetry": {
+        "rpm": 1100,
+        "gear": 1,
+        "load": 0,
+        "throttle": 0,
+        "brake": 0,
+        "shiftRemaining": 0,
+        "shiftSerial": 0,
+        "shiftCooldown": 0,
+        "acceleration": 0,
+        "steeringAngle": 0,
+        "slipRatio": 0,
+        "wheelSpeeds": [
+          0,
+          0,
+          0
+        ],
+        "wheelAngles": [
+          0,
+          0,
+          0
+        ],
+        "grounded": [
+          true,
+          true,
+          true
+        ],
+        "suspension": [
+          0,
+          0,
+          0
+        ],
+        "normalLoads": [
+          2500,
+          2500,
+          3240
+        ],
+        "surface": "road",
+        "reverseHold": 0
+      },
+      "distance": 0,
+      "lane": 0,
+      "velocity": 0,
+      "speed": 0,
+      "boost": 100,
+      "style": 0,
+      "drift": 0,
+      "draft": 0,
+      "hit": 0,
+      "boosting": false
+    },
+    "opponents": [
+      {
+        "telemetry": {
+          "rpm": 1100,
+          "gear": 1,
+          "load": 0,
+          "throttle": 0,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 0,
+          "shiftCooldown": 0,
+          "acceleration": 0,
+          "steeringAngle": 0,
+          "slipRatio": 0,
+          "wheelSpeeds": [
+            0,
+            0,
+            0
+          ],
+          "wheelAngles": [
+            0,
+            0,
+            0
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0,
+            0,
+            0
+          ],
+          "normalLoads": [
+            2500,
+            2500,
+            3240
+          ],
+          "surface": "road",
+          "reverseHold": 0
+        },
+        "distance": 10,
+        "lane": 3.3,
+        "velocity": 0,
+        "speed": 0,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "name": "JAX",
+        "skill": 1,
+        "done": 0
+      },
+      {
+        "telemetry": {
+          "rpm": 1100,
+          "gear": 1,
+          "load": 0,
+          "throttle": 0,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 0,
+          "shiftCooldown": 0,
+          "acceleration": 0,
+          "steeringAngle": 0,
+          "slipRatio": 0,
+          "wheelSpeeds": [
+            0,
+            0,
+            0
+          ],
+          "wheelAngles": [
+            0,
+            0,
+            0
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0,
+            0,
+            0
+          ],
+          "normalLoads": [
+            2500,
+            2500,
+            3240
+          ],
+          "surface": "road",
+          "reverseHold": 0
+        },
+        "distance": 17,
+        "lane": -3.3,
+        "velocity": 0,
+        "speed": 0,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "name": "REEF",
+        "skill": 0.968,
+        "done": 0
+      },
+      {
+        "telemetry": {
+          "rpm": 1100,
+          "gear": 1,
+          "load": 0,
+          "throttle": 0,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 0,
+          "shiftCooldown": 0,
+          "acceleration": 0,
+          "steeringAngle": 0,
+          "slipRatio": 0,
+          "wheelSpeeds": [
+            0,
+            0,
+            0
+          ],
+          "wheelAngles": [
+            0,
+            0,
+            0
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0,
+            0,
+            0
+          ],
+          "normalLoads": [
+            2500,
+            2500,
+            3240
+          ],
+          "surface": "road",
+          "reverseHold": 0
+        },
+        "distance": 24,
+        "lane": 3.3,
+        "velocity": 0,
+        "speed": 0,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "name": "DUSTY",
+        "skill": 0.9359999999999999,
+        "done": 0
+      },
+      {
+        "telemetry": {
+          "rpm": 1100,
+          "gear": 1,
+          "load": 0,
+          "throttle": 0,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 0,
+          "shiftCooldown": 0,
+          "acceleration": 0,
+          "steeringAngle": 0,
+          "slipRatio": 0,
+          "wheelSpeeds": [
+            0,
+            0,
+            0
+          ],
+          "wheelAngles": [
+            0,
+            0,
+            0
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0,
+            0,
+            0
+          ],
+          "normalLoads": [
+            2500,
+            2500,
+            3240
+          ],
+          "surface": "road",
+          "reverseHold": 0
+        },
+        "distance": 31,
+        "lane": -3.3,
+        "velocity": 0,
+        "speed": 0,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "name": "NOVA",
+        "skill": 0.904,
+        "done": 0
+      },
+      {
+        "telemetry": {
+          "rpm": 1100,
+          "gear": 1,
+          "load": 0,
+          "throttle": 0,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 0,
+          "shiftCooldown": 0,
+          "acceleration": 0,
+          "steeringAngle": 0,
+          "slipRatio": 0,
+          "wheelSpeeds": [
+            0,
+            0,
+            0
+          ],
+          "wheelAngles": [
+            0,
+            0,
+            0
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0,
+            0,
+            0
+          ],
+          "normalLoads": [
+            2500,
+            2500,
+            3240
+          ],
+          "surface": "road",
+          "reverseHold": 0
+        },
+        "distance": 38,
+        "lane": 3.3,
+        "velocity": 0,
+        "speed": 0,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "name": "ACE",
+        "skill": 0.872,
+        "done": 0
+      }
+    ],
+    "track": 1,
+    "length": 1555.008584432018,
+    "backend": "WebGL 2",
+    "frameMs": 226.78740762767904,
+    "lastFrameMs": 16.700000000000728,
+    "frameProfile": {
+      "samples": 0,
+      "p50": 0,
+      "p95": 0,
+      "p99": 0,
+      "max": 0,
+      "over33ms": 0
+    },
+    "viewport": [
+      1280,
+      720
+    ],
+    "drawingBuffer": [
+      1280,
+      720
+    ],
+    "textures": 57,
+    "geometries": 124,
+    "drawCalls": 201,
+    "curve": 0.010722188169412379,
+    "save": {
+      "version": 2,
+      "committedRaceIds": [],
+      "transmission": "automatic",
+      "rims": "graphite",
+      "exhaust": "standard",
+      "credits": 0,
+      "chapter": 0,
+      "upgrades": {
+        "power": 0,
+        "grip": 0,
+        "boost": 0
+      },
+      "paint": 0,
+      "rgb": 0,
+      "rgbCycle": false,
+      "bests": {},
+      "races": 0,
+      "wins": 0,
+      "settings": {
+        "sound": true,
+        "music": true,
+        "autoThrottle": true,
+        "quality": "auto",
+        "motion": true,
+        "difficulty": "easy",
+        "night": false,
+        "voice": true,
+        "effectsVolume": 0.85,
+        "musicVolume": 0.24,
+        "voiceVolume": 0.85
+      }
+    },
+    "position": 6
+  }
+}

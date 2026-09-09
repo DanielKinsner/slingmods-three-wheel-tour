@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-09T22:39:32.703Z",
+  "generated": "2026-09-09T22:59:12.393Z",
   "scope": "Node deterministic simulation tests; no browser or physical-device claim",
   "simStep": 0.016666666666666666,
   "upgrades": {
@@ -922,7 +922,7 @@
       "next": 1
     },
     {
-      "kind": "easy-full-throttle-road-bvh",
+      "kind": "easy-guided-road-bvh",
       "track": "smokies",
       "finishedAt": 88.7272813195433,
       "nextGate": 1,
@@ -940,7 +940,7 @@
       }
     },
     {
-      "kind": "easy-full-throttle-road-bvh",
+      "kind": "easy-guided-road-bvh",
       "track": "coast",
       "finishedAt": 56.21715201771842,
       "nextGate": 1,
@@ -958,7 +958,7 @@
       }
     },
     {
-      "kind": "easy-full-throttle-road-bvh",
+      "kind": "easy-guided-road-bvh",
       "track": "texas",
       "finishedAt": 94.95617958309356,
       "nextGate": 1,
@@ -976,7 +976,7 @@
       }
     },
     {
-      "kind": "easy-full-throttle-road-bvh",
+      "kind": "easy-guided-road-bvh",
       "track": "desert",
       "finishedAt": 93.84488336131682,
       "nextGate": 1,
@@ -994,7 +994,7 @@
       }
     },
     {
-      "kind": "easy-full-throttle-road-bvh",
+      "kind": "easy-guided-road-bvh",
       "track": "miami",
       "finishedAt": 75.45054262310965,
       "nextGate": 1,
@@ -1012,7 +1012,7 @@
       }
     },
     {
-      "kind": "easy-full-throttle-road-bvh",
+      "kind": "easy-guided-road-bvh",
       "track": "harbor",
       "finishedAt": 63.18549392169256,
       "nextGate": 1,

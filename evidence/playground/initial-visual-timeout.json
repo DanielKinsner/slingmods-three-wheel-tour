@@ -1,0 +1,8 @@
+{
+  "environment": "Isolated headless Chromium; virtual gamepad via navigator.getGamepads, actual application input/physics/timer, wall-clock execution. Not physical controller or phone proof.",
+  "errors": [
+    "page.waitForFunction: Timeout 35000ms exceeded.\n    at C:\\Users\\SM - Dan\\Documents\\Codex\\2026-09-09\\make-a-dope-racing-game-for\\outputs\\slingmods-three-wheel-tour\\scripts\\headless-guided-drive.mjs:95:18"
+  ],
+  "snapshots": [],
+  "bundle": "./assets/index-Cn_dVEcT.js"
+}

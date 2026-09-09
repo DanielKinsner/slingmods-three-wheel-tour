@@ -2,37 +2,143 @@ import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-const storage=join(process.env.LOCALAPPDATA,'ms-playwright');
-const candidates=readdirSync(storage).filter(n=>n.startsWith('chromium_headless_shell-')).sort((a,b)=>Number(b.split('-').at(-1))-Number(a.split('-').at(-1)));
-const executablePath=process.env.HEADLESS_CHROMIUM||candidates.map(n=>join(storage,n,'chrome-headless-shell-win64','chrome-headless-shell.exe')).find(existsSync);
-const browser=await chromium.launch({headless:true,executablePath,args:['--use-angle=d3d11']});
-const out='evidence/playground';await mkdir(out,{recursive:true});
-const result={environment:'Isolated headless Chromium on Windows; WebGL through ANGLE D3D11. No desktop/browser profile interaction.',errors:[],checks:[]};
+const storage = join(process.env.LOCALAPPDATA, 'ms-playwright');
+const candidates = readdirSync(storage)
+  .filter((n) => n.startsWith('chromium_headless_shell-'))
+  .sort((a, b) => Number(b.split('-').at(-1)) - Number(a.split('-').at(-1)));
+const executablePath =
+  process.env.HEADLESS_CHROMIUM ||
+  candidates
+    .map((n) => join(storage, n, 'chrome-headless-shell-win64', 'chrome-headless-shell.exe'))
+    .find(existsSync);
+const browser = await chromium.launch({
+  headless: true,
+  executablePath,
+  args: ['--use-angle=d3d11'],
+});
+const out = 'evidence/playground';
+await mkdir(out, { recursive: true });
+const result = {
+  environment:
+    'Isolated headless Chromium on Windows; WebGL through ANGLE D3D11. No desktop/browser profile interaction.',
+  errors: [],
+  checks: [],
+};
 try {
- const context=await browser.newContext({viewport:{width:1440,height:900},recordVideo:{dir:out+'/raw',size:{width:960,height:600}}});
- const page=await context.newPage();page.on('pageerror',e=>result.errors.push(e.message));
- page.on('console',m=>{if(m.type()==='error')result.errors.push(m.text())});
- await page.goto('http://127.0.0.1:4173/?webgl=1');
- await page.locator('[data-action="quick"]').waitFor({timeout:90000});
- await page.waitForFunction(()=>window.__tour?.drawCalls>0,{},{timeout:90000});
- await page.screenshot({path:out+'/home.png'});
- await page.click('[data-action="quick"]');await page.click('[data-quicktrack="5"]');await page.click('[data-night="night"]');await page.click('[data-mode="free"]');
- await page.waitForTimeout(1500);await page.screenshot({path:out+'/harbor-briefing.png'});
- await page.click('[data-action="race"]');await page.waitForTimeout(2500);
- let t=await page.evaluate(()=>window.__tour);result.checks.push({name:'Free Ride starts without countdown or rivals',pass:t.playMode==='free'&&t.opponents.length===0&&t.countdown===0,speed:t.player.speed});
- await page.keyboard.down('w');await page.waitForTimeout(7000);await page.screenshot({path:out+'/harbor-free-driving.png'});
- t=await page.evaluate(()=>window.__tour);result.checks.push({name:'Free Ride throttle moves the car',pass:t.player.distance>10&&!t.paused,distance:t.player.distance,tokens:t.tokens,frameProfile:t.frameProfile});
- await page.keyboard.press('c');await page.waitForTimeout(600);await page.screenshot({path:out+'/harbor-cockpit.png'});await page.keyboard.up('w');
- await page.keyboard.press('Escape');await page.click('[data-action="home"]');
- await page.click('[data-action="quick"]');await page.click('[data-mode="drift"]');await page.screenshot({path:out+'/drift-briefing.png'});
- await page.click('[data-action="race"]');await page.waitForTimeout(10000);
- await page.keyboard.down('a');await page.keyboard.down('Space');await page.waitForTimeout(1100);await page.screenshot({path:out+'/drift-slide.png'});await page.keyboard.up('a');await page.keyboard.up('Space');
- await page.waitForTimeout(1800);t=await page.evaluate(()=>window.__tour);result.checks.push({name:'Drift Attack runs with isolated scoring and timer',pass:t.playMode==='drift'&&t.driftAttack.remaining<90&&t.opponents.length===0,drift:t.driftAttack,player:t.player});
- await page.keyboard.press('Escape');await page.click('[data-action="home"]');await page.click('[data-action="quick"]');await page.click('[data-mode="race"]');await page.click('[data-quicktrack="0"]');await page.click('[data-action="race"]');await page.waitForTimeout(6000);
- t=await page.evaluate(()=>window.__tour);result.checks.push({name:'Original race still has five opponents and ordered gates',pass:t.opponents.length===5&&t.checkpoints.length===6,checkpoint:t.checkpoints[0]});await page.screenshot({path:out+'/original-race.png'});
- await context.close();
- const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});const m=await mobile.newPage();m.on('pageerror',e=>result.errors.push(e.message));
- await m.goto('http://127.0.0.1:4173/?webgl=1');await m.locator('[data-action="quick"]').waitFor({timeout:90000});await m.click('[data-action="quick"]');await m.click('[data-quicktrack="5"]');await m.click('[data-mode="free"]');await m.screenshot({path:out+'/mobile-briefing.png'});
- result.checks.push({name:'Mobile emulation fits page width and respects reduced motion',pass:await m.evaluate(()=>document.documentElement.scrollWidth<=innerWidth&&!window.__tour.save.settings.motion)});
- await m.click('[data-action="race"]');await m.waitForTimeout(1500);await m.screenshot({path:out+'/mobile-free-ride.png'});await mobile.close();
-} catch(e){result.errors.push(e.stack);process.exitCode=1;} finally {await browser.close();await writeFile(out+'/headless-checks.json',JSON.stringify(result,null,2));console.log(JSON.stringify({errors:result.errors,checks:result.checks.map(({name,pass})=>({name,pass}))},null,2));}
+  const context = await browser.newContext({
+    viewport: { width: 1440, height: 900 },
+    recordVideo: { dir: out + '/raw', size: { width: 960, height: 600 } },
+  });
+  const page = await context.newPage();
+  page.on('pageerror', (e) => result.errors.push(e.message));
+  page.on('console', (m) => {
+    if (m.type() === 'error') result.errors.push(m.text());
+  });
+  await page.goto('http://127.0.0.1:4173/?webgl=1');
+  await page.locator('[data-action="quick"]').waitFor({ timeout: 90000 });
+  await page.waitForFunction(() => window.__tour?.drawCalls > 0, {}, { timeout: 90000 });
+  await page.screenshot({ path: out + '/home.png' });
+  await page.click('[data-action="quick"]');
+  await page.click('[data-quicktrack="5"]');
+  await page.click('[data-night="night"]');
+  await page.click('[data-mode="free"]');
+  await page.waitForTimeout(1500);
+  await page.screenshot({ path: out + '/harbor-briefing.png' });
+  await page.click('[data-action="race"]');
+  await page.waitForTimeout(2500);
+  let t = await page.evaluate(() => window.__tour);
+  result.checks.push({
+    name: 'Free Ride starts without countdown or rivals',
+    pass: t.playMode === 'free' && t.opponents.length === 0 && t.countdown === 0,
+    speed: t.player.speed,
+  });
+  await page.keyboard.down('w');
+  await page.waitForTimeout(7000);
+  await page.screenshot({ path: out + '/harbor-free-driving.png' });
+  t = await page.evaluate(() => window.__tour);
+  result.checks.push({
+    name: 'Free Ride throttle moves the car',
+    pass: t.player.distance > 10 && !t.paused,
+    distance: t.player.distance,
+    tokens: t.tokens,
+    frameProfile: t.frameProfile,
+  });
+  await page.keyboard.press('c');
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: out + '/harbor-cockpit.png' });
+  await page.keyboard.up('w');
+  await page.keyboard.press('Escape');
+  await page.click('[data-action="home"]');
+  await page.click('[data-action="quick"]');
+  await page.click('[data-mode="drift"]');
+  await page.screenshot({ path: out + '/drift-briefing.png' });
+  await page.click('[data-action="race"]');
+  await page.waitForTimeout(10000);
+  await page.keyboard.down('a');
+  await page.keyboard.down('Space');
+  await page.waitForTimeout(1100);
+  await page.screenshot({ path: out + '/drift-slide.png' });
+  await page.keyboard.up('a');
+  await page.keyboard.up('Space');
+  await page.waitForTimeout(1800);
+  t = await page.evaluate(() => window.__tour);
+  result.checks.push({
+    name: 'Drift Attack runs with isolated scoring and timer',
+    pass: t.playMode === 'drift' && t.driftAttack.remaining < 90 && t.opponents.length === 0,
+    drift: t.driftAttack,
+    player: t.player,
+  });
+  await page.keyboard.press('Escape');
+  await page.click('[data-action="home"]');
+  await page.click('[data-action="quick"]');
+  await page.click('[data-mode="race"]');
+  await page.click('[data-quicktrack="0"]');
+  await page.click('[data-action="race"]');
+  await page.waitForTimeout(6000);
+  t = await page.evaluate(() => window.__tour);
+  result.checks.push({
+    name: 'Original race still has five opponents and ordered gates',
+    pass: t.opponents.length === 5 && t.checkpoints.length === 6,
+    checkpoint: t.checkpoints[0],
+  });
+  await page.screenshot({ path: out + '/original-race.png' });
+  await context.close();
+  const mobile = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    reducedMotion: 'reduce',
+  });
+  const m = await mobile.newPage();
+  m.on('pageerror', (e) => result.errors.push(e.message));
+  await m.goto('http://127.0.0.1:4173/?webgl=1');
+  await m.locator('[data-action="quick"]').waitFor({ timeout: 90000 });
+  await m.click('[data-action="quick"]');
+  await m.click('[data-quicktrack="5"]');
+  await m.click('[data-mode="free"]');
+  await m.screenshot({ path: out + '/mobile-briefing.png' });
+  result.checks.push({
+    name: 'Mobile emulation fits page width and respects reduced motion',
+    pass: await m.evaluate(
+      () =>
+        document.documentElement.scrollWidth <= innerWidth && !window.__tour.save.settings.motion,
+    ),
+  });
+  await m.click('[data-action="race"]');
+  await m.waitForTimeout(1500);
+  await m.screenshot({ path: out + '/mobile-free-ride.png' });
+  await mobile.close();
+} catch (e) {
+  result.errors.push(e.stack);
+  process.exitCode = 1;
+} finally {
+  await browser.close();
+  await writeFile(out + '/headless-checks.json', JSON.stringify(result, null, 2));
+  console.log(
+    JSON.stringify(
+      { errors: result.errors, checks: result.checks.map(({ name, pass }) => ({ name, pass })) },
+      null,
+      2,
+    ),
+  );
+}

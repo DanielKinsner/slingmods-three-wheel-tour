@@ -1,6 +1,6 @@
 {
   "name": "slingmods-three-wheel-tour",
-  "version": "0.4.1",
+  "version": "0.5.0-preview",
   "private": true,
   "type": "module",
   "scripts": {

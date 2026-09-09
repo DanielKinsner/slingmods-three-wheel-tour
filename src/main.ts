@@ -114,6 +114,7 @@ const touch = new Set<string>();
 const touchHeld = (k: string) => touch.has(k) || (taps.get('touch-' + k) || 0) > performance.now();
 let lastFrame = performance.now();
 let lastFrameMs = 0;
+let raceRenderPending = false;
 const measuredFrames: number[] = [];
 function frameProfile() {
   const sorted = [...measuredFrames].sort((a, b) => a - b);
@@ -297,6 +298,7 @@ function startRace(restart = false) {
   notice = '';
   noticeTime = 0;
   clock.reset();
+  raceRenderPending = true;
   raceId = crypto.randomUUID();
   progress = [player, ...opponents].map(
     () =>
@@ -312,7 +314,7 @@ function startRace(restart = false) {
   taps.clear();
   touch.clear();
   renderHUD();
-  if (playMode === 'free') notify('FREE RIDE · W / GAS TO ACCELERATE · COLLECT 12 TOKENS', 5);
+  if (playMode === 'free') notify('FREE RIDE · W / GAS TO GO', 5);
 }
 function renderHUD() {
   app.innerHTML = `<div class="race-screen"><div class="race-top"><div class="race-position"><span id="position">${playMode === 'race' ? '6' : playMode === 'drift' ? '1×' : '0'}</span><small>${playMode === 'race' ? '/ 6<br>POSITION' : playMode === 'drift' ? 'COMBO' : '/ 12<br>TOKENS'}</small></div><div class="race-event"><span class="eyebrow">${raceChapter !== null ? `CHAPTER ${raceChapter + 1} · ${CHAPTERS[raceChapter].goal}` : playMode === 'drift' ? 'DRIFT ATTACK' : playMode === 'free' ? 'FREE RIDE' : 'QUICK RACE'} · ${raceDifficulty.toUpperCase()}${raceNight ? ' / NIGHT' : ''}</span><strong>${TRACKS[selected].name}</strong><span id="lap">LAP 1 / ${laps}</span></div><div class="timing"><strong id="time">0:00.00</strong><span>${playMode === 'free' ? 'TAKE YOUR TIME' : playMode === 'drift' ? 'TIME LEFT' : 'RACE TIME'}</span><button class="icon-button" data-action="pause" aria-label="Pause race">Ⅱ</button></div></div><div id="leaderboard" class="leaderboard"></div><div id="race-notice" class="race-notice"></div><div id="crew-subtitle" class="crew-subtitle" aria-live="polite"></div><div id="countdown" class="countdown">3</div><div class="race-bottom"><div class="minimap-wrap"><canvas id="minimap" width="240" height="220" aria-label="Circuit map with racers"></canvas><span>${TRACKS[selected].location.toUpperCase()}</span></div><div class="race-tips"><span><kbd>A</kbd><kbd>D</kbd> STEER</span><span><kbd>SPACE</kbd> DRIFT</span><span><kbd>SHIFT</kbd> BOOST</span><span><kbd>S</kbd> BRAKE</span><span><kbd>R</kbd> RECOVER</span><span><kbd>C</kbd> CAMERA</span><span><kbd>Q</kbd><kbd>E</kbd> SHIFT</span></div><div class="speedometer"><div class="speed-read"><span id="speed">0</span><small>MPH<br><b id="gear">N</b></small></div><div class="tachometer" aria-label="Engine RPM"><i id="rpm-fill"></i></div><div class="rpm-label"><span id="rpm-value">1200 RPM</span><span>REDLINE 8500</span></div><div class="boost-label"><span>ϟ TOUR BOOST</span><strong id="boost-value">100%</strong></div><div class="boost-bar"><i id="boost-bar"></i></div><div class="style-line"><span id="style">0 STYLE</span><span id="drive-state">READY TO RIDE</span></div></div></div><div class="touch-controls"><div><button data-touch="left" aria-label="Steer left">◀</button><button data-touch="right" aria-label="Steer right">▶</button></div><div><button data-action="camera" aria-label="Change camera">VIEW</button><button data-action="recover">RESET</button>${save.transmission === 'manual' ? '<button data-action="shift-down">− GEAR</button><button data-action="shift-up">+ GEAR</button>' : ''}<button data-touch="throttle" class="touch-throttle" aria-label="Accelerate">GAS</button><button data-touch="brake">BRAKE</button><button data-touch="drift">DRIFT</button><button data-touch="boost" class="touch-boost">ϟ BOOST</button></div></div><div class="speed-vignette" id="speed-vignette"></div></div>`;
@@ -378,7 +380,9 @@ function updateHud() {
         ? 'DRAFTING'
         : Math.abs(player.lane) > 8.2
           ? 'OFF ROAD'
-          : `GATE ${progress[0]?.lastGate || 0}/32`;
+          : playMode === 'free'
+            ? 'EXPLORE AT YOUR PACE'
+            : `GATE ${progress[0]?.lastGate || 0}/32`;
   $('race-notice').textContent =
     countdown > 0
       ? ''
@@ -635,7 +639,7 @@ function recover() {
   );
   progress[0].resets++;
   world.cameraReady = false;
-  notify('RECOVERED TO LAST VALID CHECKPOINT', 2);
+  notify(playMode === 'free' ? 'BACK ON THE COURSE' : 'RECOVERED TO LAST VALID CHECKPOINT', 2);
 }
 function setupTouch() {
   app.querySelectorAll<HTMLButtonElement>('[data-touch]').forEach((b) => {
@@ -886,7 +890,7 @@ function frame(now: number) {
   const dt = Math.min(rawDt, 0.05);
   lastFrame = now;
   lastFrameMs = rawDt * 1000;
-  if (screen === 'race' && !paused && !document.hidden && countdown <= 0) {
+  if (screen === 'race' && !paused && !document.hidden && countdown <= 0 && !raceRenderPending) {
     measuredFrames.push(lastFrameMs);
     if (measuredFrames.length > 18000) measuredFrames.shift();
   }
@@ -922,7 +926,9 @@ function frame(now: number) {
         }
       });
       gamepadEdges = buttons;
-      world.interpolationAlpha = clock.advance(rawDt, step);
+      // Finish the first scene render before starting the event clock.
+      // Later stalls still use the unmodified fixed-clock pause protection.
+      world.interpolationAlpha = clock.advance(raceRenderPending ? 0 : rawDt, step);
       if (clock.pausedForStall) {
         modal('pause');
         notify('PAUSED AFTER A LONG FRAME', 3);
@@ -954,6 +960,11 @@ function frame(now: number) {
       !$('overlay'),
       ['coast', 'miami', 'harbor'].includes(TRACKS[selected].id),
     );
+    if (raceRenderPending) {
+      raceRenderPending = false;
+      lastFrame = performance.now();
+      clock.reset();
+    }
   }
   requestAnimationFrame(frame);
 }

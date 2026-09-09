@@ -189,7 +189,7 @@ export class Circuit {
       height = y - 1.1;
       if (z < -185 && distance > 23) height += (-2 - height) * clamp((distance - 23) / 10, 0, 1);
     }
-    if (this.data.id === 'harbor' && x > 500) height = -2;
+    if (this.data.id === 'harbor' && x > 475 && distance > 24) height = -2;
     if (this.data.id === 'coast' && x < -95) height -= Math.min(9, (-95 - x) * 0.13);
     return { height, distance };
   }
@@ -497,11 +497,13 @@ export class World {
     const shoulder = this.ribbon(-15, 15, -0.16, data.ground);
     shoulder.material.dispose();
     shoulder.material = surface(
-      ['coast', 'miami', 'harbor'].includes(data.id)
-        ? 'sand'
-        : data.id === 'desert'
-          ? 'stone'
-          : 'grass',
+      data.id === 'harbor'
+        ? 'concrete'
+        : ['coast', 'miami'].includes(data.id)
+          ? 'sand'
+          : data.id === 'desert'
+            ? 'stone'
+            : 'grass',
     );
     this.collision.addGround(shoulder);
     const road = this.ribbon(-8.5, 8.5, 0.015, 0x444846);
@@ -545,11 +547,13 @@ export class World {
     ground.setIndex(idx);
     ground.computeVertexNormals();
     const groundmat = surface(
-      ['coast', 'miami', 'harbor'].includes(data.id)
-        ? 'sand'
-        : data.id === 'desert'
-          ? 'stone'
-          : 'grass',
+      data.id === 'harbor'
+        ? 'concrete'
+        : ['coast', 'miami'].includes(data.id)
+          ? 'sand'
+          : data.id === 'desert'
+            ? 'stone'
+            : 'grass',
     );
     groundmat.side = T.DoubleSide;
     this.collision.addGround(mesh(ground, groundmat, this.root));

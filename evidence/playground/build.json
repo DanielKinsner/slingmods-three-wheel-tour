@@ -1,0 +1,21 @@
+{
+  "version": "0.5.0-preview",
+  "visualBundle": "./assets/index-Di4D-ey2.js",
+  "files": [
+    {
+      "file": "dist/index.html",
+      "bytes": 2162,
+      "sha256": "8b4376ab936fac46583ad2d8d52e26a36fd35061d355dce9955afd1466b516f5"
+    },
+    {
+      "file": "dist/assets/index-Di4D-ey2.js",
+      "bytes": 1180842,
+      "sha256": "75718df8d3f2183a95e52174e91050247cd61b38e819fa7a657e71868ac63119"
+    },
+    {
+      "file": "dist/assets/index-UjAHhiPa.css",
+      "bytes": 44750,
+      "sha256": "b9b1610972ba2ffbef2160544452cff5df7d8d2f600ec6e0017d8a18f906cef0"
+    }
+  ]
+}

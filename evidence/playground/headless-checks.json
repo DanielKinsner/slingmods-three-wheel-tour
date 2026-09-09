@@ -1,0 +1,153 @@
+{
+  "environment": "Isolated headless Chromium on Windows; WebGL through ANGLE D3D11. No desktop/browser profile interaction.",
+  "errors": [],
+  "checks": [
+    {
+      "name": "Free Ride starts without countdown or rivals",
+      "pass": true,
+      "speed": 0
+    },
+    {
+      "name": "Free Ride throttle moves the car",
+      "pass": true,
+      "distance": 115.29318707858135,
+      "tokens": {
+        "collected": 0,
+        "total": 12
+      },
+      "frameProfile": {
+        "samples": 546,
+        "p50": 16.69999999999709,
+        "p95": 16.700000000004366,
+        "p99": 16.80000000000291,
+        "max": 33.39999999999782,
+        "over33ms": 1
+      }
+    },
+    {
+      "name": "Drift Attack runs with isolated scoring and timer",
+      "pass": true,
+      "drift": {
+        "remaining": 80.33333333333388,
+        "banked": 0,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 0,
+        "done": false,
+        "feedback": "SLIDE, STRAIGHTEN, BANK"
+      },
+      "player": {
+        "telemetry": {
+          "rpm": 3612.506963330447,
+          "gear": 2,
+          "load": 0.9999999999999998,
+          "throttle": 1,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 1,
+          "shiftCooldown": 0,
+          "acceleration": 2.600626129317712,
+          "steeringAngle": 8.154467263619392e-7,
+          "slipRatio": 0.6094329670780584,
+          "wheelSpeeds": [
+            44.49392694857233,
+            44.493952060340604,
+            71.7234879919794
+          ],
+          "wheelAngles": [
+            477.66613223712835,
+            477.66613223712835,
+            729.538884146511
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0,
+            -4.440892098500626e-16,
+            0
+          ],
+          "normalLoads": [
+            2209.3214699397718,
+            2209.3440226903845,
+            3821.734507369843
+          ],
+          "surface": "shoulder",
+          "reverseHold": 0,
+          "driftGrip": 0.006440338697994295,
+          "slipAngle": -0.42538651505758257,
+          "bodyRoll": -0.000003597883247517818,
+          "bodyPitch": -0.01038379406949271,
+          "wheelSurfaces": [
+            "shoulder",
+            "shoulder",
+            "shoulder"
+          ],
+          "wheelSlip": [
+            0.425387011118813,
+            0.425387011118813,
+            0.4253869072852581
+          ],
+          "contacts": [
+            {
+              "x": 8.69113821107832,
+              "y": 2.839999914169312,
+              "z": 162.51877274387553
+            },
+            {
+              "x": 10.28172056426798,
+              "y": 2.8399999141693115,
+              "z": 161.77710383005908
+            },
+            {
+              "x": 8.359346200693999,
+              "y": 2.839999914169312,
+              "z": 159.73079689895772
+            }
+          ]
+        },
+        "distance": 161.33655940452854,
+        "lane": 9.500203490988314,
+        "velocity": -6.631959369553417,
+        "speed": 14.638506096966179,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 8.980573154147073,
+          "y": 2.839999914169312,
+          "z": 161.06307955376616,
+          "yaw": 0.4363158815082088,
+          "yawRate": 0.000004707562256975236
+        },
+        "previousPose": {
+          "x": 8.977645828633783,
+          "y": 2.839999914169312,
+          "z": 160.79524985218035,
+          "yaw": 0.4363158030488379,
+          "yawRate": 0.000004740125288284779
+        }
+      }
+    },
+    {
+      "name": "Original race still has five opponents and ordered gates",
+      "pass": true,
+      "checkpoint": {
+        "next": 1,
+        "lap": 0,
+        "finishedAt": null,
+        "resets": 0
+      }
+    },
+    {
+      "name": "Mobile emulation fits page width and respects reduced motion",
+      "pass": true
+    }
+  ]
+}

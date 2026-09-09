@@ -120,7 +120,49 @@ export function buildHarbor(
     box(g, steel, 12, 0.6, 4, 12, 19, 0);
     batch(g);
   }
+  // Tank farm and pipe racks fill the middle distance along the port approach.
+  for (let i = 0; i < 9; i++) {
+    const g = place(circuit.length * (0.24 + i * 0.026), i % 2 ? 42 : -43);
+    if (circuit.terrainAt(g.position.x, g.position.z).distance < 28) {
+      g.removeFromParent();
+      continue;
+    }
+    mesh(new T.CylinderGeometry(7, 7, 12, 16), ivory, g, 0, 6, 0);
+    mesh(new T.ConeGeometry(7.1, 1.5, 16), steel, g, 0, 12.7, 0);
+    for (const h of [3, 9]) {
+      const ring = mesh(new T.TorusGeometry(7.04, 0.08, 4, 20), steel, g, 0, h, 0);
+      ring.rotation.x = Math.PI / 2;
+    }
+    rod(g, V(-8, 2, 0), V(-8, 11, 0), 0.16, yellow, 6);
+    batch(g);
+  }
+  // Small stacked freight bays punctuate the approach to the returning straight.
+  for (let i = 0; i < 12; i++) {
+    const g = place(circuit.length * (0.69 + i * 0.023), i % 2 ? 31 : -34);
+    if (circuit.terrainAt(g.position.x, g.position.z).distance < 24) {
+      g.removeFromParent();
+      continue;
+    }
+    for (let j = 0; j < 2 + (i % 2); j++)
+      box(g, containerMats[(i + j) % 4], 5, 2.6, 12, 0, 1.3 + j * 2.65, 0);
+    batch(g);
+  }
+  const vessel = new T.Group();
+  kit.add(vessel);
+  vessel.position.set(570, 0, 210);
+  box(vessel, dark, 24, 7, 108, 0, 1, 0);
+  box(vessel, steel, 25, 0.8, 110, 0, 4.8, 0);
+  box(vessel, ivory, 20, 15, 16, 0, 12, -40);
+  box(vessel, dark, 22, 3, 17, 0, 17, -40);
+  for (let z = -20; z <= 35; z += 14)
+    for (let x = -7; x <= 7; x += 7)
+      for (let h = 0; h < 2; h++)
+        box(vessel, containerMats[(Math.round(z + 20) + h) % 4], 6, 3.5, 12, x, 7 + h * 3.6, z);
+  rod(vessel, V(0, 19, -40), V(0, 30, -40), 0.2, steel, 6);
+  batch(vessel);
   // Water and shore skyline sit beyond the eastern waterfront sweeper.
+  // Quay face separates the concrete apron from the lower water plane.
+  box(kit, concrete, 2.8, 4, 1300, 476, -0.3, 180);
   const water = mesh(
     new T.PlaneGeometry(1400, 2400, 12, 12),
     new T.MeshStandardMaterial({
@@ -134,12 +176,41 @@ export function buildHarbor(
     100,
   );
   water.rotation.x = -Math.PI / 2;
+  const glass = new T.MeshPhysicalMaterial({
+    color: 0x476c7b,
+    roughness: 0.31,
+    metalness: 0.35,
+    clearcoat: 0.35,
+  });
+  const windowLight = new T.MeshStandardMaterial({
+    color: 0xd9c9a5,
+    emissive: 0xffdba2,
+    emissiveIntensity: night ? 0.65 : 0.015,
+    roughness: 0.6,
+  });
   for (let i = 0; i < 18; i++) {
     const x = 690 + random() * 130,
       z = -200 + i * 49,
-      h = 18 + random() * 85;
-    box(kit, i % 2 ? steel : dark, 13 + random() * 16, h, 18, x, h / 2 - 1, z);
-    for (let y = 5; y < h; y += 5) box(kit, lamp, 0.05, 0.4, 13, x - 16, y, z);
+      h = 18 + random() * 85,
+      w = 13 + random() * 16;
+    box(kit, i % 3 ? steel : concrete, w, h, 18, x, h / 2 - 1, z);
+    box(kit, dark, w + 0.6, 0.8, 18.6, x, h - 0.8, z);
+    box(kit, concrete, w * 0.5, 3, 9, x + 2, h + 1, z);
+    for (let y = 4; y < h - 2; y += 4)
+      for (let dz = -6; dz <= 6; dz += 4)
+        box(
+          kit,
+          random() > 0.65 ? windowLight : glass,
+          0.08,
+          2.4,
+          2.5,
+          x - w / 2 - 0.05,
+          y,
+          z + dz,
+        );
+    for (let y = 4; y < h - 2; y += 4)
+      for (let dx = -w / 2 + 3; dx < w / 2 - 1; dx += 4)
+        box(kit, glass, 2.5, 2.4, 0.08, x + dx, y, z - 9.05);
   }
   const landmark = place(10, 0);
   for (const x of [-13, 13]) box(landmark, yellow, 1.1, 13, 1.1, x, 6.5, 0);

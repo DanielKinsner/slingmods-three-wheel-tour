@@ -1,5 +1,16 @@
-# SlingMods Three-Wheel Tour — v0.4.1 live
+# SlingMods Three-Wheel Tour — Playground preview / production v0.4.1
 
+## September 9 — fun-first Playground pass
+
+Implemented on `feature/harbor-playground`. Production `main` remains at `76c7a478cf56e5ccdff229da78f660a2d6baff92`; this pass is preview-only. The five existing destinations, eight chapters, purchased builds, product links, save key/version, ordered gates and receipt accounting remain. New race records use `playground-v2` because handling changed; older records remain stored.
+
+Delivered: progressive steering/recentering and grip recovery, analog throttle/brake, per-wheel road/shoulder grip, shared braking/cornering budget, grade response and contact-direction wall response. Easy assists grip and corner braking without spline steering. Wheels follow contact height, chassis attitude is damped, tire effects use individual contact/slip, and the camera adds restrained corner/acceleration response. Road patches, seams, wear and drains are shared across routes. The original hero mesh, colors/RGB, quality tiers and restrained audio are retained.
+
+Playable expansion: distinct 1.93 km Harbor Run with warehouses, freight stacks, covered inspection lane, tank farm, cranes, cargo ship and waterfront skyline; day/night options. Drift Attack runs 90 seconds on all routes with controlled-slide combos, banking and separate saved bests. Free Ride removes opponents/countdown/end pressure and adds twelve session-only boost tokens. No paid assets, API requests, new services or desktop/browser-session interaction.
+
+Validation: 113 tests and TypeScript/Vite build pass. Isolated headless WebGL checks exercise original races, new modes, steering/throttle, score saving, cockpit and 390×844 mobile/reduced-motion layout. A full 90-second virtual-gamepad Drift Attack earned/saved 1,624 points without altering campaign credits/chapter. Actual screenshots, silent gameplay recording and raw telemetry are indexed in `evidence/playground/README.md`. The final visual pass caught an initial-render stall that paused Free Ride: scene preparation now finishes before the event clock begins; subsequent long-frame protection remains intact.
+
+Limits: headless Windows/ANGLE WebGL is the current visual lane. WebGPU code remains, but this pass did not establish a new WebGPU, physical phone/controller, GPU-timing or human listening result. The planar model does not simulate airborne rigid bodies; existing suspension-link meshes are not separately rigged. No claim of an OEM simulator or an open world. Earlier production/manual-browser evidence below is historical.
 
 ## Git delivery — September 9 follow-up
 

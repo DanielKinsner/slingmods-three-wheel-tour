@@ -387,7 +387,7 @@ describe('actual triangle-road contacts and swept barrier recovery', () => {
         if (Math.abs(driver.lane) > 8.4) offRoadSeconds += SIM_STEP;
       }
       const record = {
-        kind: 'easy-full-throttle-road-bvh',
+        kind: 'easy-guided-road-bvh',
         track: track.id,
         finishedAt: race.finishedAt,
         nextGate: race.next,

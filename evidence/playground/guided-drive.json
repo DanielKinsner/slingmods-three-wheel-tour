@@ -1,0 +1,3028 @@
+{
+  "environment": "Isolated headless Chromium; virtual gamepad via navigator.getGamepads, actual application input/physics/timer, wall-clock execution. Not physical controller or phone proof.",
+  "errors": [],
+  "snapshots": [
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "free",
+      "driftAttack": {
+        "remaining": 90,
+        "banked": 0,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 0,
+        "done": false,
+        "feedback": "SLIDE, STRAIGHTEN, BANK"
+      },
+      "tokens": {
+        "collected": 0,
+        "total": 12
+      },
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 12,
+        "state": "running",
+        "voice": false,
+        "peakDb": -25.968745436690416
+      },
+      "rgb": 0,
+      "camera": [
+        2.268614760329833,
+        5.955377789434803,
+        258.5753319919255
+      ],
+      "car": [
+        2.897826643053728,
+        2.9802842041156197,
+        266.76907931090665
+      ],
+      "wheelCenters": [
+        [
+          2.1339970028300144,
+          3.291756694238366,
+          268.0416277503445
+        ],
+        [
+          3.8815762606626896,
+          3.2917656416299765,
+          267.88040821805083
+        ],
+        [
+          2.762788060448754,
+          3.3144421014465193,
+          265.3052949752862
+        ]
+      ],
+      "guide": {
+        "point": [
+          7.515527585840737,
+          2.9336728307474664,
+          292.74534115630337
+        ],
+        "bend": 0.0050936183498644216
+      },
+      "carScreen": [
+        0.049286041106693844,
+        -0.46241339596575215,
+        0.952945942236357
+      ],
+      "vehicleUpY": [
+        0.9998013408569778,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 295251,
+      "cpu": {
+        "environment": 0,
+        "render": 3.300000000745058,
+        "frame": 3.5
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": 0,
+      "raceTime": 11.533333333333486,
+      "checkpoints": [
+        {
+          "next": 5,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 5874.2205311301595,
+          "gear": 3,
+          "load": 0.30689812828023144,
+          "throttle": 1,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 2,
+          "shiftCooldown": 0,
+          "acceleration": 2.705801347351115,
+          "steeringAngle": 0.005739302380471994,
+          "slipRatio": 1.6425600609836944e-13,
+          "wheelSpeeds": [
+            106.09374606073571,
+            106.77989029092504,
+            106.43975255464613
+          ],
+          "wheelAngles": [
+            811.9974877867357,
+            811.9974877867357,
+            869.307950906191
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            -0.0015184550665212626,
+            -0.0015095076749105374,
+            0.00016695214163231498
+          ],
+          "normalLoads": [
+            1630.122212501316,
+            3180.75406060874,
+            3429.523726889943
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0,
+          "slipAngle": -0.011609410320914702,
+          "bodyRoll": -0.019930984457830432,
+          "bodyPitch": -0.00009125511912314271,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.012952270215775488,
+            0.012952270215775488,
+            0.017007918595886993
+          ],
+          "contacts": [
+            {
+              "x": 2.1351218017556493,
+              "y": 2.9587566942383656,
+              "z": 268.05559054773175
+            },
+            {
+              "x": 3.8827010595883236,
+              "y": 2.9587656416299764,
+              "z": 267.8943710154381
+            },
+            {
+              "x": 2.7639128593743862,
+              "y": 2.960442101446519,
+              "z": 265.3192577726734
+            }
+          ]
+        },
+        "distance": 267.00580588052117,
+        "lane": -1.9457099453403508,
+        "velocity": -0.4065532658363886,
+        "speed": 35.017713179848194,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 2.8989514419793627,
+          "y": 2.960275149304887,
+          "z": 266.7830421082939,
+          "yaw": 0.0919926768174779,
+          "yawRate": 0.12862760782466548
+        },
+        "previousPose": {
+          "x": 2.8520848200774624,
+          "y": 2.9606524330854147,
+          "z": 266.20125888381904,
+          "yaw": 0.08984888335373348,
+          "yawRate": 0.13622521680648286
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.66557341066997,
+      "lastFrameMs": 16.600000000002183,
+      "frameProfile": {
+        "samples": 677,
+        "p50": 16.69999999999709,
+        "p95": 16.799999999999272,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 2
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 41,
+      "geometries": 188,
+      "drawCalls": 167,
+      "curve": 0.0012863850430281222,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "free",
+      "driftAttack": {
+        "remaining": 90,
+        "banked": 0,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 0,
+        "done": false,
+        "feedback": "SLIDE, STRAIGHTEN, BANK"
+      },
+      "tokens": {
+        "collected": 2,
+        "total": 12
+      },
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 12,
+        "state": "running",
+        "voice": false,
+        "peakDb": -24.780305680328286
+      },
+      "rgb": 0,
+      "camera": [
+        414.3334628002899,
+        6.008557837524055,
+        383.23018501682486
+      ],
+      "car": [
+        418.17809297273124,
+        3.056971483221068,
+        376.0733720192589
+      ],
+      "wheelCenters": [
+        [
+          419.49564644389665,
+          3.3626626306583898,
+          375.3900945495439
+        ],
+        [
+          417.9229164065705,
+          3.3627635238256914,
+          374.6112844124165
+        ],
+        [
+          417.52575627667596,
+          3.3924193643926963,
+          377.390701452233
+        ]
+      ],
+      "guide": {
+        "point": [
+          426.0478833825476,
+          2.9660114099347443,
+          354.6172194807936
+        ],
+        "bend": 0.007282337628028523
+      },
+      "carScreen": [
+        0.11618506456920505,
+        -0.4717893616816,
+        0.952203638395938
+      ],
+      "vehicleUpY": [
+        0.9992762123551177,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 290111,
+      "cpu": {
+        "environment": 0,
+        "render": 2.300000000745058,
+        "frame": 2.300000000745058
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": 0,
+      "raceTime": 30.53333333333288,
+      "checkpoints": [
+        {
+          "next": 15,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 5075.709790902667,
+          "gear": 3,
+          "load": 0.556302177792277,
+          "throttle": 1,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 2,
+          "shiftCooldown": 0,
+          "acceleration": 2.079079071585884,
+          "steeringAngle": 0.027088914946815628,
+          "slipRatio": 0.14158688366904185,
+          "wheelSpeeds": [
+            91.29889280515484,
+            92.933464159886,
+            105.17303542145852
+          ],
+          "wheelAngles": [
+            2649.5773976791966,
+            2649.5773976791966,
+            2718.453869736961
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            -0.007198001831014267,
+            -0.0070971086637126035,
+            0.0015587319032941416
+          ],
+          "normalLoads": [
+            727.2531095962104,
+            3744.5754123131983,
+            3768.5714780905914
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0,
+          "slipAngle": -0.02448953290179266,
+          "bodyRoll": -0.03792652515122667,
+          "bodyPitch": 0.00043591223618254303,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.03947993443297215,
+            0.03947993443297215,
+            0.039337185396889324
+          ],
+          "contacts": [
+            {
+              "x": 419.51117197796225,
+              "y": 3.029662630658384,
+              "z": 375.3605823519346
+            },
+            {
+              "x": 417.93844194063615,
+              "y": 3.0297635238256855,
+              "z": 374.58177221480724
+            },
+            {
+              "x": 417.54128181074157,
+              "y": 3.0384193643926922,
+              "z": 377.3611892546237
+            }
+          ]
+        },
+        "distance": 868.4905103933434,
+        "lane": -1.098010914038467,
+        "velocity": -0.7423336460888234,
+        "speed": 30.30622272074922,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 418.19361850679695,
+          "y": 3.036860632489398,
+          "z": 376.04385982164973,
+          "yaw": 2.68179536263253,
+          "yawRate": 0.30642391778151523
+        },
+        "previousPose": {
+          "x": 417.9583831421637,
+          "y": 3.038540189029855,
+          "z": 376.49101433088157,
+          "yaw": 2.676688297336171,
+          "yawRate": 0.30620767041324287
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.667596412192225,
+      "lastFrameMs": 16.69999999999709,
+      "frameProfile": {
+        "samples": 1817,
+        "p50": 16.69999999999709,
+        "p95": 16.799999999995634,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 2
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 44,
+      "geometries": 197,
+      "drawCalls": 156,
+      "curve": 0.007833498049235119,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 83.93333333333368,
+        "banked": 0,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 6.06666666666665,
+        "done": false,
+        "feedback": "SLIDE, STRAIGHTEN, BANK"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        3.295640077260488,
+        5.97656116765896,
+        83.06831440017487
+      ],
+      "car": [
+        2.849861969995381,
+        3.035000104904175,
+        91.42352246287078
+      ],
+      "wheelCenters": [
+        [
+          1.9075951715700543,
+          3.348000104904175,
+          92.5702345150379
+        ],
+        [
+          3.659916793103787,
+          3.3480001049041754,
+          92.6671568277702
+        ],
+        [
+          2.9310447618566497,
+          3.3690001049041753,
+          89.95576589098783
+        ]
+      ],
+      "guide": {
+        "point": [
+          0.7800277516895405,
+          3,
+          112.9876122674686
+        ],
+        "bend": 0.0021760640964945174
+      },
+      "carScreen": [
+        -0.013892347400448231,
+        -0.45443480169552797,
+        0.9537494149564009
+      ],
+      "vehicleUpY": [
+        0.9998361067831325,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 294737,
+      "cpu": {
+        "environment": 0,
+        "render": 2.5,
+        "frame": 2.5
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 6.06666666666665,
+      "checkpoints": [
+        {
+          "next": 2,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 7027.181920910799,
+          "gear": 2,
+          "load": 0.9999999999941391,
+          "throttle": 1,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 1,
+          "shiftCooldown": 0,
+          "acceleration": 4.402870838589074,
+          "steeringAngle": -0.00014886372241133385,
+          "slipRatio": 0.00008610772811963623,
+          "wheelSpeeds": [
+            87.65823279498846,
+            87.62424427710681,
+            87.64879596847086
+          ],
+          "wheelAngles": [
+            278.44835422059094,
+            278.44835422059094,
+            335.58954649717674
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0,
+            4.440892098500626e-16,
+            0
+          ],
+          "normalLoads": [
+            2145.253768062982,
+            2079.252560106892,
+            4015.8936718301256
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0,
+          "slipAngle": 0.0010151638148120001,
+          "bodyRoll": 0.002377151980602834,
+          "bodyPitch": -0.01794840224256473,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.0008995185643093258,
+            0.0008995185643093258,
+            0.0013399991973909642
+          ],
+          "contacts": [
+            {
+              "x": 1.9071262207600925,
+              "y": 3.015000104904175,
+              "z": 92.57887198882948
+            },
+            {
+              "x": 3.6594478422938264,
+              "y": 3.0150001049041752,
+              "z": 92.6757943015618
+            },
+            {
+              "x": 2.930575811046688,
+              "y": 3.015000104904175,
+              "z": 89.96440336477941
+            }
+          ]
+        },
+        "distance": 91.57635424240334,
+        "lane": 1.1000363768127692,
+        "velocity": 0.029271210476719968,
+        "speed": 28.833967478359675,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 2.8493930191854204,
+          "y": 3.015000104904175,
+          "z": 91.43215993666237,
+          "yaw": -0.05525450061238971,
+          "yawRate": -0.006371636685507286
+        },
+        "previousPose": {
+          "x": 2.8754458419607722,
+          "y": 3.015000104904175,
+          "z": 90.95230028157837,
+          "yaw": -0.05514830666763126,
+          "yawRate": -0.007050875027780445
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.667400281112325,
+      "lastFrameMs": 16.69999999999709,
+      "frameProfile": {
+        "samples": 2182,
+        "p50": 16.69999999999709,
+        "p95": 16.799999999995634,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 2
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 44,
+      "geometries": 197,
+      "drawCalls": 176,
+      "curve": -0.0002021814895120417,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 74.31666666666756,
+        "banked": 0,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 15.683333333333692,
+        "done": false,
+        "feedback": "SLIDE, STRAIGHTEN, BANK"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        47.94588253378316,
+        6.468710800032242,
+        416.37033883462857
+      ],
+      "car": [
+        52.43942971286364,
+        3.5040712381369854,
+        422.87111121169045
+      ],
+      "wheelCenters": [
+        [
+          52.41640082296809,
+          3.8338832965666434,
+          424.35512095567134
+        ],
+        [
+          53.84774010020522,
+          3.8331709709342032,
+          423.3395950458895
+        ],
+        [
+          51.58881826706348,
+          3.8351652339180697,
+          421.6722116461414
+        ]
+      ],
+      "guide": {
+        "point": [
+          68.32588805962729,
+          3.6522568504037327,
+          440.96087339436275
+        ],
+        "bend": 0.010698320406320056
+      },
+      "carScreen": [
+        0.060827308414512324,
+        -0.4840143169485816,
+        0.951118696937361
+      ],
+      "vehicleUpY": [
+        0.9993571399889308,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 294525,
+      "cpu": {
+        "environment": 0,
+        "render": 2.199999999254942,
+        "frame": 2.2999999970197678
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 15.683333333333692,
+      "checkpoints": [
+        {
+          "next": 8,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 5420.282389154121,
+          "gear": 3,
+          "load": 0.043860624515036,
+          "throttle": 0.04339380835497697,
+          "brake": 0.956606191645023,
+          "shiftRemaining": 0,
+          "shiftSerial": 2,
+          "shiftCooldown": 0,
+          "acceleration": -10.924321295433236,
+          "steeringAngle": 0.007357040662449974,
+          "slipRatio": 1.0057870429960697e-15,
+          "wheelSpeeds": [
+            96.15483720678739,
+            96.5335048214386,
+            96.35415828075149
+          ],
+          "wheelAngles": [
+            1314.9178573535423,
+            1314.9178573535423,
+            1377.7481355865611
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0.016656248547145314,
+            0.015943922914702924,
+            -0.0030618141014278066
+          ],
+          "normalLoads": [
+            2576.385181183715,
+            3290.2630411223117,
+            2373.751777693973
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.9988196324375822,
+          "slipAngle": -0.08577900474274174,
+          "bodyRoll": -0.016546611812700878,
+          "bodyPitch": 0.03885977821988449,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.09047440960325176,
+            0.09047440960325176,
+            0.08904601037304788
+          ],
+          "contacts": [
+            {
+              "x": 52.42714651612697,
+              "y": 3.5008832965666445,
+              "z": 424.37340678932634
+            },
+            {
+              "x": 53.85848579336411,
+              "y": 3.500170970934202,
+              "z": 423.35788087954444
+            },
+            {
+              "x": 51.59956396022236,
+              "y": 3.4811652339180714,
+              "z": 421.69049747979636
+            }
+          ]
+        },
+        "distance": 431.55914218716305,
+        "lane": -2.8768843722405806,
+        "velocity": -2.7256454522292852,
+        "speed": 31.697232263643176,
+        "boost": 100,
+        "style": 0,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 52.45017540602254,
+          "y": 3.4842270480194992,
+          "z": 422.88939704534545,
+          "yaw": 0.6170690632801712,
+          "yawRate": 0.07098669243319053
+        },
+        "previousPose": {
+          "x": 52.18153307705289,
+          "y": 3.4803318009566944,
+          "z": 422.4322512039752,
+          "yaw": 0.615885951739618,
+          "yawRate": 0.06879537454848737
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.66755308815003,
+      "lastFrameMs": 16.69999999999709,
+      "frameProfile": {
+        "samples": 2759,
+        "p50": 16.69999999999709,
+        "p95": 16.70000000001164,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 2
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 44,
+      "geometries": 197,
+      "drawCalls": 160,
+      "curve": 0.003162642362031994,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 64.70000000000144,
+        "banked": 344,
+        "pending": 127.91791687595965,
+        "combo": 1,
+        "controlledSeconds": 1.8333333333333317,
+        "cleanSeconds": 0.18333333333333332,
+        "done": false,
+        "feedback": "HOLD THE SLIDE"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        306.9034067407282,
+        6.856995331567031,
+        483.21679808852997
+      ],
+      "car": [
+        313.80358221584896,
+        3.8831044875062917,
+        478.5090503961988
+      ],
+      "wheelCenters": [
+        [
+          315.2870974085665,
+          4.182815181668987,
+          478.5537485278813
+        ],
+        [
+          314.29258231654285,
+          4.183641365190631,
+          477.107731677448
+        ],
+        [
+          312.5923886146314,
+          4.218557307855905,
+          479.3420630373812
+        ]
+      ],
+      "guide": {
+        "point": [
+          334.2153347672547,
+          3.6884586587711192,
+          461.1380620564995
+        ],
+        "bend": 0.0032015570381943837
+      },
+      "carScreen": [
+        0.027066071251927264,
+        -0.45364308025556005,
+        0.9537033865462603
+      ],
+      "vehicleUpY": [
+        0.9999711065379894,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 289271,
+      "cpu": {
+        "environment": 0,
+        "render": 3.199999999254942,
+        "frame": 3.300000000745058
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 25.299999999999844,
+      "checkpoints": [
+        {
+          "next": 12,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 5863.2158201817165,
+          "gear": 3,
+          "load": 0.9999999902378537,
+          "throttle": 1,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 2,
+          "shiftCooldown": 0,
+          "acceleration": 2.7492881928323127,
+          "steeringAngle": 0.00008090518793647248,
+          "slipRatio": 0.00022065510435857652,
+          "wheelSpeeds": [
+            106.60241565693862,
+            106.68635819697622,
+            106.67017236501485
+          ],
+          "wheelAngles": [
+            2206.7823364386827,
+            2206.7823364386827,
+            2308.7451446065256
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            -0.013095388873559433,
+            -0.012269205351915335,
+            0.00164673731335796
+          ],
+          "normalLoads": [
+            2104.3042595347233,
+            2298.2085490674763,
+            3837.8871913978005
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.9999999589089066,
+          "slipAngle": -0.07851471552101622,
+          "bodyRoll": -0.0055880946897115735,
+          "bodyPitch": -0.010994084537601086,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.07806204096474123,
+            0.07806204096474123,
+            0.07916992757442023
+          ],
+          "contacts": [
+            {
+              "x": 315.318586256733,
+              "y": 3.8498151816689874,
+              "z": 478.53555366882006
+            },
+            {
+              "x": 314.3240711647092,
+              "y": 3.8506413651906315,
+              "z": 477.0895368183868
+            },
+            {
+              "x": 312.6238774627978,
+              "y": 3.864557307855905,
+              "z": 479.32386817831997
+            }
+          ]
+        },
+        "distance": 721.8862099889791,
+        "lane": -3.9228553918182096,
+        "velocity": -2.760442204683299,
+        "speed": 35.08600329896899,
+        "boost": 100,
+        "style": 85.05800141097062,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 313.8350710640154,
+          "y": 3.862910570542547,
+          "z": 478.49085553713763,
+          "yaw": 2.1732613971050436,
+          "yawRate": 0.0157362368503535
+        },
+        "previousPose": {
+          "x": 313.3271864161722,
+          "y": 3.8660382635061628,
+          "z": 478.78432100586514,
+          "yaw": 2.172999126490871,
+          "yawRate": 0.017002030828298962
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.66834645754225,
+      "lastFrameMs": 16.80000000000291,
+      "frameProfile": {
+        "samples": 3334,
+        "p50": 16.69999999999709,
+        "p95": 16.70000000001164,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 3
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 44,
+      "geometries": 197,
+      "drawCalls": 155,
+      "curve": 0.003547300104771659,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 54.76666666666867,
+        "banked": 601,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 4.266666666666657,
+        "done": false,
+        "feedback": "BANKED +130"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        444.1386217030189,
+        6.00976445136975,
+        189.23774365862795
+      ],
+      "car": [
+        444.004399144567,
+        3.025200019623381,
+        180.99566830486899
+      ],
+      "wheelCenters": [
+        [
+          444.8520763236244,
+          3.339435737889463,
+          179.77736676169283
+        ],
+        [
+          443.0976113751829,
+          3.339454246396983,
+          179.8206997132482
+        ],
+        [
+          444.04069512108333,
+          3.359133667033657,
+          182.46522014202503
+        ]
+      ],
+      "guide": {
+        "point": [
+          440.3259648320147,
+          2.999844049240864,
+          153.39666063873867
+        ],
+        "bend": 0.002794809666182263
+      },
+      "carScreen": [
+        0.02285988105190596,
+        -0.4599452580411831,
+        0.9531290284593739
+      ],
+      "vehicleUpY": [
+        0.9999397196767713,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 291623,
+      "cpu": {
+        "environment": 0,
+        "render": 3.2000000029802322,
+        "frame": 3.300000000745058
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 35.23333333333262,
+      "checkpoints": [
+        {
+          "next": 18,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 6194.430119999844,
+          "gear": 3,
+          "load": 0.8177055925998448,
+          "throttle": 0.8174601555825134,
+          "brake": 0.18253984441748655,
+          "shiftRemaining": 0,
+          "shiftSerial": 2,
+          "shiftCooldown": 0,
+          "acceleration": 0.20806047155923488,
+          "steeringAngle": 0.01807714305133636,
+          "slipRatio": 6.368594553193499e-24,
+          "wheelSpeeds": [
+            111.81818180483607,
+            112.6142197960063,
+            112.21839016896249
+          ],
+          "wheelAngles": [
+            3260.764248698876,
+            3260.764248698876,
+            3404.9952939280342
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0.0012085395660430542,
+            0.0012270480735634415,
+            -0.00009353128976163916
+          ],
+          "normalLoads": [
+            1528.2282631507503,
+            3151.6188741203887,
+            3560.55286272886
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.12479662625821714,
+          "slipAngle": -0.007733869916182038,
+          "bodyRoll": -0.010968166765180655,
+          "bodyPitch": -0.00021004676715403396,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.020972831553122653,
+            0.020972831553122653,
+            0.01367497734642901
+          ],
+          "contacts": [
+            {
+              "x": 444.85115800103785,
+              "y": 3.0064357378894635,
+              "z": 179.7232248723157
+            },
+            {
+              "x": 443.09669305259644,
+              "y": 3.006454246396984,
+              "z": 179.76655782387104
+            },
+            {
+              "x": 444.0397767984969,
+              "y": 3.005133667033659,
+              "z": 182.4110782526479
+            }
+          ]
+        },
+        "distance": 1066.3428103462093,
+        "lane": -1.8446533235113582,
+        "velocity": -0.2855334421973823,
+        "speed": 36.91913006333857,
+        "boost": 100,
+        "style": 117.54529147589331,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 444.00348082198053,
+          "y": 3.0052271983234204,
+          "z": 180.94152641549186,
+          "yaw": 3.166286303601266,
+          "yawRate": 0.14922877441310295
+        },
+        "previousPose": {
+          "x": 444.01391630591746,
+          "y": 3.0049183494593366,
+          "z": 181.55677515841586,
+          "yaw": 3.1637991573610473,
+          "yawRate": 0.13511165460333638
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.66713516411035,
+      "lastFrameMs": 16.70000000001164,
+      "frameProfile": {
+        "samples": 3930,
+        "p50": 16.69999999999709,
+        "p95": 16.70000000001164,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 3
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 45,
+      "geometries": 200,
+      "drawCalls": 157,
+      "curve": 0.001486663372810079,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 45.15000000000255,
+        "banked": 601,
+        "pending": 5.976524726690069,
+        "combo": 1,
+        "controlledSeconds": 0.09999999999999999,
+        "cleanSeconds": 0,
+        "done": false,
+        "feedback": "HOLD THE SLIDE"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        299.36696469709614,
+        6.019273870901535,
+        -123.34405550135742
+      ],
+      "car": [
+        292.4428378107549,
+        3.035000104904175,
+        -127.85502954259447
+      ],
+      "wheelCenters": [
+        [
+          291.88596205753777,
+          3.348000104904177,
+          -129.2307855694681
+        ],
+        [
+          290.96327768071,
+          3.348000104904176,
+          -127.7379096400091
+        ],
+        [
+          293.69328089696836,
+          3.369000104904178,
+          -127.0821827996106
+        ]
+      ],
+      "guide": {
+        "point": [
+          267.5129473705079,
+          3,
+          -140.66584135204593
+        ],
+        "bend": 0.00416653483302467
+      },
+      "carScreen": [
+        0.09461093760148458,
+        -0.4601531285329443,
+        0.9530919748930066
+      ],
+      "vehicleUpY": [
+        0.999415595745462,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 288717,
+      "cpu": {
+        "environment": 0,
+        "render": 3,
+        "frame": 3.100000001490116
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 44.84999999999874,
+      "checkpoints": [
+        {
+          "next": 24,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 6183.022982702175,
+          "gear": 3,
+          "load": 0.829592435374377,
+          "throttle": 0.8308879784560773,
+          "brake": 0.1691120215439227,
+          "shiftRemaining": 0,
+          "shiftSerial": 2,
+          "shiftCooldown": 0,
+          "acceleration": 0.5140532633317743,
+          "steeringAngle": 0.003517203421572413,
+          "slipRatio": 0.05082000450415141,
+          "wheelSpeeds": [
+            111.55659908927429,
+            112.40327544738818,
+            117.70301088409892
+          ],
+          "wheelAngles": [
+            4340.809280344534,
+            4340.809280344534,
+            4491.354452189093
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            -4.440892098500626e-16,
+            4.440892098500626e-16,
+            4.440892098500626e-16
+          ],
+          "normalLoads": [
+            1312.273470905904,
+            3325.270964855389,
+            3602.8555642387064
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.9995905740263805,
+          "slipAngle": -0.10195122375773337,
+          "bodyRoll": -0.03410956692996653,
+          "bodyPitch": -0.002337077633421581,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.10036225609732174,
+            0.10036225609732174,
+            0.10821464245816664
+          ],
+          "contacts": [
+            {
+              "x": 291.83214045253914,
+              "y": 3.0150001049041744,
+              "z": -129.27217374598547
+            },
+            {
+              "x": 290.9094560757114,
+              "y": 3.0150001049041752,
+              "z": -127.77929781652651
+            },
+            {
+              "x": 293.63945929196973,
+              "y": 3.0150001049041752,
+              "z": -127.12357097612798
+            }
+          ]
+        },
+        "distance": 1419.9687662190486,
+        "lane": -3.2706778657273374,
+        "velocity": -3.7690935257285676,
+        "speed": 36.84139936128098,
+        "boost": 100,
+        "style": 119.6458805936897,
+        "drift": 0.16666666666666666,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 292.38901620575626,
+          "y": 3.015000104904175,
+          "z": -127.89641771911192,
+          "yaw": 4.158797021287075,
+          "yawRate": 0.15872166485439718
+        },
+        "previousPose": {
+          "x": 292.8783035239239,
+          "y": 3.015000104904175,
+          "z": -127.52016156895459,
+          "yaw": 4.156151660206168,
+          "yawRate": 0.1678718969818908
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.66797392285731,
+      "lastFrameMs": 16.69999999999709,
+      "frameProfile": {
+        "samples": 4507,
+        "p50": 16.69999999999709,
+        "p95": 16.70000000001164,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 3
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 45,
+      "geometries": 200,
+      "drawCalls": 149,
+      "curve": 0.003050718744324719,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 35.550000000003095,
+        "banked": 939,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 1.7666666666666653,
+        "done": false,
+        "feedback": "BANKED +310"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        2.13589739815291,
+        5.972648501130584,
+        -158.2387965918132
+      ],
+      "car": [
+        -4.172620496576568,
+        3.035000104904175,
+        -153.65223380490974
+      ],
+      "wheelCenters": [
+        [
+          -5.656714694120695,
+          3.3480001049041754,
+          -153.63551068271755
+        ],
+        [
+          -4.6032198703973775,
+          3.3480001049041754,
+          -152.23188193679215
+        ],
+        [
+          -2.9969314615279323,
+          3.3690001049041753,
+          -154.5346482726438
+        ]
+      ],
+      "guide": {
+        "point": [
+          -19.120388897771303,
+          3,
+          -140.39021359112786
+        ],
+        "bend": 0.04687595364563524
+      },
+      "carScreen": [
+        0.06641885691457251,
+        -0.49275946528771347,
+        0.9504545085420978
+      ],
+      "vehicleUpY": [
+        0.9989363073176933,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 291439,
+      "cpu": {
+        "environment": 0,
+        "render": 5.800000000745058,
+        "frame": 6.100000001490116
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 54.44999999999819,
+      "checkpoints": [
+        {
+          "next": 29,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 4503.622597393916,
+          "gear": 3,
+          "load": 0.00016078253559182867,
+          "throttle": 0,
+          "brake": 1,
+          "shiftRemaining": 0,
+          "shiftSerial": 2,
+          "shiftCooldown": 0,
+          "acceleration": -11.486217585011932,
+          "steeringAngle": 0.001966651902247332,
+          "slipRatio": 3.920025960925049e-14,
+          "wheelSpeeds": [
+            79.43030565556585,
+            79.89463254928965,
+            79.67153587110312
+          ],
+          "wheelAngles": [
+            5306.925307232307,
+            5306.925307232307,
+            5474.219342943896
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            -4.440892098500626e-16,
+            0,
+            0
+          ],
+          "normalLoads": [
+            2558.6755723930055,
+            3363.7783394449816,
+            2317.946088162013
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.7557837409891145,
+          "slipAngle": -0.07484578394753588,
+          "bodyRoll": -0.01669568230163277,
+          "bodyPitch": 0.043002193592002476,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.07285805534974367,
+            0.07285805534974367,
+            0.07969882160112676
+          ],
+          "contacts": [
+            {
+              "x": -5.708377849200591,
+              "y": 3.0150001049041744,
+              "z": -153.6024684983122
+            },
+            {
+              "x": -4.654883025477266,
+              "y": 3.015000104904175,
+              "z": -152.1988397523868
+            },
+            {
+              "x": -3.048594616607824,
+              "y": 3.015000104904175,
+              "z": -154.50160608823845
+            }
+          ]
+        },
+        "distance": 1735.4360013680944,
+        "lane": -2.729923292081822,
+        "velocity": -1.9653007556378752,
+        "speed": 26.208952334698733,
+        "boost": 100,
+        "style": 167.96706634096907,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": -4.224283651656465,
+          "y": 3.015000104904175,
+          "z": -153.61919162050438,
+          "yaw": 5.356242574326817,
+          "yawRate": 0.08704475671517542
+        },
+        "previousPose": {
+          "x": -3.85526111537255,
+          "y": 3.015000104904175,
+          "z": -153.8552072233991,
+          "yaw": 5.354791828381564,
+          "yawRate": 0.09368732574608563
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.66435757122281,
+      "lastFrameMs": 16.59999999999127,
+      "frameProfile": {
+        "samples": 5083,
+        "p50": 16.69999999999709,
+        "p95": 16.70000000001164,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 3
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 45,
+      "geometries": 200,
+      "drawCalls": 154,
+      "curve": 0.002914060420546922,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 25.550000000003664,
+        "banked": 939,
+        "pending": 35.96339169028413,
+        "combo": 1,
+        "controlledSeconds": 0.5833333333333335,
+        "cleanSeconds": 0,
+        "done": false,
+        "feedback": "HOLD THE SLIDE"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        -0.9585911157241834,
+        5.953012898475551,
+        -14.111660416592784
+      ],
+      "car": [
+        1.4393881046412904,
+        3.035000104904175,
+        -6.35511521065339
+      ],
+      "wheelCenters": [
+        [
+          0.8752171215779718,
+          3.348000104904176,
+          -4.9823346921911815
+        ],
+        [
+          2.5788000473392247,
+          3.348000104904175,
+          -5.404033891923324
+        ],
+        [
+          1.0861699715323165,
+          3.369000104904176,
+          -7.782047917701276
+        ]
+      ],
+      "guide": {
+        "point": [
+          1.7157152047681226,
+          3,
+          11.899734657305697
+        ],
+        "bend": 0.006399030502994193
+      },
+      "carScreen": [
+        -0.14839799437024526,
+        -0.47533145458429976,
+        0.9519908912092043
+      ],
+      "vehicleUpY": [
+        0.9986405506493821,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 296141,
+      "cpu": {
+        "environment": 0.09999999776482582,
+        "render": 20.5,
+        "frame": 21.5
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 64.44999999999763,
+      "checkpoints": [
+        {
+          "next": 0,
+          "lap": 0,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 5789.473379950212,
+          "gear": 2,
+          "load": 0.9941285911968163,
+          "throttle": 1,
+          "brake": 0,
+          "shiftRemaining": 0,
+          "shiftSerial": 3,
+          "shiftCooldown": 0,
+          "acceleration": 1.6530397306687978,
+          "steeringAngle": -0.06720606119675065,
+          "slipRatio": 1.4174637374916008,
+          "wheelSpeeds": [
+            72.80022396868004,
+            70.12316931739795,
+            173.07403340467542
+          ],
+          "wheelAngles": [
+            5880.400165978169,
+            5880.400165978169,
+            6172.019131963996
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            4.440892098500626e-16,
+            0,
+            4.440892098500626e-16
+          ],
+          "normalLoads": [
+            4177.724196678968,
+            350,
+            3720.346190456965
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.9963327536595752,
+          "slipAngle": 0.21513606645563932,
+          "bodyRoll": 0.05184678436770006,
+          "bodyPitch": -0.0056083953572467465,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.2578302412324231,
+            0.2578302412324231,
+            0.3260166596230682
+          ],
+          "contacts": [
+            {
+              "x": 0.9042897705189727,
+              "y": 3.0150001049041752,
+              "z": -4.923328544423703
+            },
+            {
+              "x": 2.6078726962802254,
+              "y": 3.015000104904175,
+              "z": -5.345027744155845
+            },
+            {
+              "x": 1.115242620473318,
+              "y": 3.0150001049041752,
+              "z": -7.723041769933798
+            }
+          ]
+        },
+        "distance": 1922.7554734897622,
+        "lane": 2.9341098390700195,
+        "velocity": 5.137549103546023,
+        "speed": 23.510898195559832,
+        "boost": 100,
+        "style": 180.02509521331064,
+        "drift": 0.6000000000000002,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 1.4684607535822918,
+          "y": 3.015000104904175,
+          "z": -6.296109062885911,
+          "yaw": 6.5258441769076905,
+          "yawRate": -0.5018524104112845
+        },
+        "previousPose": {
+          "x": 1.2911885039420972,
+          "y": 3.015000104904175,
+          "z": -6.655902646833839,
+          "yaw": 6.534208383747878,
+          "yawRate": -0.500886593492917
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.868058436767917,
+      "lastFrameMs": 16.69999999999709,
+      "frameProfile": {
+        "samples": 5668,
+        "p50": 16.69999999999709,
+        "p95": 16.79999999998836,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 8
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 45,
+      "geometries": 200,
+      "drawCalls": 298,
+      "curve": -0.017167289022816945,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 15.916666666670869,
+        "banked": 1093,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 8.283333333333324,
+        "done": false,
+        "feedback": "BANKED +154"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        5.0813050553523,
+        5.95131783570962,
+        296.224464940096
+      ],
+      "car": [
+        6.487313304788409,
+        2.968832759855056,
+        304.31572327203514
+      ],
+      "wheelCenters": [
+        [
+          5.838776989144929,
+          3.2822632185237914,
+          305.65071986277667
+        ],
+        [
+          7.565307662040166,
+          3.2822531085619313,
+          305.33589159919165
+        ],
+        [
+          6.223610998537737,
+          3.302733448258732,
+          302.8695693750802
+        ]
+      ],
+      "guide": {
+        "point": [
+          14.262866850529461,
+          2.9552724561063974,
+          330.86098203186833
+        ],
+        "bend": 0.00459871480472279
+      },
+      "carScreen": [
+        0.04280591521902345,
+        -0.46223712997725835,
+        0.9529359619729211
+      ],
+      "vehicleUpY": [
+        0.9999215332011836,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 294675,
+      "cpu": {
+        "environment": 0,
+        "render": 3,
+        "frame": 3.199999999254942
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 74.08333333333042,
+      "checkpoints": [
+        {
+          "next": 6,
+          "lap": 1,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 6109.482874177372,
+          "gear": 3,
+          "load": 0.8112640139635587,
+          "throttle": 0.9209882705758133,
+          "brake": 0.07901172942418669,
+          "shiftRemaining": 0,
+          "shiftSerial": 4,
+          "shiftCooldown": 0,
+          "acceleration": 1.5209773886755207,
+          "steeringAngle": 0.00634614505228135,
+          "slipRatio": 5.383960936741276e-16,
+          "wheelSpeeds": [
+            110.6339999933959,
+            110.8999612260382,
+            110.77238300901446
+          ],
+          "wheelAngles": [
+            6827.422960521667,
+            6827.422960521667,
+            7252.056305800399
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            0.0004134614746647003,
+            0.0004033515128045728,
+            -0.00011630879039481457
+          ],
+          "normalLoads": [
+            1995.010785204011,
+            2539.0631904115544,
+            3706.3260243844343
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.9988109434537079,
+          "slipAngle": -0.05755773004964314,
+          "bodyRoll": -0.012451990026927382,
+          "bodyPitch": 0.0015159054221520797,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.06227147750863803,
+            0.06227147750863803,
+            0.059562007898798154
+          ],
+          "contacts": [
+            {
+              "x": 5.852489810338001,
+              "y": 2.949263218523791,
+              "z": 305.76181865471733
+            },
+            {
+              "x": 7.579020483233231,
+              "y": 2.9492531085619307,
+              "z": 305.4469903911323
+            },
+            {
+              "x": 6.2373238197308,
+              "y": 2.9487334482587313,
+              "z": 302.9806681670208
+            }
+          ]
+        },
+        "distance": 2233.028276047116,
+        "lane": -2.6014390296025733,
+        "velocity": -2.0998575531903043,
+        "speed": 36.44233662059691,
+        "boost": 100,
+        "style": 220.37343031677275,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 6.501026125981486,
+          "y": 2.948849757049126,
+          "z": 304.42682206397575,
+          "yaw": 6.4635509775948625,
+          "yawRate": 0.04985825956656449
+        },
+        "previousPose": {
+          "x": 6.426499923845219,
+          "y": 2.948757380994397,
+          "z": 303.82302428169004,
+          "yaw": 6.462720006602086,
+          "yawRate": 0.04589912956884107
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.66581826353297,
+      "lastFrameMs": 16.69999999999709,
+      "frameProfile": {
+        "samples": 6242,
+        "p50": 16.69999999999709,
+        "p95": 16.79999999998836,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 9
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 45,
+      "geometries": 200,
+      "drawCalls": 165,
+      "curve": 0.002573146573691312,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 6.3000000000038145,
+        "banked": 1489,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 1.6333333333333324,
+        "done": false,
+        "feedback": "BANKED +363"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        191.83384037173965,
+        7.116092720534411,
+        501.0325743478856
+      ],
+      "car": [
+        200.16816552041394,
+        4.146845352559813,
+        501.2279721751265
+      ],
+      "wheelCenters": [
+        [
+          201.3624779021136,
+          4.459413685867387,
+          502.1091266365684
+        ],
+        [
+          201.36784195651393,
+          4.459424076167543,
+          500.3541348340462
+        ],
+        [
+          198.6981723866773,
+          4.48093794716642,
+          501.2234792064835
+        ]
+      ],
+      "guide": {
+        "point": [
+          225.9015198965025,
+          4.098368085758617,
+          499.31993099169375
+        ],
+        "bend": 0.007202905294405755
+      },
+      "carScreen": [
+        0.0683712814852559,
+        -0.45565886086178214,
+        0.95354156052114
+      ],
+      "vehicleUpY": [
+        0.9996269651745798,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 289221,
+      "cpu": {
+        "environment": 0,
+        "render": 2.899999998509884,
+        "frame": 3
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "race",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 83.69999999999654,
+      "checkpoints": [
+        {
+          "next": 11,
+          "lap": 1,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 5707.34596121131,
+          "gear": 3,
+          "load": 0.9310099669430346,
+          "throttle": 0.8470926145796114,
+          "brake": 0.15290738542038868,
+          "shiftRemaining": 0,
+          "shiftSerial": 4,
+          "shiftCooldown": 0,
+          "acceleration": 0.7621055875142498,
+          "steeringAngle": 0.007181180378182597,
+          "slipRatio": 7.285871150378394e-14,
+          "wheelSpeeds": [
+            103.16648014900163,
+            104.02508842592593,
+            103.60053846276546
+          ],
+          "wheelAngles": [
+            7751.818518239189,
+            7751.818518239189,
+            8198.873441986098
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            -0.0004125680020443667,
+            -0.0004021777018898831,
+            0.00011169329698734742
+          ],
+          "normalLoads": [
+            1359.485604186866,
+            3252.5086383764537,
+            3628.40575743668
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.022822691410984832,
+          "slipAngle": -0.015431930394120654,
+          "bodyRoll": -0.0258900416558477,
+          "bodyPitch": -0.008920753684690984,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.016961140804660064,
+            0.016961140804660064,
+            0.02237155990215593
+          ],
+          "contacts": [
+            {
+              "x": 201.47949018045037,
+              "y": 4.126413685867389,
+              "z": 502.1112902501423
+            },
+            {
+              "x": 201.4848542348507,
+              "y": 4.1264240761675435,
+              "z": 500.3562984476201
+            },
+            {
+              "x": 198.81518466501413,
+              "y": 4.126937947166421,
+              "z": 501.2256428200574
+            }
+          ]
+        },
+        "distance": 2534.3370954218117,
+        "lane": -1.7759382628338036,
+        "velocity": -0.5260084407074583,
+        "speed": 34.083013030575586,
+        "boost": 100,
+        "style": 284.11649349114094,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 200.28517779875074,
+          "y": 4.126826253869433,
+          "z": 501.2301357887004,
+          "yaw": 7.850925187961904,
+          "yawRate": 0.16095847470547014
+        },
+        "previousPose": {
+          "x": 199.71715703012745,
+          "y": 4.126918965958658,
+          "z": 501.21963281018645,
+          "yaw": 7.848242546716813,
+          "yawRate": 0.1707059982997743
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.66623346475433,
+      "lastFrameMs": 16.699999999982538,
+      "frameProfile": {
+        "samples": 6819,
+        "p50": 16.69999999999709,
+        "p95": 16.79999999998836,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 9
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 45,
+      "geometries": 200,
+      "drawCalls": 150,
+      "curve": 0.003121597267706475,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {},
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    },
+    {
+      "build": "0.5.0-playground-preview",
+      "playMode": "drift",
+      "driftAttack": {
+        "remaining": 3.831927830599824e-12,
+        "banked": 1624,
+        "pending": 0,
+        "combo": 1,
+        "controlledSeconds": 0,
+        "cleanSeconds": 2.533333333333329,
+        "done": true,
+        "feedback": "BANKED +135"
+      },
+      "tokens": null,
+      "night": false,
+      "difficulty": "easy",
+      "audio": {
+        "loaded": 13,
+        "state": "running",
+        "voice": false,
+        "peakDb": -13.965150425249204
+      },
+      "rgb": 0,
+      "camera": [
+        384.65858092383746,
+        6.257132903587731,
+        423.4599687724793
+      ],
+      "car": [
+        389.7104733509677,
+        3.295086353102986,
+        416.94441945828885
+      ],
+      "wheelCenters": [
+        [
+          391.13740253650315,
+          3.594158987739473,
+          416.53614461278994
+        ],
+        [
+          389.7504655067643,
+          3.5950064772098718,
+          415.4607699452721
+        ],
+        [
+          388.8097321764655,
+          3.630681058881636,
+          418.1061273977282
+        ]
+      ],
+      "guide": {
+        "point": [
+          403.65358077161187,
+          3.12284265959322,
+          396.6217978309376
+        ],
+        "bend": 0.007627243499497799
+      },
+      "carScreen": [
+        0.037656902785041524,
+        -0.4611232212895252,
+        0.953094436230598
+      ],
+      "vehicleUpY": [
+        0.9996929074969362,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "triangles": 289235,
+      "cpu": {
+        "environment": 0,
+        "render": 2.300000000745058,
+        "frame": 2.5
+      },
+      "pixelRatio": 1,
+      "contacts": 0,
+      "screen": "results",
+      "paused": false,
+      "countdown": -0.016666666666659235,
+      "raceTime": 89.99999999999618,
+      "checkpoints": [
+        {
+          "next": 14,
+          "lap": 1,
+          "finishedAt": null,
+          "resets": 0
+        }
+      ],
+      "player": {
+        "telemetry": {
+          "rpm": 5438.992068087639,
+          "gear": 3,
+          "load": 0.6236272626065364,
+          "throttle": 0.8105506628596176,
+          "brake": 0.09969412816553413,
+          "shiftRemaining": 0,
+          "shiftSerial": 4,
+          "shiftCooldown": 0,
+          "acceleration": 1.1144584215186195,
+          "steeringAngle": 0.002707178807511661,
+          "slipRatio": 3.4574135767233576e-17,
+          "wheelSpeeds": [
+            98.25819497649321,
+            98.7588876797288,
+            98.51142204842265
+          ],
+          "wheelAngles": [
+            8405.235976148544,
+            8405.235976148544,
+            8891.744466261503
+          ],
+          "grounded": [
+            true,
+            true,
+            true
+          ],
+          "suspension": [
+            -0.013254813212827177,
+            -0.012407323742430254,
+            0.002267257929337241
+          ],
+          "normalLoads": [
+            1780.15160391587,
+            2854.689480341211,
+            3605.558915742918
+          ],
+          "surface": "road",
+          "reverseHold": 0,
+          "driftGrip": 0.16202575083415582,
+          "slipAngle": -0.01667515411327009,
+          "bodyRoll": -0.022195654427950004,
+          "bodyPitch": 0.006288589340868893,
+          "wheelSurfaces": [
+            "road",
+            "road",
+            "road"
+          ],
+          "wheelSlip": [
+            0.01591642516129592,
+            0.01591642516129592,
+            0.02093097533315292
+          ],
+          "contacts": [
+            {
+              "x": 391.2111079913118,
+              "y": 3.2611589877394676,
+              "z": 416.4442896949804
+            },
+            {
+              "x": 389.8241709615729,
+              "y": 3.2620064772098645,
+              "z": 415.36891502746255
+            },
+            {
+              "x": 388.88343763127426,
+              "y": 3.276681058881632,
+              "z": 418.0142724799187
+            }
+          ]
+        },
+        "distance": 2747.4411681500023,
+        "lane": -2.395588555892034,
+        "velocity": -0.5404803369586406,
+        "speed": 32.40931009694852,
+        "boost": 100,
+        "style": 317.281600792842,
+        "drift": 0,
+        "draft": 0,
+        "hit": 0,
+        "boosting": false,
+        "pose": {
+          "x": 389.7841788057764,
+          "y": 3.2744138009522947,
+          "z": 416.8525645404793,
+          "yaw": 8.76524339227949,
+          "yawRate": 0.09386205091994418
+        },
+        "previousPose": {
+          "x": 389.4460803892222,
+          "y": 3.277498902560975,
+          "z": 417.27391737446874,
+          "yaw": 8.763679024764158,
+          "yawRate": 0.10192415736004885
+        }
+      },
+      "opponents": [],
+      "track": 5,
+      "length": 1928.3614429683237,
+      "backend": "WebGL 2",
+      "frameMs": 16.665983260250353,
+      "lastFrameMs": 16.699999999982538,
+      "frameProfile": {
+        "samples": 7197,
+        "p50": 16.69999999999709,
+        "p95": 16.70000000001164,
+        "p99": 16.80000000000291,
+        "max": 233.40000000000146,
+        "over33ms": 9
+      },
+      "viewport": [
+        1440,
+        900
+      ],
+      "drawingBuffer": [
+        1440,
+        900
+      ],
+      "textures": 45,
+      "geometries": 200,
+      "drawCalls": 152,
+      "curve": 0.003856280259324597,
+      "save": {
+        "version": 2,
+        "committedRaceIds": [],
+        "transmission": "automatic",
+        "rims": "graphite",
+        "exhaust": "standard",
+        "credits": 0,
+        "chapter": 0,
+        "upgrades": {
+          "power": 0,
+          "grip": 0,
+          "boost": 0
+        },
+        "paint": 0,
+        "rgb": 0,
+        "rgbCycle": false,
+        "bests": {},
+        "driftBests": {
+          "harbor-easy-day-drift-v1": 1624
+        },
+        "races": 0,
+        "wins": 0,
+        "settings": {
+          "sound": true,
+          "music": true,
+          "autoThrottle": true,
+          "quality": "auto",
+          "motion": true,
+          "difficulty": "easy",
+          "night": false,
+          "voice": true,
+          "effectsVolume": 0.85,
+          "musicVolume": 0.24,
+          "voiceVolume": 0.85
+        }
+      },
+      "position": 1
+    }
+  ],
+  "driftResult": {
+    "score": 1624,
+    "saved": {
+      "harbor-easy-day-drift-v1": 1624
+    },
+    "credits": 0,
+    "chapter": 0,
+    "done": true
+  },
+  "defaultRenderer": {
+    "backend": "WebGL 2",
+    "triangles": 2793775,
+    "drawCalls": 209
+  }
+}
