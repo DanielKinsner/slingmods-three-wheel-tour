@@ -74,7 +74,7 @@ export const INSTALLS: Record<string, InstallStep[]> = {
       id: 'shocks',
       product: PRODUCTS[2],
       label: 'Three-way adjustable coilovers fitted.',
-      view: 0.9,
+      view: 2.1,
     },
   ],
   boost: [
@@ -111,12 +111,12 @@ let cache: Record<string, T.MeshStandardMaterial> | undefined;
 function materials() {
   if (cache) return cache;
   cache = {
-    polished: new T.MeshStandardMaterial({ color: 0xd9dde2, metalness: 1, roughness: 0.18 }),
-    brushed: new T.MeshStandardMaterial({ color: 0xb9bec6, metalness: 0.9, roughness: 0.42 }),
+    // Metalness stays below 1 so parts read in the dim studio instead of mirroring darkness.
+    polished: new T.MeshStandardMaterial({ color: 0xe3e7ec, metalness: 0.7, roughness: 0.28 }),
+    brushed: new T.MeshStandardMaterial({ color: 0xc4c9d0, metalness: 0.6, roughness: 0.48 }),
     ceramic: new T.MeshStandardMaterial({ color: 0x1f2226, metalness: 0.35, roughness: 0.55 }),
-    billet: new T.MeshStandardMaterial({ color: 0xc9ced4, metalness: 0.95, roughness: 0.3 }),
+    billet: new T.MeshStandardMaterial({ color: 0xd4d9df, metalness: 0.7, roughness: 0.34 }),
     red: new T.MeshStandardMaterial({ color: 0xc41529, metalness: 0.4, roughness: 0.4 }),
-    filter: new T.MeshStandardMaterial({ color: 0x2a63d8, roughness: 0.8 }),
     black: mat(0x15181c, 0.8),
   };
   return cache;
@@ -254,34 +254,13 @@ function swayBarMounts(parent: T.Object3D) {
   }
   return g;
 }
-/** Cold air intake: red airbox with a blue cone filter, sitting under the hood line. */
-function intake(parent: T.Object3D) {
-  const m = materials();
-  const g = new T.Group();
-  g.name = 'Cold air intake';
-  parent.add(g);
-  box(g, m.red, 0.34, 0.16, 0.26, -0.28, 0.72, 1.05, 0.01).name = 'Airbox';
-  rod(g, V(-0.28, 0.79, 0.98), V(-0.28, 0.79, 1.16), 0.055, m.filter, 14).name = 'Cone filter';
-  path(
-    g,
-    [
-      [-0.12, 0.72, 1.0],
-      [0.05, 0.7, 0.9],
-      [0.2, 0.66, 0.78],
-    ],
-    0.035,
-    m.black,
-    true,
-  ).name = 'Intake tube';
-  return g;
-}
-
 /** Original aftermarket-style wheel drawn inside a Wheel_i node (axle along local X). */
 function aftermarketWheel(wheel: T.Object3D, design: WheelDesign, finish: BuildSpec['rims']) {
   const face = new T.MeshStandardMaterial({
-    color: finish === 'silver' ? 0xc1c9ce : finish === 'bronze' ? 0x947446 : 0x262b31,
-    metalness: 0.9,
-    roughness: 0.28,
+    // Machined faces read lighter than the stock graphite so the spoke pattern is legible.
+    color: finish === 'silver' ? 0xd2d8dd : finish === 'bronze' ? 0xa8875a : 0x5a616a,
+    metalness: 0.6,
+    roughness: 0.3,
   });
   const pocket = mat(0x16191d, 0.6, 0.6);
   const g = new T.Group();
@@ -304,9 +283,9 @@ function aftermarketWheel(wheel: T.Object3D, design: WheelDesign, finish: BuildS
       const angle = (i / design.spokes) * Math.PI * 2;
       const spoke = new T.Mesh(
         new T.BoxGeometry(
-          0.018,
+          0.02,
           0.19,
-          design.id === 'mesh' ? 0.018 : design.id === 'six' ? 0.05 : 0.036,
+          design.id === 'mesh' ? 0.024 : design.id === 'six' ? 0.06 : 0.044,
         ),
         face,
       );
@@ -346,7 +325,7 @@ export function applyBuild(car: T.Group, spec: BuildSpec) {
   parts.name = PART_GROUP;
   car.add(parts);
   const low = spec.quality === 'low';
-  if (spec.upgrades.power >= 1) intake(parts);
+  // Stage 1 (cold air intake) sits under the closed hood; it is a stat and a product card, not geometry.
   if (spec.upgrades.power >= 2) {
     const stock = car.userData.exhaust as T.Object3D | undefined;
     if (stock) stock.visible = false;
@@ -356,7 +335,8 @@ export function applyBuild(car: T.Group, spec: BuildSpec) {
   if (spec.upgrades.grip >= 2 && !low) endLinks(parts);
   if (spec.upgrades.grip >= 3) {
     for (const side of [-1, 1])
-      coilover(parts, V(side * 0.7, 0.27, 1.12), V(side * 0.52, 0.74, 1.02)).name =
+      // Rearward of the tire so the side and rear views can see it past the closed fender.
+      coilover(parts, V(side * 0.74, 0.26, 0.86), V(side * 0.58, 0.66, 0.8)).name =
         'Front coilover';
     coilover(parts, V(0.3, 0.29, -1.36), V(0.32, 0.73, -1.1), 0.95).name = 'Rear coilover';
   }
