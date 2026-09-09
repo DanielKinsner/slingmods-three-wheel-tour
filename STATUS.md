@@ -1,6 +1,13 @@
-# SlingMods Three-Wheel Tour — Playground preview / production v0.4.1
+# SlingMods Three-Wheel Tour — Playground live
 
-## September 9 — fun-first Playground pass
+
+## Owner-approved production merge — September 9
+
+The owner explicitly requested "please merge it" after reviewing the preview. `feature/harbor-playground` was fast-forwarded into `main` at `c6a6129168510215f94d141a76c8bf68c5d16fab` and pushed. Vercel's first production deployment for this update, `dpl_284kN5NarPK6mJg9XywoP1tdn9HC`, is Ready at https://slingmods-three-wheel-tour.vercel.app/. All 113 tests and the TypeScript/Vite build passed on Vercel. Anonymous GETs of HTML, JS and CSS returned 200 and SHA-256 matched the tested local build. Later documentation-only commits may rebuild these identical game assets.
+
+The permanent public URL now includes Harbor Run, Drift Attack, Free Ride and the removal of Easy-mode road-centering steering. The tested build still identifies itself as `0.5.0-playground-preview`; this label does not mean the public URL is still running v0.4.1. Existing browser progress stays on the same origin. The earlier preview-only boundary below was superseded by this explicit merge approval; no SlingMods storefront changes.
+
+## Historical preview — September 9 fun-first Playground pass
 
 Implemented on `feature/harbor-playground`. [Open the Playground preview](https://slingmods-three-wheel-tour-git-156a60-daniel-kinsners-projects.vercel.app/). The first Git preview (`58b1a2f`, `dpl_Bj1EoUe3rQ9y6NqvSfShTqSKGCrW`) is Ready: Vercel passed all 113 tests and built the same `index-Di4D-ey2.js` / `index-UjAHhiPa.css` filenames as the locally rendered evidence. Existing Vercel sign-in protection is unchanged. The branch alias follows later preview commits. Production `main` remains at `76c7a478cf56e5ccdff229da78f660a2d6baff92`; this pass is preview-only. The five existing destinations, eight chapters, purchased builds, product links, save key/version, ordered gates and receipt accounting remain. New race records use `playground-v2` because handling changed; older records remain stored.
 
@@ -16,7 +23,7 @@ Limits: headless Windows/ANGLE WebGL is the current visual lane. WebGPU code rem
 
 Private repository created at https://github.com/DanielKinsner/slingmods-three-wheel-tour with the existing source history and `main` default branch. Connected to the existing Vercel project; its Git settings confirm `productionBranch: main`. `vercel.json` now gates automatic publishing on all tests and the TypeScript/Vite build. End-to-end verified: push `23c2d52` automatically created production deployment `dpl_4uC1CDVB9tZccFivCYLtuwWaoma4` with source `git`; all 99 tests passed on Vercel, TypeScript/Vite built successfully, and GitHub reported success. The permanent URL resolved to that deployment and its public game assets matched the verified visual build. See evidence/git-auto-deploy.json. Historical deployment IDs below refer to the earlier visual-finish promotion, not later Git rebuilds. See DEPLOYMENT.md for updates and rollback.
 
-## Current release — September 9 visual finish
+## Historical release — September 9 visual finish
 
 [Play the current game](https://slingmods-three-wheel-tour.vercel.app/). The owner explicitly approved production promotion. Vercel reports production Ready at `dpl_BDutzGXHPPjyH9WMYh1a1poXHTxn`, promoted from verified preview `dpl_AFGdWQAQcS8pcvzZXgtGc75966ei`. Anonymous GETs of HTML, JS, CSS, both vehicle meshes and the new window atlas all returned 200 and byte-matched the local build. See PRODUCTION-DEPLOYMENT.json. The original permanent address is retained; no storefront changes.
 
