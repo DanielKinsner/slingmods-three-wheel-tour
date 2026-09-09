@@ -1,25 +1,39 @@
 # Hosting and embedding
 
-## Current Vercel deployment
+## Current Git-connected Vercel project
 
 **Public game:** https://slingmods-three-wheel-tour.vercel.app/
 
-Version **0.3.2**, deployed September 9, 2026 to `daniel-kinsners-projects/slingmods-three-wheel-tour`. Deployment ID: `dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o`. No login is required at the public game URL. SlingMods.com integration is a separate step.
+**Private repository:** https://github.com/DanielKinsner/slingmods-three-wheel-tour
 
-The deployment uses Vercel's [Build Output API](https://vercel.com/docs/build-output-api). The already-verified `dist/` files were copied into `.vercel/output/static/` and deployed without a remote rebuild. All 50 public files were fetched anonymously and their SHA-256 hashes matched `BUILD-MANIFEST.json`. The v0.3.2 initial loading screen shows the SlingMods logo before the engine initializes. Desktop and 390-pixel mobile layouts were checked, and normal startup reached the home screen. Prior vehicle/lighting and race/audio verification is preserved in QA-v0.3.1.md and QA-v0.3.0.md.
+**Project:** `daniel-kinsners-projects/slingmods-three-wheel-tour` (`prj_8GgNcjmAI4DbJjUjV9JmaF8etKVT`). The existing project and permanent URL are retained. Its connected GitHub repository is `DanielKinsner/slingmods-three-wheel-tour`; production branch is `main`, repository root is the game root, Node is 24.x.
 
-To publish a future update from this source folder after building and reviewing it:
+## Normal updates
 
-```powershell
+1. Edit and validate the game, then commit the changes.
+2. Push or merge the reviewed changes to `main` on GitHub.
+3. Vercel automatically runs `npm ci`, then `npm test && npm run build`, and serves `dist/` when successful. A failed build does not replace the current game.
+4. Check the Vercel deployment for that exact Git commit before calling an update live.
+
+Other branches get preview deployments. Preview access follows the existing Vercel deployment-protection settings. No separate deploy hook or Vercel credential stored in GitHub is required. Files saved only on a developer's computer do not trigger a deployment.
+
+```sh
+git switch main
+git pull --ff-only
 npm ci
 npm test
 npm run build
-vercel link --yes --scope daniel-kinsners-projects --project slingmods-three-wheel-tour
-npm run prepare:vercel
-vercel deploy --prebuilt --prod --yes --scope daniel-kinsners-projects
+# Commit reviewed changes, then:
+git push origin main
 ```
 
-The CLI requires Vercel authorization. `.vercel/` is local deployment metadata/output and is excluded from the source archive. No Git repository or automatic deploy trigger was configured. `vercel.json` also provides build/output/cache settings for a future source-based deployment.
+The repository preserves the game source, generated runtime assets, editable asset masters, checkpoints and evidence. `.env*`, `.vercel/`, `node_modules/`, `dist/` and raw capture WebMs remain excluded. A credential-pattern scan of tracked text history found no matches before the initial push.
+
+## Rollback and manual fallback
+
+For code rollback, revert the faulty commit on `main` and push the revert; Vercel rebuilds it automatically. For an urgent deployment rollback use the previous Ready deployment in Vercel, then reconcile `main` before further pushes. Historical v0.4.1 manual-promotion provenance is retained in PRODUCTION-DEPLOYMENT.json; it is not a rolling pointer to every later Git deployment.
+
+A local prebuilt deployment remains available for deliberate recovery using `npm run build`, `npm run prepare:vercel`, and the Vercel CLI. Normal updates should use the connected repository so deployment provenance records the Git commit.
 
 To embed the hosted game, use `https://slingmods-three-wheel-tour.vercel.app/` as the iframe `src` in the example below. Saves are scoped to this origin and do not automatically transfer from localhost or to a later custom domain. Verify the actual storefront iframe before adding it for customers.
 

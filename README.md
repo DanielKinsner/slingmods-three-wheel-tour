@@ -1,8 +1,16 @@
-# SlingMods: Three-Wheel Tour — After Dark v0.3.2
+# SlingMods: Three-Wheel Tour — v0.4.1
 
 **Play online:** https://slingmods-three-wheel-tour.vercel.app/ — hosted on Vercel, no local server required. See `DEPLOYMENT.md` for the deployed version and update commands.
 
-A playable, original 3D arcade racer built for SlingMods.com. Four regional circuits, an eight-chapter sponsor story, six-rider grids, drafting, drift rewards, boost, and a garage funded by race winnings.
+A playable, original 3D arcade racer built for SlingMods.com. Five regional circuits, an eight-chapter sponsor story, six-rider grids, drafting, drift rewards, boost, and a garage funded by race winnings.
+
+## Repository and automatic deployment
+
+Private source: [DanielKinsner/slingmods-three-wheel-tour](https://github.com/DanielKinsner/slingmods-three-wheel-tour).
+
+Push or merge to `main` to update the existing public Vercel game. Vercel installs the locked dependencies with `npm ci`, runs all tests, builds with TypeScript/Vite, and publishes `dist/` after success. Failed tests or builds leave the last successful deployment live. Other branches receive preview deployments under the existing Vercel protection settings. Local edits alone do not publish anything; commit and push them to GitHub.
+
+Current vehicle, Miami, saved-progress and validation notes are in [STATUS.md](STATUS.md). See [DEPLOYMENT.md](DEPLOYMENT.md) for the workflow and rollback procedure. Secrets, dependencies and local build output are git-ignored.
 
 ## New in v0.3.2
 
@@ -21,7 +29,7 @@ npm ci
 npm run dev
 ```
 
-Open the local address printed by Vite. Click **Start your story** or **Quick race**. All four tracks are available in quick race; the story moves through them in order. A race takes about 35–100 seconds, depending on the course, laps, build, and driving.
+Open the local address printed by Vite. Click **Start your story** or **Quick race**. All five tracks are available in quick race; the story moves through them in order. A race takes about 35–100 seconds, depending on the course, laps, build, and driving.
 
 ## Controls
 

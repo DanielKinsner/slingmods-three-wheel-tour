@@ -1,6 +1,10 @@
 # SlingMods Three-Wheel Tour — v0.4.1 live
 
 
+## Git delivery — September 9 follow-up
+
+Private repository created at https://github.com/DanielKinsner/slingmods-three-wheel-tour with the existing source history and `main` default branch. Connected to the existing Vercel project; its Git settings confirm `productionBranch: main`. `vercel.json` now gates automatic publishing on all tests and the TypeScript/Vite build. The first post-connection push is the end-to-end deployment check; use the live Vercel/GitHub commit status to confirm completion. Historical deployment IDs below refer to the earlier visual-finish promotion, not later Git rebuilds. See DEPLOYMENT.md for updates and rollback.
+
 ## Current release — September 9 visual finish
 
 [Play the current game](https://slingmods-three-wheel-tour.vercel.app/). The owner explicitly approved production promotion. Vercel reports production Ready at `dpl_BDutzGXHPPjyH9WMYh1a1poXHTxn`, promoted from verified preview `dpl_AFGdWQAQcS8pcvzZXgtGc75966ei`. Anonymous GETs of HTML, JS, CSS, both vehicle meshes and the new window atlas all returned 200 and byte-matched the local build. See PRODUCTION-DEPLOYMENT.json. The original permanent address is retained; no storefront changes.
