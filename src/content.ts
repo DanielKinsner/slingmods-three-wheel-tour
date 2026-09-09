@@ -293,11 +293,20 @@ export const UPGRADES = [
     prices: [650, 1200, 1900],
   },
 ] as const;
+/**
+ * 2025 factory palette as named in Polaris's 2025 lineup announcement (S: Slingshot Red,
+ * Jet Black; SL: Liquid Lime; SLR: Graphite Gloss, Royal Red; R: Royal Red Crystal,
+ * Nightfall). Hex values are the game's own approximations of those finishes. The
+ * SlingMods red stays first so existing saves keep their default paint.
+ */
 export const PAINTS = [
-  { name: 'SlingMods red', color: '#cf102d' },
-  { name: 'Glacier', color: '#eceff2' },
-  { name: 'Electric blue', color: '#28a2d6' },
-  { name: 'Citron', color: '#d9e34f' },
-  { name: 'Midnight', color: '#383c4d' },
+  { name: 'SlingMods red', color: '#cf102d', trim: 'SlingMods' },
+  { name: 'Slingshot Red', color: '#b8121f', trim: 'S' },
+  { name: 'Jet Black', color: '#0d0f12', trim: 'S / SL' },
+  { name: 'Liquid Lime', color: '#b6e02a', trim: 'SL' },
+  { name: 'Graphite Gloss', color: '#4a4e55', trim: 'SLR' },
+  { name: 'Royal Red', color: '#7e0f1f', trim: 'SLR' },
+  { name: 'Royal Red Crystal', color: '#9c1226', trim: 'R', finish: 'crystal' },
+  { name: 'Nightfall', color: '#1a2030', trim: 'R' },
 ];
 export const RIVALS = ['JAX', 'REEF', 'DUSTY', 'NOVA', 'ACE'];
