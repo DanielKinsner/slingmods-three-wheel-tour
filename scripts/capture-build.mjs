@@ -60,5 +60,17 @@ for (const [view, name] of [
 await page.selectOption('[data-studio]', 'night');
 await page.waitForTimeout(1500);
 await page.screenshot({ path: `${out}/garage-night.png` });
-console.log(JSON.stringify({ errors, out }));
+// Parts must survive into a race: start a quick race on the coast and grab the chase view.
+await page.click('[data-action="home"]');
+await page.waitForTimeout(800);
+await page.click('[data-action="quick"]');
+await page.waitForTimeout(800);
+await page.click('[data-action="race"]');
+await page.waitForTimeout(6500);
+await page.screenshot({ path: `${out}/race.png` });
+const raceParts = await page.evaluate(() => {
+  const t = window.__tour;
+  return { playMode: t?.playMode, drawCalls: t?.drawCalls };
+});
+console.log(JSON.stringify({ errors, out, raceParts }));
 await browser.close();
