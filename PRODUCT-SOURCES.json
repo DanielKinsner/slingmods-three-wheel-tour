@@ -1,0 +1,68 @@
+[
+  {
+    "id": "intake",
+    "name": "DDMWorks Cold Air Intake System for the Polaris Slingshot (2025+) Gen 3",
+    "url": "https://www.slingmods.com/polaris-slingshot-cold-air-intake-system-ddm-works-gen-3",
+    "image": "./products/intake.jpg",
+    "imageSource": "http://www.slingmods.com/image/catalog/ddm/2025-cold-air-intake/polaris-slingshot-ddm-cold-air-intake-gen3-sm-installed-main.jpg",
+    "checked": "2026-09-09",
+    "brand": "DDMWorks",
+    "shortName": "Gen 3 cold air intake",
+    "fitment": "2025+"
+  },
+  {
+    "id": "exhaust",
+    "name": "Thermal R&D Cat-Back Ceramic Coated Dual Rear Exit Sport Exhaust System for the Polaris Slingshot (2025+)",
+    "url": "https://www.slingmods.com/thermal-dual-rear-exit-sport-exhaust-slingshot-2025-up",
+    "image": "./products/exhaust.jpg",
+    "imageSource": "http://www.slingmods.com/image/catalog/thermal-exhaust/polaris-slingshot-catback-ceramic-coated-dual-rear-exit-sport-exhaust-2025/polaris-slingshot-2025-up-dual-catback-rear-exit-sport-exhaust-system-studio-main.jpg",
+    "checked": "2026-09-09",
+    "brand": "Thermal R&D",
+    "shortName": "Dual rear exit sport exhaust",
+    "fitment": "2025+"
+  },
+  {
+    "id": "shocks",
+    "name": "DDMWorks 3-Way Adjustable Sport Shocks for the Polaris Slingshot (Set of 3) (2015+)",
+    "url": "https://www.slingmods.com/polaris-slingshot-3-way-adjustable-sport-shocks-coilovers-ddmworks",
+    "image": "./products/shocks.jpg",
+    "imageSource": "http://www.slingmods.com/image/catalog/ddm/sport-shocks/polaris-slingshot-3-way-adjustable-sport-shocks-coilovers-ddmworks-main.jpg",
+    "checked": "2026-09-09",
+    "brand": "DDMWorks",
+    "shortName": "3-way adjustable sport shocks",
+    "fitment": "2015+ \u00b7 set of 3"
+  },
+  {
+    "id": "mounts",
+    "name": "DDMWorks Sway Bar Mounting Brackets for the Polaris Slingshot (Pair) (2015-2025)",
+    "url": "https://www.slingmods.com/polaris-slingshot-sway-bar-mounting-brackets-ddmworks",
+    "image": "./products/mounts.jpg",
+    "imageSource": "http://www.slingmods.com/image/catalog/ddm/sway-bar/mounting-brackets-only/polaris-slingshot-sway-bar-mounting-brackets-glow.jpg",
+    "checked": "2026-09-09",
+    "brand": "DDMWorks",
+    "shortName": "Sway bar mounting brackets",
+    "fitment": "2015\u20132025 \u00b7 pair"
+  },
+  {
+    "id": "links",
+    "name": "DDMWorks Adjustable Billet Aluminum Sway Bar End Links for the Polaris Slingshot (Pair) (2015+)",
+    "url": "https://www.slingmods.com/polaris-slingshot-sway-bar-end-links-ddmworks",
+    "image": "./products/links.jpg",
+    "imageSource": "http://www.slingmods.com/image/catalog/ddm/polaris-slingshot-billet-aluminum-sway-bar-end-links/polaris-slingshot-sway-bar-end-links-gradient-main.jpg",
+    "checked": "2026-09-09",
+    "brand": "DDMWorks",
+    "shortName": "Adjustable sway bar end links",
+    "fitment": "2015+ \u00b7 pair"
+  },
+  {
+    "id": "rgb",
+    "name": "Kit #1 Standard RGB LED UnderGlow Lighting Kit with Remote for the Polaris Slingshot",
+    "url": "https://www.slingmods.com/polaris-slingshot-underglow-kit",
+    "image": "./products/rgb.jpg",
+    "imageSource": "http://www.slingmods.com/image/catalog/product_images/polaris-slingshot-underglow.jpg",
+    "checked": "2026-09-09",
+    "brand": "TricLED",
+    "shortName": "RGB underglow kit + remote",
+    "fitment": "Check model fitment on product page"
+  }
+]

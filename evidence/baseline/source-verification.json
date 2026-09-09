@@ -1,0 +1,21 @@
+{
+  "version": "0.3.2",
+  "liveMatchesWorkspace": true,
+  "stack": "TypeScript / Three.js 0.186.0 / Vite 8.2.2",
+  "tracks": [
+    "smokies",
+    "coast",
+    "texas",
+    "desert"
+  ],
+  "bundleSha256": "1968f3666017c58767105933de9bdd37763e57fe285b503b0bcc832995ed5597",
+  "briefMismatches": [
+    "No Vue",
+    "No Miami/Ozarks/Sturgis",
+    "No double chapter payment found",
+    "HUD already uses m/s to mph conversion",
+    "Fixed step 120 Hz already exists",
+    "Sun shadows 2048 not 8192",
+    "Space drift / Shift boost already established"
+  ]
+}

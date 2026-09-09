@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#161a19" />
+    <meta
+      name="description"
+      content="Four destinations. Three wheels. One unforgettable tour. Race, earn credits, and build your ride in the SlingMods garage."
+    />
+    <title>SlingMods — Three-Wheel Tour</title>
+    <link rel="icon" href="./mark.svg" />
+    <link rel="preload" as="image" href="./slingmods-logo.png" fetchpriority="high" />
+    <style>
+      /* Show the branded splash even before the game bundle finishes loading. */
+      #boot-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(12px, 3vh, 25px);
+        padding: 24px;
+        overflow: auto;
+        background: #27292d;
+        color: #f5f6f8;
+        font-family: 'Barlow', Arial, sans-serif;
+        text-align: center;
+      }
+      .boot-logo {
+        display: block;
+        width: min(360px, 72vw);
+        height: auto;
+        max-height: 14vh;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="world" aria-label="Three dimensional racing world"></canvas>
+    <div id="app">
+      <div class="boot" id="boot-screen">
+        <img
+          class="boot-logo"
+          src="./slingmods-logo.png"
+          alt="SlingMods.com"
+          width="360"
+          height="86"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <span class="eyebrow">PRESENTS</span>
+        <h1>THREE-WHEEL<br />TOUR<span class="accent">.</span></h1>
+        <p id="boot-status">Warming up the engine…</p>
+        <div class="loading-line"></div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

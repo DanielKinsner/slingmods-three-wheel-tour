@@ -1,0 +1,27 @@
+{
+  "name": "slingmods-three-wheel-tour",
+  "version": "0.3.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "prepare:vercel": "node scripts/prepare-vercel.mjs"
+  },
+  "dependencies": {
+    "@fontsource/barlow": "^5.2.8",
+    "@fontsource/barlow-condensed": "^5.2.8",
+    "three": "0.186.0",
+    "three-mesh-bvh": "^0.9.15"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/three": "^0.183.0",
+    "prettier": "^3.9.6",
+    "typescript": "^5.9.3",
+    "vite": "8.2.2",
+    "vitest": "^4.0.18"
+  }
+}

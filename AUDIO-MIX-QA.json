@@ -1,0 +1,168 @@
+{
+  "masterGain": 0.55,
+  "limiterThresholdDb": -12,
+  "assets": [
+    {
+      "id": "brief-0",
+      "targetLufs": -20,
+      "measuredLufs": "-20.54",
+      "truePeakDbTP": "-6.47",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "e332814d83c83cdac0f5eead40533ac1f4f6dabcb5ce8f4e64a8a169027c8896"
+    },
+    {
+      "id": "brief-1",
+      "targetLufs": -20,
+      "measuredLufs": "-20.63",
+      "truePeakDbTP": "-6.34",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "01980e23b01498ef58ef45cb6b7a3ac394c495188331f120adcfb31e680bf385"
+    },
+    {
+      "id": "brief-2",
+      "targetLufs": -20,
+      "measuredLufs": "-20.51",
+      "truePeakDbTP": "-6.45",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "409d42a2b6dd2eac8646bed5ab17adffdc2704353924c008e983c9f9edc4b3d7"
+    },
+    {
+      "id": "brief-3",
+      "targetLufs": -20,
+      "measuredLufs": "-20.82",
+      "truePeakDbTP": "-6.46",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "4cc0423b4ad72c5f1efc14872a2d3bbdc8e87074decb56d780bb7780205f6a50"
+    },
+    {
+      "id": "brief-4",
+      "targetLufs": -20,
+      "measuredLufs": "-21.09",
+      "truePeakDbTP": "-6.45",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "1232691f1d9d816e06b4d6192494ca475f4da2f6dabefa79e49103893d3ebfad"
+    },
+    {
+      "id": "brief-5",
+      "targetLufs": -20,
+      "measuredLufs": "-20.46",
+      "truePeakDbTP": "-6.42",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "32b8b662dab1e57852e009cfdb685ec31c4621116a1c8c85ee93ba379680d79d"
+    },
+    {
+      "id": "brief-6",
+      "targetLufs": -20,
+      "measuredLufs": "-20.78",
+      "truePeakDbTP": "-6.44",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "26666a3370bb5b084941e23451071768901ab53e9043bdb3e27aefa015204cf3"
+    },
+    {
+      "id": "brief-7",
+      "targetLufs": -20,
+      "measuredLufs": "-21.18",
+      "truePeakDbTP": "-6.45",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "5bcad28f0523f70ac68e8067578feed19c8253fd9497c36c47844aa7b2d70bf2"
+    },
+    {
+      "id": "engine-high",
+      "targetLufs": -21,
+      "measuredLufs": "-21.10",
+      "truePeakDbTP": "-12.15",
+      "loopCrossfadeSeconds": 0.12,
+      "sha256": "3a046e819f7621c1ad9a068847dc6b194bb7b31b8b273825a4e9e09eebddf650"
+    },
+    {
+      "id": "engine-idle",
+      "targetLufs": -21,
+      "measuredLufs": "-21.65",
+      "truePeakDbTP": "-11.03",
+      "loopCrossfadeSeconds": 0.12,
+      "sha256": "23a9e757bb28086cd4f3e65d1c477895c464d8e1cc5dd05ad02a1b1a53e7b0e4"
+    },
+    {
+      "id": "engine-mid",
+      "targetLufs": -21,
+      "measuredLufs": "-21.08",
+      "truePeakDbTP": "-11.39",
+      "loopCrossfadeSeconds": 0.12,
+      "sha256": "6bba538d280fb7069329480669e2cf16e83ab6eae19696d3991e22c3cbcc7295"
+    },
+    {
+      "id": "final-lap",
+      "targetLufs": -20,
+      "measuredLufs": "-24.06",
+      "truePeakDbTP": "-6.45",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "4bacf8e2a81f4799ce0682829fc74424f300bd54276c632ea3d8b2e53eeb1862"
+    },
+    {
+      "id": "finish",
+      "targetLufs": -20,
+      "measuredLufs": "-21.28",
+      "truePeakDbTP": "-6.36",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "7f7c5535bfb43f08c75f4079fb742947762b219478c8d8a5f2aec2a2e75d1b4e"
+    },
+    {
+      "id": "green",
+      "targetLufs": -20,
+      "measuredLufs": "-20.43",
+      "truePeakDbTP": "-7.35",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "ab9cac54730dbf2ba7c684a3bd11cd17ae0fa4c28beb2ffd7435a4c4a024a156"
+    },
+    {
+      "id": "impact",
+      "targetLufs": -23,
+      "measuredLufs": "-26.40",
+      "truePeakDbTP": "-6.48",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "403a4cfe13e4bcd8abb3a7484b6e62d816ac2e1ea9c8deb5dedecb88cf0256ff"
+    },
+    {
+      "id": "install",
+      "targetLufs": -23,
+      "measuredLufs": "-23.28",
+      "truePeakDbTP": "-9.81",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "e83107908cb706d89c047f2bbbb609a75cc04ab8bd7fa739a0256a8b3b5d3171"
+    },
+    {
+      "id": "shift",
+      "targetLufs": -23,
+      "measuredLufs": "-23.35",
+      "truePeakDbTP": "-6.63",
+      "loopCrossfadeSeconds": 0,
+      "sha256": "fa2a9c8d394cad4580b3dc503d6d7e23177b0c5e95f6fb2d56b55a0293f8852c"
+    },
+    {
+      "id": "tire",
+      "targetLufs": -23,
+      "measuredLufs": "-23.39",
+      "truePeakDbTP": "-13.77",
+      "loopCrossfadeSeconds": 0.12,
+      "sha256": "1cbb7db7e005e54797e14f5ce9c9db82bfea865a66d9ade0b55cc9b407bb9a16"
+    },
+    {
+      "id": "tour-music",
+      "targetLufs": -25,
+      "measuredLufs": "-25.33",
+      "truePeakDbTP": "-12.37",
+      "loopCrossfadeSeconds": 0.7,
+      "sha256": "5f599b08f6dc03934154ca46676b75944715839aa0eb734a2a9a638343195ebf"
+    },
+    {
+      "id": "wind",
+      "targetLufs": -23,
+      "measuredLufs": "-23.63",
+      "truePeakDbTP": "-12.14",
+      "loopCrossfadeSeconds": 0.12,
+      "sha256": "563f3cd43a3bb4ebe4c356f164d88a48f03a1b6056358135697b785716430c9b"
+    }
+  ],
+  "postCompressorOutputGain": 0.5,
+  "note": "Final 6 dB output trim counteracts Web Audio compressor makeup gain, including countdown and finish tones."
+}

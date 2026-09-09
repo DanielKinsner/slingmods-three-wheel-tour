@@ -1,0 +1,251 @@
+export type Region = 'smokies' | 'coast' | 'texas' | 'desert';
+export interface Track {
+  id: Region;
+  name: string;
+  location: string;
+  state: string;
+  subtitle: string;
+  character: string;
+  color: string;
+  sky: number;
+  fog: number;
+  ground: number;
+  trees: number;
+  points: [number, number, number][];
+}
+export const TRACKS: Track[] = [
+  {
+    id: 'smokies',
+    name: 'SMOKY MOUNTAIN RUN',
+    location: 'Maggie Valley',
+    state: 'NORTH CAROLINA',
+    subtitle: 'Chase the ridgeline.',
+    character: 'Technical · Forest switchbacks',
+    color: '#bdcc9a',
+    sky: 0xb6d4d2,
+    fog: 0xa9c4b7,
+    ground: 0x67775a,
+    trees: 0x304b38,
+    points: [
+      [0, 6, 0],
+      [80, 10, 130],
+      [220, 23, 200],
+      [290, 34, 340],
+      [150, 25, 470],
+      [-30, 9, 420],
+      [-175, 15, 480],
+      [-295, 28, 320],
+      [-235, 20, 180],
+      [-120, 5, 160],
+      [-135, 3, 30],
+      [-80, 4, -60],
+    ],
+  },
+  {
+    id: 'coast',
+    name: 'ATLANTIC BOULEVARD',
+    location: 'Daytona Beach',
+    state: 'FLORIDA',
+    subtitle: 'Ride the last light.',
+    character: 'Urban · Oceanfront boulevard',
+    color: '#f4b5a3',
+    sky: 0x9bbacf,
+    fog: 0xbacbd3,
+    ground: 0xbba681,
+    trees: 0x506c50,
+    points: [
+      [0, 3, 0],
+      [35, 4, 210],
+      [10, 6, 410],
+      [100, 5, 520],
+      [245, 4, 450],
+      [270, 3, 250],
+      [250, 4, 50],
+      [175, 3, -90],
+      [55, 3, -115],
+    ],
+  },
+  {
+    id: 'texas',
+    name: 'HILL COUNTRY HEAT',
+    location: 'Texas Hill Country',
+    state: 'TEXAS',
+    subtitle: 'Find your own line.',
+    character: 'Flowing · Rolling ranch roads',
+    color: '#d8b36e',
+    sky: 0xc3d2ce,
+    fog: 0xc5bda0,
+    ground: 0x9d9565,
+    trees: 0x626641,
+    points: [
+      [0, 8, 0],
+      [110, 20, 110],
+      [100, 8, 270],
+      [240, 13, 360],
+      [195, 25, 520],
+      [-15, 18, 550],
+      [-90, 9, 380],
+      [-245, 20, 320],
+      [-275, 14, 150],
+      [-120, 6, 85],
+      [-145, 8, -55],
+    ],
+  },
+  {
+    id: 'desert',
+    name: 'RED ROCK RECKONING',
+    location: 'Las Vegas',
+    state: 'NEVADA',
+    subtitle: 'Leave it all in the dust.',
+    character: 'Demanding · Canyon hairpins',
+    color: '#e6956a',
+    sky: 0xdcc1a7,
+    fog: 0xd2a187,
+    ground: 0xa97d5c,
+    trees: 0x747654,
+    points: [
+      [0, 7, 0],
+      [30, 12, 160],
+      [180, 30, 245],
+      [260, 22, 390],
+      [150, 8, 485],
+      [20, 9, 380],
+      [-80, 23, 460],
+      [-225, 32, 400],
+      [-265, 20, 225],
+      [-130, 9, 160],
+      [-150, 5, 10],
+      [-55, 6, -80],
+    ],
+  },
+];
+export const CHAPTERS = [
+  {
+    track: 0,
+    title: 'A seat at the table',
+    contact: 'MAYA / SLINGMODS CREW CHIEF',
+    text: 'You rolled into Maggie Valley with a stock ride and a tank full of ambition. We have one open spot on the SlingMods tour. Finish your first race. Show us you belong.',
+    goal: 'Finish the race',
+    maxPlace: 6,
+    laps: 1,
+    reward: 900,
+    after:
+      'You kept it together. That is all we needed to see. Your first sponsor credits are in—put them to work in the garage.',
+  },
+  {
+    track: 0,
+    title: 'Earn your colors',
+    contact: 'MAYA / SLINGMODS CREW CHIEF',
+    text: 'The locals know every bend on this mountain. Jax thinks you are just here for the view. Bring home a top-three finish and the tour jacket is yours.',
+    goal: 'Finish in the top 3',
+    maxPlace: 3,
+    laps: 2,
+    reward: 1300,
+    after:
+      'Jax stopped talking. That is a good sign. Pack light; we are following the sun to Daytona.',
+  },
+  {
+    track: 1,
+    title: 'Salt in the air',
+    contact: 'REEF / COASTAL REGULAR',
+    text: 'Welcome to the coast. The ocean is pretty, but keep your eyes on the next apex. Ride my slipstream, save your boost, and bring it home in the top four.',
+    goal: 'Finish in the top 4',
+    maxPlace: 4,
+    laps: 1,
+    reward: 1200,
+    after: 'You found the rhythm. There is one more race before the lights come on. Make it count.',
+  },
+  {
+    track: 1,
+    title: 'Daytona after dark',
+    contact: 'REEF / COASTAL REGULAR',
+    text: 'Streetlights on. Underglow ready. The boulevard belongs to the tour tonight. Read the braking zones, draft the straights, and bring the crew a top-three finish under the lights.',
+    goal: 'Finish in the top 3',
+    maxPlace: 3,
+    laps: 2,
+    reward: 1500,
+    after:
+      'That finish deserved an audience. The beach crew is wearing SlingMods colors tonight. Next stop: Texas.',
+  },
+  {
+    track: 2,
+    title: 'Wide open welcome',
+    contact: 'DUSTY / HILL COUNTRY HOST',
+    text: 'Around here we measure a good day in miles. These rolling turns reward a smooth hand. Stay on the pavement, find a clean line, and finish in the top four.',
+    goal: 'Finish in the top 4',
+    maxPlace: 4,
+    laps: 1,
+    reward: 1400,
+    after:
+      'Smooth is fast. You are starting to make that stock ride feel like your own. There is a bigger field waiting tomorrow.',
+  },
+  {
+    track: 2,
+    title: 'Lone Star showdown',
+    contact: 'DUSTY / HILL COUNTRY HOST',
+    text: 'Jax followed you west. Says the mountain was luck and the beach was a tailwind. Put two clean laps together and beat everyone to the line.',
+    goal: 'Win the race',
+    maxPlace: 1,
+    laps: 2,
+    reward: 1800,
+    after: 'No excuses left. The crew is behind you, the ride is dialed, and Vegas is calling.',
+  },
+  {
+    track: 3,
+    title: 'Into the red',
+    contact: 'MAYA / SLINGMODS CREW CHIEF',
+    text: 'This is the part of Vegas the postcards miss. Red rock, tight corners, nowhere to hide. Learn the canyon and land on the podium. The finale is next.',
+    goal: 'Finish in the top 3',
+    maxPlace: 3,
+    laps: 1,
+    reward: 1600,
+    after:
+      'One more race. One more chance to put your name on this tour. Take a breath, check your setup, and let us finish this.',
+  },
+  {
+    track: 3,
+    title: 'Three wheels. One champion.',
+    contact: 'MAYA / SLINGMODS CREW CHIEF',
+    text: 'From a parking lot in Maggie Valley to the final grid in Nevada. Every mile got you here. Win the finale and bring the Three-Wheel Tour trophy home to SlingMods.',
+    goal: 'Win the race',
+    maxPlace: 1,
+    laps: 2,
+    reward: 3000,
+    after:
+      'TOUR CHAMPION. Four destinations, one crew, and a ride that tells your story. The road does not end here. Chase your best times, finish your build, and run it back.',
+  },
+];
+export const UPGRADES = [
+  {
+    id: 'power',
+    name: 'POWER PACKAGE',
+    label: 'Real parts + crew calibration',
+    description: 'Pull harder out of every corner. Each stage adds acceleration and top speed.',
+    icon: '↗',
+    prices: [700, 1300, 2100],
+  },
+  {
+    id: 'grip',
+    name: 'APEX PACKAGE',
+    label: 'DDMWorks suspension build',
+    description: 'Tighter lines, less push. Each stage improves corner grip and braking.',
+    icon: '⌁',
+    prices: [600, 1100, 1800],
+  },
+  {
+    id: 'boost',
+    name: 'TOUR BOOST',
+    label: 'Arcade boost system',
+    description: 'Stay in the fight longer. Each stage increases boost capacity and regeneration.',
+    icon: 'ϟ',
+    prices: [650, 1200, 1900],
+  },
+] as const;
+export const PAINTS = [
+  { name: 'SlingMods red', color: '#cf102d' },
+  { name: 'Glacier', color: '#eceff2' },
+  { name: 'Electric blue', color: '#28a2d6' },
+  { name: 'Citron', color: '#d9e34f' },
+  { name: 'Midnight', color: '#383c4d' },
+];
+export const RIVALS = ['JAX', 'REEF', 'DUSTY', 'NOVA', 'ACE'];
