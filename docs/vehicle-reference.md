@@ -79,9 +79,12 @@ inspected to verify Y-up, +Z forward and zero initial local wheel rotation.
 
 ## Honest limits
 
-Owner approval of proportions has not been obtained. Panel curvature, rear body
-closure, seat shaping, brake rotor perforations, optical internals, and material
-weathering are still simplified. Suspension rods are rigid visual parts, not a
+The owner approved the general model direction and supplied PNG angle references.
+The follow-up in `owner-angle-refinements.md` improves hood channels, integrated
+seat shapes, optical surrounds, rear deck/closeouts and coilover detail. Approval
+of every revised contour has not been obtained; brake rotors, optical internals,
+material weathering and exact panel curvature remain simplified.
+Suspension rods are rigid visual parts, not a
 fully articulated kinematic assembly. Gauge needles have separate `RpmNeedle` and
 `SpeedNeedle` nodes; root integration must rotate their Z axis from telemetry.
 The steering wheel and wheel pivots are separate animated nodes. No claim is made that neutral Blender renders prove

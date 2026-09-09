@@ -6,7 +6,11 @@
     "validHeaderLength": true,
     "animationContract": true,
     "wheelTransforms": true,
-    "manifestHash": true
+    "customizationMaterials": true,
+    "triangles": 53212,
+    "meshes": 45,
+    "bytes": 2343704,
+    "sha256": "f6fba56ef0d23821018e116da63e0880855fc5f29c1d9ffc582d35587b5f1683"
   },
   {
     "tier": "lod",
@@ -15,6 +19,10 @@
     "validHeaderLength": true,
     "animationContract": true,
     "wheelTransforms": true,
-    "manifestHash": true
+    "customizationMaterials": true,
+    "triangles": 22938,
+    "meshes": 45,
+    "bytes": 1227008,
+    "sha256": "de60eb0beb4beeb6bc360cbae6700fbe94c29ee3ad7c52b1967063f5ce193ca6"
   }
 ]

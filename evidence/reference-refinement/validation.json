@@ -1,0 +1,35 @@
+{
+  "referenceDirectory": "D:\\slingshot angles",
+  "sourceImagesEmbedded": false,
+  "old": {
+    "high": {
+      "triangles": 46060,
+      "meshes": 45
+    },
+    "low": {
+      "triangles": 19916,
+      "meshes": 45
+    }
+  },
+  "new": {
+    "high": {
+      "triangles": 53212,
+      "meshes": 45
+    },
+    "low": {
+      "triangles": 22938,
+      "meshes": 45
+    }
+  },
+  "wheelCentersUnchanged": true,
+  "frontTrackUnchanged": true,
+  "wheelbaseUnchanged": true,
+  "paintAndRgbSourceUnchanged": true,
+  "runtimeChecks": [
+    "WebGPU garage, Glacier/ice blue and Electric blue/violet",
+    "Night race cockpit moving at 61 mph, clear forward view",
+    "Rear body and tail-lamp visibility in chase view"
+  ],
+  "runtimeConsoleErrors": [],
+  "performanceLimitation": "Prior full Miami frame distribution predates this mesh refinement. Mesh count remains 45; new mesh triangle/byte cost is measured separately. No refreshed full performance matrix or physical phone claim."
+}

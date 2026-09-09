@@ -1,5 +1,11 @@
 # Owner-driving upgrade — review branch
 
+## Owner-angle refinement — September 9 follow-up
+
+Implemented from the owner's `D:\slingshot angles` R references: contoured bucket seats, hood channels/shoulders, integrated center-light eyebrow, recessed outer optics, rear deck/spine, wraparound tail lamps and rear spring. All paint/RGB choices, axle transforms and gameplay code are unchanged. Both GLBs and Blender masters/turntable were rebuilt. Full: 53,212 triangles / 2,343,704 bytes; reduced: 22,938 triangles / 1,227,008 bytes. Both retain 45 mesh groups.
+
+Build and 99 tests pass; GLB structure, animation/customization contracts and wheel transforms validated. Actual WebGPU garage paint/RGB changes, rear lights and moving night-race cockpit were inspected without console errors. Before/after frames are under evidence/reference-refinement. This art follow-up does not renew the older full Miami performance claim; a short gameplay clip includes a background/long-frame pause and is visual evidence only. Updated preview model hashes match local assets. See docs/owner-angle-refinements.md.
+
 Production is frozen at v0.3.2. No production promotion or storefront modification is authorized.
 
 ## Verified baseline
@@ -22,7 +28,7 @@ Physical iPhone/Safari, controller hardware and human speaker/headphone audition
 
 ## Final review deployment and evidence
 
-[Play preview](https://slingmods-three-wheel-tour-hvbvyoxk5-daniel-kinsners-projects.vercel.app/). Existing Vercel protection requires an authorized account. Verified in the owner's signed-in Chrome session; anonymous requests redirect to Vercel login. Protection was not changed. JS/CSS hashes match the local build (PREVIEW-DEPLOYMENT.json). Production remains deployment dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o. No storefront changes or production promotion.
+[Play preview](https://slingmods-three-wheel-tour-riwaaa1fb-daniel-kinsners-projects.vercel.app/). Existing Vercel protection requires an authorized account. Verified in the owner's signed-in Chrome session; anonymous requests redirect to Vercel login. Protection was not changed. JS/CSS hashes match the local build (PREVIEW-DEPLOYMENT.json). Production remains deployment dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o. No storefront changes or production promotion.
 
 Actual baseline Daytona, full Miami night and garage customization videos, comparable garage frames, downloaded owner photo, neutral vehicle views/turntable and engine/gameplay A/B are delivered. Canvas videos omit the DOM HUD; actual UI was inspected in browser screenshots. New preview origin correctly starts at zero credits; production progress is not copied.
 

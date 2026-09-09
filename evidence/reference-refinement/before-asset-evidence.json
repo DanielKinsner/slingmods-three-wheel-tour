@@ -1,0 +1,78 @@
+{
+  "id": "slingshot-r-inspired-2025",
+  "created": "2026-09-09",
+  "classification": "original Blender-authored approximation",
+  "reference": "2025 Polaris Slingshot R, ProStar generation",
+  "license": "Original project geometry; no manufacturer mesh, photo, logo or CAD included. References are not redistributed. No OEM endorsement or exact-fit claim.",
+  "units": "metres, Y up, +Z forward",
+  "wheelCenters": [
+    [
+      -0.8775,
+      0.333,
+      1.197
+    ],
+    [
+      0.8775,
+      0.333,
+      1.197
+    ],
+    [
+      0,
+      0.354,
+      -1.47
+    ]
+  ],
+  "frontTrack": 1.755,
+  "wheelbase": 2.667,
+  "measuredBounds": {
+    "min": [
+      -1.003749966621399,
+      -0.001969665288925171,
+      -1.8641873598098755
+    ],
+    "max": [
+      1.0112026929855347,
+      1.3170340061187744,
+      1.9299955368041992
+    ],
+    "size": [
+      2.0149526596069336,
+      1.3190036714076996,
+      3.7941828966140747
+    ]
+  },
+  "high": {
+    "triangles": 46060,
+    "meshes": 45
+  },
+  "low": {
+    "triangles": 19916,
+    "meshes": 45
+  },
+  "files": {
+    "public/models/slingshot-r-hero.glb": {
+      "bytes": 2090204,
+      "sha256": "39f3d7f2702215df05adb8bd6cf7a3661536f97d448d68b25107a87104612d15"
+    },
+    "public/models/slingshot-r-lod.glb": {
+      "bytes": 1101024,
+      "sha256": "35b517d212e6be030871b1e782376f168751575da1473cf39ca581699b43ae32"
+    },
+    "artwork/vehicle/slingshot-r-inspired.blend": {
+      "bytes": 3664124,
+      "sha256": "8da7120e99e60bdc9daf558eac196ca046c73a29392c5a4952ab81c0a131d948"
+    },
+    "artwork/vehicle/rubber-micro-normal.png": {
+      "bytes": 38419,
+      "sha256": "a647b2fdbe2d0adfa71309523ed0ae772f7be37e13b8e4de4233d1a810de54bf"
+    },
+    "artwork/vehicle/trim-micro-normal.png": {
+      "bytes": 38393,
+      "sha256": "97be469c9094044bd9e9dec1f8ba8c803a692da06aa9829e46dc9887a452e82b"
+    },
+    "artwork/vehicle/upholstery-micro-normal.png": {
+      "bytes": 38425,
+      "sha256": "481b91c380c61ca927d519c84753764d95d95ba3237a15d7e0db56d4d9d386b7"
+    }
+  }
+}

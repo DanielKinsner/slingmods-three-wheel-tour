@@ -1,5 +1,7 @@
 # Review evidence
 
+Latest art follow-up: [owner-angle refinement, before/after and live captures](reference-refinement/README.md).
+
 - [Original Daytona gameplay](baseline-daytona.mp4) and [baseline profile](baseline-daytona-profile.json).
 - [Full Miami night lap with game audio](miami-night.mp4) and [final measured profile](miami-night-profile.json).
 - [Actual garage customization](owner-garage.mp4) and [downloaded owner-build photo](owner-build-photo.png).

@@ -1,6 +1,6 @@
 {
-  "previewUrl": "https://slingmods-three-wheel-tour-hvbvyoxk5-daniel-kinsners-projects.vercel.app",
-  "deploymentId": "dpl_83evGAWaFSycg9nRH2cVNA5zWjHn",
+  "previewUrl": "https://slingmods-three-wheel-tour-riwaaa1fb-daniel-kinsners-projects.vercel.app",
+  "deploymentId": "dpl_BhA5Au7CCw1mc4hQDB6iFU99Tb68",
   "target": "preview",
   "status": "Ready",
   "anonymousRequestRedirectsToVercelLogin": true,
@@ -18,5 +18,11 @@
     }
   ],
   "unchangedProductionUrl": "https://slingmods-three-wheel-tour.vercel.app/",
-  "unchangedProductionDeploymentId": "dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o"
+  "unchangedProductionDeploymentId": "dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o",
+  "assetRefinement": "Owner supplied PNG angles; original mesh source updated",
+  "authenticatedBrowserModelHashesVerified": true,
+  "assetHashes": {
+    "slingshot-r-hero.glb": "f6fba56ef0d23821018e116da63e0880855fc5f29c1d9ffc582d35587b5f1683",
+    "slingshot-r-lod.glb": "de60eb0beb4beeb6bc360cbae6700fbe94c29ee3ad7c52b1967063f5ce193ca6"
+  }
 }
