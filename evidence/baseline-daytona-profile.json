@@ -1,0 +1,41 @@
+{
+  "label": "baseline-daytona",
+  "original": "captures/gameplay-1788988026299.webm",
+  "profile": "captures/profile-1788988026299.json",
+  "editedVideo": "baseline-daytona.mp4",
+  "editing": "Downscaled to1920width at30fps; results tail shortened. Audio retained with no loudness normalization. Any pauses remain; no speed changes.",
+  "device": "Windows desktop / RTX4080 / Core i9-12900K / Chrome; not midrange or mobile hardware",
+  "renderer": "WebGPU",
+  "activeSamples": 335,
+  "lastRaceTime": 33.49166666666541,
+  "sampledCpuFrameMs": null,
+  "smoothedFrameMsNotRawDistribution": {
+    "samples": 335,
+    "p50": 16.67053414652151,
+    "p95": 18.17532613513991,
+    "p99": 19.288381273928906,
+    "max": 19.814089790805333
+  },
+  "drawCalls": {
+    "samples": 335,
+    "p50": 365,
+    "p95": 781,
+    "p99": 839,
+    "max": 839
+  },
+  "triangles": {
+    "samples": 335,
+    "p50": 2806631,
+    "p95": 3358681,
+    "p99": 3359661,
+    "max": 3359661
+  },
+  "actualFrameDistribution": null,
+  "viewport": null,
+  "drawingBuffer": null,
+  "textures": null,
+  "sampledOutputPeakDb": -13.05606795207106,
+  "audioListeningApproval": false,
+  "GPUFrameTime": "Not measured; CPU submission time and rAF intervals are not GPU timer-query results",
+  "captureLimitation": "Early mutable CPU and nested telemetry snapshots are invalid; excluded. Actual media and primitive time/frame values remain valid."
+}

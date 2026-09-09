@@ -1,0 +1,353 @@
+{
+  "version": "0.4.0-review",
+  "assets": [
+    {
+      "file": "public/audio/brief-0.mp3",
+      "bytes": 137969,
+      "sha256": "e332814d83c83cdac0f5eead40533ac1f4f6dabcb5ce8f4e64a8a169027c8896",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/brief-1.mp3",
+      "bytes": 92412,
+      "sha256": "01980e23b01498ef58ef45cb6b7a3ac394c495188331f120adcfb31e680bf385",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/brief-2.mp3",
+      "bytes": 120833,
+      "sha256": "409d42a2b6dd2eac8646bed5ab17adffdc2704353924c008e983c9f9edc4b3d7",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/brief-3.mp3",
+      "bytes": 117907,
+      "sha256": "4cc0423b4ad72c5f1efc14872a2d3bbdc8e87074decb56d780bb7780205f6a50",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/brief-4.mp3",
+      "bytes": 114563,
+      "sha256": "1232691f1d9d816e06b4d6192494ca475f4da2f6dabefa79e49103893d3ebfad",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/brief-5.mp3",
+      "bytes": 104532,
+      "sha256": "32b8b662dab1e57852e009cfdb685ec31c4621116a1c8c85ee93ba379680d79d",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/brief-6.mp3",
+      "bytes": 116235,
+      "sha256": "26666a3370bb5b084941e23451071768901ab53e9043bdb3e27aefa015204cf3",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/brief-7.mp3",
+      "bytes": 104950,
+      "sha256": "5bcad28f0523f70ac68e8067578feed19c8253fd9497c36c47844aa7b2d70bf2",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/coastal-air.wav",
+      "bytes": 1411244,
+      "sha256": "7dee03f34c29f7a902a7cf046f0d4d39e4e0765148dd6a06335a109f4ce6073a",
+      "origin": "Original deterministic DSP synthesis; scripts/build-surface-audio.py",
+      "usage": "Original generated audio; not a field recording"
+    },
+    {
+      "file": "public/audio/engine-high.mp3",
+      "bytes": 95337,
+      "sha256": "3a046e819f7621c1ad9a068847dc6b194bb7b31b8b273825a4e9e09eebddf650",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/engine-idle.mp3",
+      "bytes": 95337,
+      "sha256": "23a9e757bb28086cd4f3e65d1c477895c464d8e1cc5dd05ad02a1b1a53e7b0e4",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/engine-mid.mp3",
+      "bytes": 95337,
+      "sha256": "6bba538d280fb7069329480669e2cf16e83ab6eae19696d3991e22c3cbcc7295",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/final-lap.mp3",
+      "bytes": 35151,
+      "sha256": "4bacf8e2a81f4799ce0682829fc74424f300bd54276c632ea3d8b2e53eeb1862",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/finish.mp3",
+      "bytes": 55213,
+      "sha256": "7f7c5535bfb43f08c75f4079fb742947762b219478c8d8a5f2aec2a2e75d1b4e",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/green.mp3",
+      "bytes": 32225,
+      "sha256": "ab9cac54730dbf2ba7c684a3bd11cd17ae0fa4c28beb2ffd7435a4c4a024a156",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/impact.mp3",
+      "bytes": 17179,
+      "sha256": "403a4cfe13e4bcd8abb3a7484b6e62d816ac2e1ea9c8deb5dedecb88cf0256ff",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/install.mp3",
+      "bytes": 21358,
+      "sha256": "e83107908cb706d89c047f2bbbb609a75cc04ab8bd7fa739a0256a8b3b5d3171",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/road-roll.wav",
+      "bytes": 705644,
+      "sha256": "d007d4de9c0c1858ae70a38552e418db36f1c7d9822ed31cb29e83d18ac1cdd0",
+      "origin": "Original deterministic DSP synthesis; scripts/build-surface-audio.py",
+      "usage": "Original generated audio; not a field recording"
+    },
+    {
+      "file": "public/audio/shift.mp3",
+      "bytes": 8820,
+      "sha256": "fa2a9c8d394cad4580b3dc503d6d7e23177b0c5e95f6fb2d56b55a0293f8852c",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/shoulder-roll.wav",
+      "bytes": 705644,
+      "sha256": "83dc8e791aefd8a50dac011715a070b99ebf7da8b4ab3071f9295cb507e7e178",
+      "origin": "Original deterministic DSP synthesis; scripts/build-surface-audio.py",
+      "usage": "Original generated audio; not a field recording"
+    },
+    {
+      "file": "public/audio/tire.mp3",
+      "bytes": 47272,
+      "sha256": "1cbb7db7e005e54797e14f5ce9c9db82bfea865a66d9ade0b55cc9b407bb9a16",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/tour-music.mp3",
+      "bytes": 710573,
+      "sha256": "5f599b08f6dc03934154ca46676b75944715839aa0eb734a2a9a638343195ebf",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/audio/wind.mp3",
+      "bytes": 95337,
+      "sha256": "563f3cd43a3bb4ebe4c356f164d88a48f03a1b6056358135697b785716430c9b",
+      "origin": "Existing ElevenLabs generation; AUDIO-PROVENANCE.json",
+      "usage": "Preserved existing asset; commercial subscription entitlement at generation not independently reverified"
+    },
+    {
+      "file": "public/mark.svg",
+      "bytes": 200,
+      "sha256": "cf998492c21f05fe27e499da1749911baf290330812f31c768bb3dd1c6384d8e",
+      "origin": "Original project-authored asset",
+      "usage": "Project artwork; source retained in this delivery"
+    },
+    {
+      "file": "public/models/slingshot-r-hero.glb",
+      "bytes": 2090204,
+      "sha256": "39f3d7f2702215df05adb8bd6cf7a3661536f97d448d68b25107a87104612d15",
+      "origin": "Original Blender source artwork/vehicle/slingshot-r-inspired.blend",
+      "usage": "Original R-inspired approximation; reference photographs not embedded; not manufacturer CAD"
+    },
+    {
+      "file": "public/models/slingshot-r-lod.glb",
+      "bytes": 1101024,
+      "sha256": "35b517d212e6be030871b1e782376f168751575da1473cf39ca581699b43ae32",
+      "origin": "Original Blender source artwork/vehicle/slingshot-r-inspired.blend",
+      "usage": "Original R-inspired approximation; reference photographs not embedded; not manufacturer CAD"
+    },
+    {
+      "file": "public/products/exhaust.jpg",
+      "bytes": 581050,
+      "sha256": "87d553bbb79abf287a32164efe937b56c9233a6fe6f65fa5b2d83e93893d55b0",
+      "origin": "http://www.slingmods.com/image/catalog/thermal-exhaust/polaris-slingshot-catback-ceramic-coated-dual-rear-exit-sport-exhaust-2025/polaris-slingshot-2025-up-dual-catback-rear-exit-sport-exhaust-system-studio-main.jpg",
+      "usage": "Existing company-catalog image; owner authorized company use. Supplier/image redistribution entitlement not independently verified."
+    },
+    {
+      "file": "public/products/intake.jpg",
+      "bytes": 934501,
+      "sha256": "74f18d46ff421cd48e401ea43b15680c5a1469b69522a5fc9a4d4a42eec42629",
+      "origin": "http://www.slingmods.com/image/catalog/ddm/2025-cold-air-intake/polaris-slingshot-ddm-cold-air-intake-gen3-sm-installed-main.jpg",
+      "usage": "Existing company-catalog image; owner authorized company use. Supplier/image redistribution entitlement not independently verified."
+    },
+    {
+      "file": "public/products/links.jpg",
+      "bytes": 400523,
+      "sha256": "78e32c3e3eea681cc57d123445fb468b1eaeef4af68566cd19a5b47266983b13",
+      "origin": "http://www.slingmods.com/image/catalog/ddm/polaris-slingshot-billet-aluminum-sway-bar-end-links/polaris-slingshot-sway-bar-end-links-gradient-main.jpg",
+      "usage": "Existing company-catalog image; owner authorized company use. Supplier/image redistribution entitlement not independently verified."
+    },
+    {
+      "file": "public/products/mounts.jpg",
+      "bytes": 256756,
+      "sha256": "1ed7ea9e4129bb5bae8021aee9f15f4e15edf23d08b4b9cac6fb480e44f623d3",
+      "origin": "http://www.slingmods.com/image/catalog/ddm/sway-bar/mounting-brackets-only/polaris-slingshot-sway-bar-mounting-brackets-glow.jpg",
+      "usage": "Existing company-catalog image; owner authorized company use. Supplier/image redistribution entitlement not independently verified."
+    },
+    {
+      "file": "public/products/rgb.jpg",
+      "bytes": 158789,
+      "sha256": "14fda3c5b730a60b80664f0ff5e49345b6aa69cf40f8580fc9b82e33497175d7",
+      "origin": "http://www.slingmods.com/image/catalog/product_images/polaris-slingshot-underglow.jpg",
+      "usage": "Existing company-catalog image; owner authorized company use. Supplier/image redistribution entitlement not independently verified."
+    },
+    {
+      "file": "public/products/shocks.jpg",
+      "bytes": 164660,
+      "sha256": "0039adf193dd5a69f494bc77fe6f2d5c421586d63bad17541f23ee686b36aa92",
+      "origin": "http://www.slingmods.com/image/catalog/ddm/sport-shocks/polaris-slingshot-3-way-adjustable-sport-shocks-coilovers-ddmworks-main.jpg",
+      "usage": "Existing company-catalog image; owner authorized company use. Supplier/image redistribution entitlement not independently verified."
+    },
+    {
+      "file": "public/slingmods-logo.png",
+      "bytes": 24200,
+      "sha256": "7f86698349f9c83abdd9a68d9c40810c2f89385a710fa209de6ad71fff75c3fd",
+      "origin": "https://www.slingmods.com/image/catalog/slingmods-logo-main.png",
+      "usage": "Company mark used under explicit owner authorization"
+    },
+    {
+      "file": "public/textures/asphalt.webp",
+      "bytes": 772400,
+      "sha256": "2723b9192cbafb49301f3830281217330ecc87c94f1247bed17f5e09aa1cec26",
+      "origin": "Existing OpenAI-generated artwork; GENERATED-ASSETS.md and artwork/textures",
+      "usage": "Original generated texture; not a scan"
+    },
+    {
+      "file": "public/textures/coastal-sky.hdr",
+      "bytes": 4434394,
+      "sha256": "99451201586489ef3288c97bfac2a2ac232a5491c51a1faf0ec8ea39f3ccd533",
+      "origin": "https://polyhaven.com/a/kloppenheim_06_puresky",
+      "usage": "CC0; https://polyhaven.com/license"
+    },
+    {
+      "file": "public/textures/coastal-stucco.webp",
+      "bytes": 710596,
+      "sha256": "f708e8bbd054ad3fb8571dd1defe4ffd974db14363bc23800fdabbb9a5924c16",
+      "origin": "Existing OpenAI-generated artwork; GENERATED-ASSETS.md and artwork/textures",
+      "usage": "Original generated texture; not a scan"
+    },
+    {
+      "file": "public/textures/deco-facade.webp",
+      "bytes": 398116,
+      "sha256": "f9ba3f5d40ae026abac11acee6d44851ab0035504804ca18d100885ace1fc093",
+      "origin": "Existing OpenAI-generated artwork; GENERATED-ASSETS.md and artwork/textures",
+      "usage": "Original generated texture; not a scan"
+    },
+    {
+      "file": "public/textures/miami/limewash-color.webp",
+      "bytes": 18822,
+      "sha256": "4109224fd9efc3d6f576df2b67c2d37c9a3eded5abf8c8f42d49785b69c7dc39",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/limewash-normal.webp",
+      "bytes": 73494,
+      "sha256": "6bcc231ee6a07b4173ed76d6171a1c81b365b0e2992538b8fa1e41f418a56724",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/limewash-roughness.webp",
+      "bytes": 48570,
+      "sha256": "c0e712fb78037c0310a0d311e231614156079e7c3e59d5519c6f72bcb719e6ba",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/pavers-color.webp",
+      "bytes": 35734,
+      "sha256": "3b9d77a55d65ae6a72ff6521b2a84fa7e0848e18df52bfa44e46369854c44658",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/pavers-normal.webp",
+      "bytes": 18318,
+      "sha256": "5a0c8d0bf9589bd6c8c03d759378660f0211eeb2b9fe420cc4a042a53a97f973",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/pavers-roughness.webp",
+      "bytes": 55660,
+      "sha256": "d5572f7d18a75b4aa42bc6aef644da3735b635bb551a7202528b28af65bb2f64",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/storefront-atlas.webp",
+      "bytes": 58560,
+      "sha256": "0ec04bf92183107bd2e1358892b2e8344e6a593a1ac26d5fcfb6865731bdffd5",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/terrazzo-color.webp",
+      "bytes": 129540,
+      "sha256": "5e6971811ea9676586efdd37afc64fe9d4194d4d58699ed71c37476411a6f44b",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/terrazzo-normal.webp",
+      "bytes": 812,
+      "sha256": "be54981b2c8b8f4d8218c0cc0ac4ac3f809cd63d567dc5a8658f07af651c1adb",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/textures/miami/terrazzo-roughness.webp",
+      "bytes": 64660,
+      "sha256": "f69d191f75237e19f0b845e405cf8bdfac25d0dd56faaf8f9beebf32d2fc3eeb",
+      "origin": "Original deterministic texture authoring; scripts/generate-miami-assets.py",
+      "usage": "Original artwork; normal maps are art approximations, not scanned PBR"
+    },
+    {
+      "file": "public/THIRD_PARTY_NOTICES.txt",
+      "bytes": 18107,
+      "sha256": "19c5eab0f8a1a52d322829762047bd8539d502d26a34432a228551966aab5771",
+      "origin": "Original project-authored asset",
+      "usage": "Project artwork; source retained in this delivery"
+    },
+    {
+      "package": "@fontsource/barlow",
+      "origin": "https://fontsource.org/fonts/barlow",
+      "usage": "SIL Open Font License 1.1; see docs/licenses",
+      "files": "Bundled Latin weights from package-lock.json"
+    },
+    {
+      "package": "@fontsource/barlow-condensed",
+      "origin": "https://fontsource.org/fonts/barlow-condensed",
+      "usage": "SIL Open Font License 1.1; see docs/licenses",
+      "files": "Bundled Latin weights from package-lock.json"
+    }
+  ]
+}

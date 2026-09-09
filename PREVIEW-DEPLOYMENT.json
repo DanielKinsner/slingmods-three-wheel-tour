@@ -1,0 +1,22 @@
+{
+  "previewUrl": "https://slingmods-three-wheel-tour-hvbvyoxk5-daniel-kinsners-projects.vercel.app",
+  "deploymentId": "dpl_83evGAWaFSycg9nRH2cVNA5zWjHn",
+  "target": "preview",
+  "status": "Ready",
+  "anonymousRequestRedirectsToVercelLogin": true,
+  "verifiedDate": "2026-09-09",
+  "authenticatedBrowserAssets": [
+    {
+      "path": "assets/index-DgaaEf3p.js",
+      "sha256": "474ee641e684ce909aa9a89c2f4862e510ff6d510ff8dcda39b0502dad347bd9",
+      "matchesLocalBuild": true
+    },
+    {
+      "path": "assets/index-8L4ugj--.css",
+      "sha256": "872db00a529c18fa2bb0135f9925161a5c1548ff725181616a83e47141926c45",
+      "matchesLocalBuild": true
+    }
+  ],
+  "unchangedProductionUrl": "https://slingmods-three-wheel-tour.vercel.app/",
+  "unchangedProductionDeploymentId": "dpl_kgBwd3XtaFjDF6sNR5egHrdnX31o"
+}

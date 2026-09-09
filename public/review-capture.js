@@ -24,6 +24,6 @@ if (['127.0.0.1','localhost'].includes(location.hostname) && new URLSearchParams
    recorder.start(1000);rec.textContent='QA: STOP';
   };
   snap.onclick=()=>requestAnimationFrame(()=>document.querySelector('#world').toBlob(b=>b&&upload('frame-'+Date.now()+'.png',b)));
-  setInterval(()=>{if(recorder?.state==='recording'&&window.__tour){const t=window.__tour;samples.push({at:performance.now(),build:t.build,screen:t.screen,raceTime:t.raceTime,frameMs:t.frameMs,cpu:t.cpu,drawCalls:t.drawCalls,triangles:t.triangles,player:t.player,audio:t.audio,backend:t.backend});}},100);
+  setInterval(()=>{if(recorder?.state==='recording'&&window.__tour){const t=window.__tour;samples.push({at:performance.now(),build:t.build,screen:t.screen,paused:t.paused,raceTime:t.raceTime,frameMs:t.frameMs,lastFrameMs:t.lastFrameMs,frameProfile:t.frameProfile,viewport:t.viewport,drawingBuffer:t.drawingBuffer,textures:t.textures,pixelRatio:t.pixelRatio,cpu:t.cpu,drawCalls:t.drawCalls,triangles:t.triangles,player:t.player,audio:t.audio,backend:t.backend,checkpoints:t.checkpoints});}},100);
  });
 }

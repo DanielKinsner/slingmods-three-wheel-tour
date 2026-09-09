@@ -1,0 +1,59 @@
+{
+  "label": "miami-night",
+  "original": "captures/gameplay-1788989065356.webm",
+  "profile": "captures/profile-1788989065356.json",
+  "editedVideo": "miami-night.mp4",
+  "editing": "Downscaled to1920width at30fps; results tail shortened. Audio retained with no loudness normalization. Any pauses remain; no speed changes.",
+  "device": "Windows desktop / RTX4080 / Core i9-12900K / Chrome; not midrange or mobile hardware",
+  "renderer": "WebGPU",
+  "activeSamples": 738,
+  "lastRaceTime": 73.80217024253952,
+  "sampledCpuFrameMs": {
+    "samples": 738,
+    "p50": 6.600000001490116,
+    "p95": 8.600000001490116,
+    "p99": 10.199999999254942,
+    "max": 27
+  },
+  "smoothedFrameMsNotRawDistribution": {
+    "samples": 738,
+    "p50": 16.66774794920579,
+    "p95": 16.707078402286026,
+    "p99": 17.390940798835462,
+    "max": 18.839104477057646
+  },
+  "drawCalls": {
+    "samples": 738,
+    "p50": 582,
+    "p95": 832,
+    "p99": 907,
+    "max": 910
+  },
+  "triangles": {
+    "samples": 738,
+    "p50": 1480859,
+    "p95": 1578171,
+    "p99": 1584489,
+    "max": 1584837
+  },
+  "actualFrameDistribution": {
+    "samples": 4423,
+    "p50": 16.69999999999709,
+    "p95": 16.80000000000291,
+    "p99": 16.900000000001455,
+    "max": 83.39999999999418,
+    "over33ms": 2
+  },
+  "viewport": [
+    2560,
+    1215
+  ],
+  "drawingBuffer": [
+    2248,
+    1067
+  ],
+  "textures": 64,
+  "sampledOutputPeakDb": -14.052506508781619,
+  "audioListeningApproval": false,
+  "GPUFrameTime": "Not measured; CPU submission time and rAF intervals are not GPU timer-query results"
+}

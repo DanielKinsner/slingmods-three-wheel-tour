@@ -136,25 +136,38 @@ export class Circuit {
       curve: a.curve + (b.curve - a.curve) * f,
     };
   }
-  project(position:T.Vector3,hint:number){
-    const step=this.length/this.samples.length;
-    const center=Math.round((((hint%this.length)+this.length)%this.length)/step);
-    let best=Infinity,bestIndex=center;
-    for(let offset=-55;offset<=55;offset++){
-      const i=(center+offset+this.samples.length)%this.samples.length;
-      const q=this.samples[i].p;const d=(q.x-position.x)**2+(q.z-position.z)**2;
-      if(d<best){best=d;bestIndex=i;}
+  project(position: T.Vector3, hint: number) {
+    const step = this.length / this.samples.length;
+    const center = Math.round((((hint % this.length) + this.length) % this.length) / step);
+    let best = Infinity,
+      bestIndex = center;
+    for (let offset = -55; offset <= 55; offset++) {
+      const i = (center + offset + this.samples.length) % this.samples.length;
+      const q = this.samples[i].p;
+      const d = (q.x - position.x) ** 2 + (q.z - position.z) ** 2;
+      if (d < best) {
+        best = d;
+        bestIndex = i;
+      }
     }
-    if(best>80*80)for(let i=0;i<this.samples.length;i+=3){
-      const q=this.samples[i].p;const d=(q.x-position.x)**2+(q.z-position.z)**2;
-      if(d<best){best=d;bestIndex=i;}
-    }
-    const nearest=this.samples[bestIndex];
-    const offset=position.clone().sub(nearest.p).dot(nearest.t);
-    const wrapped=bestIndex*step+offset;
-    const delta=((wrapped-hint+this.length*1.5)%this.length+this.length)%this.length-this.length*.5;
-    const distance=hint+delta,point=this.at(distance);
-    return {distance,lane:position.clone().sub(point.p).dot(point.r),point};
+    if (best > 80 * 80)
+      for (let i = 0; i < this.samples.length; i += 3) {
+        const q = this.samples[i].p;
+        const d = (q.x - position.x) ** 2 + (q.z - position.z) ** 2;
+        if (d < best) {
+          best = d;
+          bestIndex = i;
+        }
+      }
+    const nearest = this.samples[bestIndex];
+    const offset = position.clone().sub(nearest.p).dot(nearest.t);
+    const wrapped = bestIndex * step + offset;
+    const delta =
+      ((((wrapped - hint + this.length * 1.5) % this.length) + this.length) % this.length) -
+      this.length * 0.5;
+    const distance = hint + delta,
+      point = this.at(distance);
+    return { distance, lane: position.clone().sub(point.p).dot(point.r), point };
   }
   terrainAt(x: number, z: number) {
     let closest = Infinity,
@@ -170,7 +183,10 @@ export class Circuit {
     const distance = Math.sqrt(closest),
       fade = clamp((distance - 13) / 65, 0, 1);
     let height = y - 1.1 + (Math.sin(x * 0.022) * 5 + Math.cos(z * 0.018) * 4) * fade;
-    if (this.data.id === 'miami') { height = y - 1.1; if(z < -185 && distance > 23) height += (-2-height)*clamp((distance-23)/10,0,1); }
+    if (this.data.id === 'miami') {
+      height = y - 1.1;
+      if (z < -185 && distance > 23) height += (-2 - height) * clamp((distance - 23) / 10, 0, 1);
+    }
     if (this.data.id === 'coast' && x < -95) height -= Math.min(9, (-95 - x) * 0.13);
     return { height, distance };
   }
@@ -212,9 +228,11 @@ export class World {
   environment?: ReturnType<typeof buildEnvironment>;
   vehicleView = 0;
   cockpit = false;
-  interpolationAlpha=1;
-  photoPending=false;
-  studioMood='studio';
+  interpolationAlpha = 1;
+  photoPending = false;
+  studioMood = 'studio';
+  checkpointDistance = 0;
+  checkpointMarker?: T.Group;
   miami?: ReturnType<typeof buildMiami>;
   orbitAngle = 0;
   smoke!: T.InstancedMesh;
@@ -243,7 +261,12 @@ export class World {
   }
   async init() {
     await this.renderer.init();
-    await Promise.all([loadSurfaceAssets(), ...(matchMedia('(max-width:800px)').matches ? [loadHeroAsset('low')] : [loadHeroAsset(),loadHeroAsset('low')])]);
+    await Promise.all([
+      loadSurfaceAssets(),
+      ...(matchMedia('(max-width:800px)').matches
+        ? [loadHeroAsset('low')]
+        : [loadHeroAsset(), loadHeroAsset('low')]),
+    ]);
     this.backend = (this.renderer.backend as unknown as { isWebGPUBackend?: boolean })
       .isWebGPUBackend
       ? 'WebGPU'
@@ -264,13 +287,19 @@ export class World {
   setQuality(q: string) {
     this.quality = q;
     this.renderer.setPixelRatio(
-      q === 'low' ? 1 : Math.min(devicePixelRatio, q === 'high' ? 2 : 1.6),
+      Math.min(
+        devicePixelRatio,
+        q === 'low' ? 1 : q === 'high' ? 2 : 1.3,
+        Math.sqrt(
+          (q === 'low' ? 1300000 : q === 'high' ? 4200000 : 2400000) / (innerWidth * innerHeight),
+        ),
+      ),
     );
     this.renderer.shadowMap.enabled = q !== 'low';
     this.resize();
   }
   load(data: Track, paint: string, night = false) {
-    night = night && ['coast','miami'].includes(data.id);
+    night = night && ['coast', 'miami'].includes(data.id);
     if (this.circuit?.data === data && this.cars.length && this.night === night) {
       this.repaint(paint);
       this.cameraReady = false;
@@ -288,7 +317,18 @@ export class World {
     const textures = new Set<T.Texture>();
     this.root.traverse((o) => {
       if (o instanceof T.Mesh) {
-        if(o.parent && this.cars.some(c=>{let parent:T.Object3D|null=o;while(parent){if(parent===c)return true;parent=parent.parent;}return false;})) return;
+        if (
+          o.parent &&
+          this.cars.some((c) => {
+            let parent: T.Object3D | null = o;
+            while (parent) {
+              if (parent === c) return true;
+              parent = parent.parent;
+            }
+            return false;
+          })
+        )
+          return;
         geometries.add(o.geometry);
         for (const material of Array.isArray(o.material) ? o.material : [o.material]) {
           materials.add(material);
@@ -363,12 +403,19 @@ export class World {
     this.studioEnvironment = environmentTexture(true);
     this.buildRoad(data);
     this.environment = buildEnvironment(this.root, this.circuit, data, this.collision, night);
-    this.miami = data.id === 'miami' ? buildMiami(this.root,this.circuit,night,this.collision) : undefined;
-    this.updateStreetLights = streetLightPool(this.root, [...this.environment.streetLights,...(this.miami?.streetLights || [])], night);
+    this.miami =
+      data.id === 'miami' ? buildMiami(this.root, this.circuit, night, this.collision) : undefined;
+    this.updateStreetLights = streetLightPool(
+      this.root,
+      [...this.environment.streetLights, ...(this.miami?.streetLights || [])],
+      night,
+    );
     this.collision.build();
     this.cars = [
-      makeHeroVehicle(paint,true,this.quality==='low'?'low':'full') || makeVehicle(paint),
-      ...['#b1d969', '#4ca7b3', '#ddd6bf', '#8c829a', '#dbad52'].map((c) => makeHeroVehicle(c,true,'low') || makeVehicle(c)),
+      makeHeroVehicle(paint, true, this.quality === 'low' ? 'low' : 'full') || makeVehicle(paint),
+      ...['#b1d969', '#4ca7b3', '#ddd6bf', '#8c829a', '#dbad52'].map(
+        (c) => makeHeroVehicle(c, true, 'low') || makeVehicle(c),
+      ),
     ];
     this.cars.forEach((c) => this.root.add(c));
     this.carLights = this.cars.map((c, i) => vehicleLighting(c, i === 0));
@@ -435,7 +482,7 @@ export class World {
     const shoulder = this.ribbon(-15, 15, -0.16, data.ground);
     shoulder.material.dispose();
     shoulder.material = surface(
-      ['coast','miami'].includes(data.id) ? 'sand' : data.id === 'desert' ? 'stone' : 'grass',
+      ['coast', 'miami'].includes(data.id) ? 'sand' : data.id === 'desert' ? 'stone' : 'grass',
     );
     this.collision.addGround(shoulder);
     const road = this.ribbon(-8.5, 8.5, 0.015, 0x444846);
@@ -470,7 +517,7 @@ export class World {
     ground.setIndex(idx);
     ground.computeVertexNormals();
     const groundmat = surface(
-      ['coast','miami'].includes(data.id) ? 'sand' : data.id === 'desert' ? 'stone' : 'grass',
+      ['coast', 'miami'].includes(data.id) ? 'sand' : data.id === 'desert' ? 'stone' : 'grass',
     );
     groundmat.side = T.DoubleSide;
     this.collision.addGround(mesh(ground, groundmat, this.root));
@@ -542,6 +589,13 @@ export class World {
     }
     this.root.add(posts, rails);
     this.collision.add(rails);
+    this.checkpointMarker = new T.Group();
+    this.root.add(this.checkpointMarker);
+    const checkpointMat = new T.MeshBasicMaterial({ color: 0x6de3d2, toneMapped: false });
+    for (const side of [-1, 1]) {
+      box(this.checkpointMarker, checkpointMat, 0.12, 2, 0.12, side * 8.25, 1, 0);
+      box(this.checkpointMarker, checkpointMat, 1, 0.12, 0.12, side * 7.8, 2, 0);
+    }
     for (let i = 0; i < 10; i++) {
       const a = this.circuit.at((i * this.circuit.length) / 10 + 50);
       const g = new T.Group();
@@ -612,34 +666,56 @@ export class World {
       if (i < 2) pivot.rotation.y = slipAngle * 1.4;
     });
   }
-  placeSimCar(car:T.Group, p:Driver) {
-    if(!p.pose){this.placeCar(car,p.distance,p.lane,0,0);return;}
-    const previous=p.previousPose || p.pose,alpha=this.interpolationAlpha;
-    const pose={...p.pose,x:previous.x+(p.pose.x-previous.x)*alpha,y:previous.y+(p.pose.y-previous.y)*alpha,z:previous.z+(p.pose.z-previous.z)*alpha,
-      yaw:previous.yaw+Math.atan2(Math.sin(p.pose.yaw-previous.yaw),Math.cos(p.pose.yaw-previous.yaw))*alpha},t=p.telemetry;
-    car.position.set(pose.x,pose.y+.02,pose.z);
-    const slope=this.circuit.at(p.distance).t.y;
-    car.rotation.set(0,pose.yaw,0);
-    car.rotateX(-Math.asin(clamp(slope,-.18,.18)));
-    car.rotateZ(clamp(-p.speed*pose.yawRate*.0018,-.035,.035));
-    car.userData.steering.rotation.z=-t.steeringAngle*8;
-    if(car.userData.rpmNeedle)car.userData.rpmNeedle.rotation.z=-clamp(t.rpm/8500,0,1)*Math.PI*1.5;
-    if(car.userData.speedNeedle)car.userData.speedNeedle.rotation.z=-clamp(Math.abs(p.speed)*2.237/160,0,1)*Math.PI*1.5;
-    (car.userData.wheels as T.Object3D[]).forEach((wheel,i)=>{
-      wheel.rotation.x=t.wheelAngles[i];
-      if(i<2)car.userData.pivots[i].rotation.y=t.steeringAngle;
+  placeSimCar(car: T.Group, p: Driver) {
+    if (!p.pose) {
+      this.placeCar(car, p.distance, p.lane, 0, 0);
+      return;
+    }
+    const previous = p.previousPose || p.pose,
+      alpha = this.interpolationAlpha;
+    const pose = {
+        ...p.pose,
+        x: previous.x + (p.pose.x - previous.x) * alpha,
+        y: previous.y + (p.pose.y - previous.y) * alpha,
+        z: previous.z + (p.pose.z - previous.z) * alpha,
+        yaw:
+          previous.yaw +
+          Math.atan2(Math.sin(p.pose.yaw - previous.yaw), Math.cos(p.pose.yaw - previous.yaw)) *
+            alpha,
+      },
+      t = p.telemetry;
+    car.position.set(pose.x, pose.y + 0.02, pose.z);
+    const slope = this.circuit.at(p.distance).t.y;
+    car.rotation.set(0, pose.yaw, 0);
+    car.rotateX(-Math.asin(clamp(slope, -0.18, 0.18)));
+    car.rotateZ(clamp(-p.speed * pose.yawRate * 0.0018, -0.035, 0.035));
+    car.userData.steering.rotation.z = -t.steeringAngle * 8;
+    if (car.userData.rpmNeedle)
+      car.userData.rpmNeedle.rotation.z = -clamp(t.rpm / 8500, 0, 1) * Math.PI * 1.5;
+    if (car.userData.speedNeedle)
+      car.userData.speedNeedle.rotation.z =
+        -clamp((Math.abs(p.speed) * 2.237) / 160, 0, 1) * Math.PI * 1.5;
+    (car.userData.wheels as T.Object3D[]).forEach((wheel, i) => {
+      wheel.rotation.x = t.wheelAngles[i];
+      if (i < 2) car.userData.pivots[i].rotation.y = t.steeringAngle;
     });
   }
-  setStudioMood(mood:string){
-    this.studioMood=mood;
-    this.showroom?.traverse(o=>{if(o instanceof T.DirectionalLight){o.intensity=mood==='night'?.7:o.position.x>0?2.4:3.8;o.color.set(mood==='warm'?0xffd4ac:o.position.x>0?0xc9dfff:0xffe9db);}});
+  setStudioMood(mood: string) {
+    this.studioMood = mood;
+    this.showroom?.traverse((o) => {
+      if (o instanceof T.DirectionalLight) {
+        o.intensity = mood === 'night' ? 0.7 : o.position.x > 0 ? 2.4 : 3.8;
+        o.color.set(mood === 'warm' ? 0xffd4ac : o.position.x > 0 ? 0xc9dfff : 0xffe9db);
+      }
+    });
   }
-  customize(rims:string,exhaust:string) {
-    const c=this.cars[0];if(!c)return;
-    const finish=c.userData.wheelFinish as T.MeshStandardMaterial|undefined;
-    finish?.color.set(rims==='silver'?'#c1c9ce':rims==='bronze'?'#947446':'#262b31');
-    for(const tip of c.userData.exhaustTips || []) {
-      tip.material.color.set(exhaust==='sport'?'#898e96':'#33373b');
+  customize(rims: string, exhaust: string) {
+    const c = this.cars[0];
+    if (!c) return;
+    const finish = c.userData.wheelFinish as T.MeshStandardMaterial | undefined;
+    finish?.color.set(rims === 'silver' ? '#c1c9ce' : rims === 'bronze' ? '#947446' : '#262b31');
+    for (const tip of c.userData.exhaustTips || []) {
+      tip.material.color.set(exhaust === 'sport' ? '#898e96' : '#33373b');
     }
   }
   update(
@@ -652,9 +728,15 @@ export class World {
     const start = performance.now();
     this.elapsed += dt;
     this.environment?.update(this.elapsed, motion);
-    this.miami?.update(this.elapsed,motion);
+    this.miami?.update(this.elapsed, motion);
     this.cpu.environment = performance.now() - start;
     const race = mode === 'race' || mode === 'finish';
+    if (this.checkpointMarker) {
+      this.checkpointMarker.visible = race;
+      const gate = this.circuit.at(this.checkpointDistance);
+      this.checkpointMarker.position.copy(gate.p);
+      roadOrientation(gate.t, this.checkpointMarker.quaternion);
+    }
     const garage = mode === 'garage';
     if (garage !== this.inShowroom) {
       this.inShowroom = garage;
@@ -678,7 +760,7 @@ export class World {
     }
     this.cars.slice(1).forEach((c, i) => {
       c.visible = race;
-      if (race) this.placeSimCar(c,ai[i]);
+      if (race) this.placeSimCar(c, ai[i]);
     });
     const a = garage
       ? { p: new T.Vector3(), t: new T.Vector3(0, 0, 1), r: new T.Vector3(1, 0, 0), curve: 0 }
@@ -690,7 +772,7 @@ export class World {
       race ? player.velocity * 0.045 : 0,
       player.distance / 0.329,
     );
-    if (race) this.placeSimCar(this.cars[0],player);
+    if (race) this.placeSimCar(this.cars[0], player);
     if (garage) {
       this.cars[0].position.set(0, 0.006, 0);
       this.cars[0].quaternion.identity();
@@ -702,17 +784,28 @@ export class World {
     });
     this.updateStreetLights?.(dt, this.cars[0].position, !garage);
     this.cars[0].userData.flame.visible = race && player.boosting;
-    this.cars[0].userData.rider.visible = race;
+    this.cars[0].userData.rider.visible = race && !this.cockpit;
     this.cars[0].userData.tail.emissiveIntensity = race && player.telemetry.brake > 0 ? 3 : 1.3;
     const target = new T.Vector3(),
       desired = new T.Vector3();
     if (race) {
-      const forward=new T.Vector3(Math.sin(player.pose!.yaw),0,Math.cos(player.pose!.yaw));
-      target.copy(this.cars[0].position).addScaledVector(forward,8);target.y+=1.1;
-      desired.copy(this.cars[0].position).addScaledVector(forward,-8.6-Math.abs(player.speed)*.02);
-      desired.y+=3.3+Math.abs(player.speed)*.008;
-      if(this.cockpit){desired.copy(this.cars[0].position).add(new T.Vector3(.365,1.12,-.57).applyQuaternion(this.cars[0].quaternion));target.copy(desired).addScaledVector(forward,30);}
-      const fov = 54 + (motion ? player.speed * 0.09 + (player.boosting ? 5 : 0) : 0);
+      const forward = new T.Vector3(Math.sin(player.pose!.yaw), 0, Math.cos(player.pose!.yaw));
+      target.copy(this.cars[0].position).addScaledVector(forward, 8);
+      target.y += 1.1;
+      desired
+        .copy(this.cars[0].position)
+        .addScaledVector(forward, -8.6 - Math.abs(player.speed) * 0.02);
+      desired.y += 3.3 + Math.abs(player.speed) * 0.008;
+      if (this.cockpit) {
+        desired
+          .copy(this.cars[0].position)
+          .add(new T.Vector3(0.365, 1.07, -0.57).applyQuaternion(this.cars[0].quaternion));
+        target.copy(desired).addScaledVector(forward, 30);
+        target.y -= 2.5;
+      }
+      const fov = this.cockpit
+        ? 76
+        : 54 + (motion ? player.speed * 0.09 + (player.boosting ? 5 : 0) : 0);
       this.camera.fov += (fov - this.camera.fov) * Math.min(1, dt * 4);
     } else {
       this.orbitAngle +=
@@ -805,14 +898,35 @@ export class World {
     this.sun.target.position.copy(a.p);
     const renderStart = performance.now();
     this.renderer.render(this.scene, this.camera);
-    if(this.photoPending){
-      this.photoPending=false;
-      const photo=document.createElement('canvas');photo.width=this.canvas.width;photo.height=this.canvas.height;
-      const ctx=photo.getContext('2d')!;ctx.drawImage(this.canvas,0,0);
-      const band=Math.max(70,photo.height*.09);ctx.fillStyle='#10151eee';ctx.fillRect(0,photo.height-band,photo.width,band);
-      if(brandImage)ctx.drawImage(brandImage,band*.3,photo.height-band*.78,band*2.2,band*.53);
-      ctx.fillStyle='#fff';ctx.font=`600 ${band*.24}px Barlow, sans-serif`;ctx.textAlign='right';ctx.fillText('MY BUILD / THREE-WHEEL TOUR',photo.width-band*.3,photo.height-band*.42);
-      photo.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='SlingMods-My-Build.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);});
+    if (this.photoPending) {
+      this.photoPending = false;
+      const photo = document.createElement('canvas');
+      photo.width = this.canvas.width;
+      photo.height = this.canvas.height;
+      const ctx = photo.getContext('2d')!;
+      ctx.drawImage(this.canvas, 0, 0);
+      const band = Math.max(70, photo.height * 0.09);
+      ctx.fillStyle = '#10151eee';
+      ctx.fillRect(0, photo.height - band, photo.width, band);
+      if (brandImage)
+        ctx.drawImage(brandImage, band * 0.3, photo.height - band * 0.78, band * 2.2, band * 0.53);
+      ctx.fillStyle = '#fff';
+      ctx.font = `600 ${band * 0.24}px Barlow, sans-serif`;
+      ctx.textAlign = 'right';
+      ctx.fillText(
+        'MY BUILD / THREE-WHEEL TOUR',
+        photo.width - band * 0.3,
+        photo.height - band * 0.42,
+      );
+      photo.toBlob((blob) => {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob),
+          a = document.createElement('a');
+        a.href = url;
+        a.download = 'SlingMods-My-Build.png';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+      });
     }
     this.cpu.render = performance.now() - renderStart;
     this.cpu.frame = performance.now() - start;

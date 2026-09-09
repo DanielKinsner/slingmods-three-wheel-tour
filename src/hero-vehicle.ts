@@ -22,23 +22,41 @@ export function loadHeroAsset(quality: Quality = 'full'): Promise<boolean> {
   if (templates.has(quality)) return Promise.resolve(true);
   const active = pending.get(quality);
   if (active) return active;
-  const request = new GLTFLoader().loadAsync(HERO_MODEL[quality]).then((gltf) => {
-    // Validate the actual animation contract before accepting the optional asset.
-    for (const name of ['Body', 'Rider', 'Steering', 'Pivot_0', 'Pivot_1', 'Pivot_2', 'Wheel_0', 'Wheel_1', 'Wheel_2']) {
-      if (!gltf.scene.getObjectByName(name)) throw new Error(`Hero asset missing ${name}`);
-    }
-    templates.set(quality, gltf.scene);
-    return true;
-  }).catch((error: unknown) => {
-    console.warn('Optional hero vehicle unavailable; procedural fallback retained.', error);
-    return false;
-  }).finally(() => pending.delete(quality));
+  const request = new GLTFLoader()
+    .loadAsync(HERO_MODEL[quality])
+    .then((gltf) => {
+      // Validate the actual animation contract before accepting the optional asset.
+      for (const name of [
+        'Body',
+        'Rider',
+        'Steering',
+        'Pivot_0',
+        'Pivot_1',
+        'Pivot_2',
+        'Wheel_0',
+        'Wheel_1',
+        'Wheel_2',
+      ]) {
+        if (!gltf.scene.getObjectByName(name)) throw new Error(`Hero asset missing ${name}`);
+      }
+      templates.set(quality, gltf.scene);
+      return true;
+    })
+    .catch((error: unknown) => {
+      console.warn('Optional hero vehicle unavailable; procedural fallback retained.', error);
+      return false;
+    })
+    .finally(() => pending.delete(quality));
   pending.set(quality, request);
   return request;
 }
 
 /** Instantiates shared immutable geometry with per-owner paint, lights and wheel finish. */
-export function makeHeroVehicle(color: string, withDriver = true, quality: Quality = 'full'): T.Group | null {
+export function makeHeroVehicle(
+  color: string,
+  withDriver = true,
+  quality: Quality = 'full',
+): T.Group | null {
   const template = templates.get(quality) ?? templates.get('full') ?? templates.get('low');
   if (!template) return null;
   const group = template.clone(true);
@@ -71,7 +89,10 @@ export function makeHeroVehicle(color: string, withDriver = true, quality: Quali
   const rider = group.getObjectByName('Rider')!;
   rider.visible = withDriver;
   // Fictional game boost flame is kept separate from the naturally aspirated engine.
-  const flame = new T.Mesh(new T.ConeGeometry(0.035, 0.28, 10), new T.MeshBasicMaterial({ color: 0x81d9ff }));
+  const flame = new T.Mesh(
+    new T.ConeGeometry(0.035, 0.28, 10),
+    new T.MeshBasicMaterial({ color: 0x81d9ff }),
+  );
   flame.position.set(0.51, 0.26, -1.27);
   flame.rotation.x = -Math.PI / 2;
   flame.visible = false;

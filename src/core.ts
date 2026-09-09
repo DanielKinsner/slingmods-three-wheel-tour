@@ -33,7 +33,10 @@ export interface Save {
 }
 export const freshSave = (): Save => ({
   version: 2,
-  committedRaceIds: [], transmission: 'automatic', rims: 'graphite', exhaust: 'standard',
+  committedRaceIds: [],
+  transmission: 'automatic',
+  rims: 'graphite',
+  exhaust: 'standard',
   credits: 0,
   chapter: 0,
   upgrades: { power: 0, grip: 0, boost: 0 },
@@ -66,10 +69,18 @@ export function sanitizeSave(raw: unknown): Save {
   const s = freshSave();
   if (!raw || typeof raw !== 'object') return s;
   const r = raw as Partial<Save>;
-  s.committedRaceIds = Array.isArray(r.committedRaceIds) ? [...new Set(r.committedRaceIds.filter((id): id is string => typeof id === 'string' && id.length > 0 && id.length < 100))] : [];
-  if(r.transmission === 'manual')s.transmission='manual';
-  if(r.rims === 'silver' || r.rims === 'bronze')s.rims=r.rims;
-  if(r.exhaust === 'sport')s.exhaust='sport';
+  s.committedRaceIds = Array.isArray(r.committedRaceIds)
+    ? [
+        ...new Set(
+          r.committedRaceIds.filter(
+            (id): id is string => typeof id === 'string' && id.length > 0 && id.length < 100,
+          ),
+        ),
+      ]
+    : [];
+  if (r.transmission === 'manual') s.transmission = 'manual';
+  if (r.rims === 'silver' || r.rims === 'bronze') s.rims = r.rims;
+  if (r.exhaust === 'sport') s.exhaust = 'sport';
   const num = (v: unknown, max: number) =>
     typeof v === 'number' && Number.isFinite(v) ? Math.floor(clamp(v, 0, max)) : 0;
   s.credits = num(r.credits, 9999999);
@@ -84,7 +95,9 @@ export function sanitizeSave(raw: unknown): Save {
   if (r.bests && typeof r.bests === 'object')
     for (const [k, v] of Object.entries(r.bests))
       if (
-        /^(smokies|coast|texas|desert|miami)-(1|2)(-(easy|hard)-(day|night))?(-owner-v1)?$/.test(k) &&
+        /^(smokies|coast|texas|desert|miami)-(1|2)(-(easy|hard)-(day|night))?(-owner-v1)?$/.test(
+          k,
+        ) &&
         typeof v === 'number' &&
         Number.isFinite(v) &&
         v > 0
@@ -139,8 +152,8 @@ export function formatTime(seconds: number) {
 }
 export interface Driver {
   telemetry: Drivetrain;
-  previousPose?: {x:number;y:number;z:number;yaw:number;yawRate:number};
-  pose?: { x:number; y:number; z:number; yaw:number; yawRate:number };
+  previousPose?: { x: number; y: number; z: number; yaw: number; yawRate: number };
+  pose?: { x: number; y: number; z: number; yaw: number; yawRate: number };
   distance: number;
   lane: number;
   velocity: number;

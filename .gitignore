@@ -3,5 +3,8 @@ dist/
 *.log
 .vercel/
 .env*
+__pycache__/
+*.pyc
+evidence/captures/*.webm
 
 .vercel

@@ -21,11 +21,11 @@ export function glowTexture() {
 }
 
 /** Surface-aligned halos: always face the nose, never the camera or the rear of the car. */
-function frontLampHalo(width: number, hero=false) {
+function frontLampHalo(width: number, hero = false) {
   const strips = [
     [
-      [-0.127, hero ? .480 : .518, hero ? 1.844 : 1.655],
-      [0.127, hero ? .480 : .518, hero ? 1.844 : 1.655],
+      [-0.127, hero ? 0.48 : 0.518, hero ? 1.844 : 1.655],
+      [0.127, hero ? 0.48 : 0.518, hero ? 1.844 : 1.655],
     ],
   ];
   for (const side of [-1, 1]) {

@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-09",
+  "desktop": "Windows / Chrome / RTX 4080 / Core i9-12900K",
+  "previewBuild": "0.4.0-owner-review",
+  "previewBackend": "WebGPU",
+  "previewAuthentication": "Owner signed-in Chrome; anonymous requests redirect to Vercel login; protection unchanged",
+  "freshPreviewSave": {"credits": 0, "chapterDisplayed": "01 / 08"},
+  "startup": {
+    "navigationDOMContentLoadedMs": 1444.8,
+    "navigationLoadMs": 1457.9,
+    "sameOriginResourceTransferBytesFirstFourSeconds": 6496365,
+    "sameOriginResourceDecodedBytesFirstFourSeconds": 10808151,
+    "lastInitialAssetResponseMs": 2488.6,
+    "timeToPlayableMs": null,
+    "limitation": "One observed desktop navigation; resource timing is not shader-ready/time-to-play. Fonts and audio also load later on interaction. Not a throttled-network or cold-cache guarantee."
+  },
+  "emulation": {
+    "portrait": [390,844],
+    "landscape": [844,390],
+    "deviceScaleFactor": 1,
+    "backend": "WebGL 2",
+    "modelRequestsOnMobileBoot": ["/models/slingshot-r-lod.glb"],
+    "portraitDocumentScrollWidth": 390,
+    "checked": ["Home navigation", "Garage controls", "Race entry", "Landscape touch HUD", "Revised cockpit clear of seat obstruction", "Pause on viewport/background stall"],
+    "consoleErrors": [],
+    "physicalDevice": false,
+    "physicalController": false,
+    "simultaneousTouchHardware": false
+  },
+  "assetGenerationSafetyTests": {"passed": 8, "network": "Mocked only; no paid requests"}
+}

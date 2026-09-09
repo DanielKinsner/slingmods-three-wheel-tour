@@ -35,12 +35,18 @@ export class CollisionWorld {
   setRoad(mesh: T.Mesh) {
     this.road = new MeshBVH(mesh.geometry);
   }
-  addGround(mesh:T.Mesh){this.ground.push(new MeshBVH(mesh.geometry));}
-  groundHeight(x:number,z:number,y:number){
-    const road=this.roadHeight(x,z,y);if(road!==undefined)return road;
-    const ray=new T.Ray(new T.Vector3(x,y+3,z),new T.Vector3(0,-1,0));
-    let height:number|undefined;
-    for(const mesh of this.ground){const hit=mesh.raycastFirst(ray,T.DoubleSide,0,8);if(hit&&(height===undefined||hit.point.y>height))height=hit.point.y;}
+  addGround(mesh: T.Mesh) {
+    this.ground.push(new MeshBVH(mesh.geometry));
+  }
+  groundHeight(x: number, z: number, y: number) {
+    const road = this.roadHeight(x, z, y);
+    if (road !== undefined) return road;
+    const ray = new T.Ray(new T.Vector3(x, y + 3, z), new T.Vector3(0, -1, 0));
+    let height: number | undefined;
+    for (const mesh of this.ground) {
+      const hit = mesh.raycastFirst(ray, T.DoubleSide, 0, 8);
+      if (hit && (height === undefined || hit.point.y > height)) height = hit.point.y;
+    }
     return height;
   }
   build() {
@@ -100,22 +106,51 @@ export class CollisionWorld {
     }
     return false;
   }
-  resolveWorld(p:Driver){
-    if(!this.bvh||!p.pose)return false;
-    const pose=p.pose,normal=new T.Vector3(),closest=new T.Vector3();let touched=false;
-    for(const [forward,radius] of [[1.12,.92],[-.3,.70],[-1.45,.34]]){
-      const center=new T.Vector3(pose.x+Math.sin(pose.yaw)*forward,pose.y+.5,pose.z+Math.cos(pose.yaw)*forward);
-      const sphere=new T.Sphere(center,radius);
-      this.bvh.shapecast({intersectsBounds:b=>b.intersectsSphere(sphere),intersectsTriangle:triangle=>{
-        triangle.closestPointToPoint(center,closest);normal.copy(center).sub(closest);
-        const length=normal.length();if(length>=radius||length<.00001||Math.abs(normal.y)>length*.65)return false;
-        normal.y=0;normal.normalize();const depth=radius-length+.004;
-        pose.x+=normal.x*depth;pose.z+=normal.z*depth;center.addScaledVector(normal,depth);
-        const incoming=(Math.sin(pose.yaw)*normal.x+Math.cos(pose.yaw)*normal.z)*p.speed;
-        if(incoming<0&&p.hit<=0){p.speed*=.58;p.velocity*=.35;p.hit=.35;this.contacts++;touched=true;}
-        return false;
-      }});
-    }return touched;
+  resolveWorld(p: Driver) {
+    if (!this.bvh || !p.pose) return false;
+    const pose = p.pose,
+      normal = new T.Vector3(),
+      closest = new T.Vector3();
+    let touched = false;
+    for (const [forward, radius] of [
+      [1.12, 0.92],
+      [-0.3, 0.7],
+      [-1.45, 0.34],
+    ]) {
+      const center = new T.Vector3(
+        pose.x + Math.sin(pose.yaw) * forward,
+        pose.y + 0.5,
+        pose.z + Math.cos(pose.yaw) * forward,
+      );
+      const sphere = new T.Sphere(center, radius);
+      this.bvh.shapecast({
+        intersectsBounds: (b) => b.intersectsSphere(sphere),
+        intersectsTriangle: (triangle) => {
+          triangle.closestPointToPoint(center, closest);
+          normal.copy(center).sub(closest);
+          const length = normal.length();
+          if (length >= radius || length < 0.00001 || Math.abs(normal.y) > length * 0.65)
+            return false;
+          normal.y = 0;
+          normal.normalize();
+          const depth = radius - length + 0.004;
+          pose.x += normal.x * depth;
+          pose.z += normal.z * depth;
+          center.addScaledVector(normal, depth);
+          const incoming =
+            (Math.sin(pose.yaw) * normal.x + Math.cos(pose.yaw) * normal.z) * p.speed;
+          if (incoming < 0 && p.hit <= 0) {
+            p.speed *= 0.58;
+            p.velocity *= 0.35;
+            p.hit = 0.35;
+            this.contacts++;
+            touched = true;
+          }
+          return false;
+        },
+      });
+    }
+    return touched;
   }
   dispose() {
     this.geometry?.dispose();

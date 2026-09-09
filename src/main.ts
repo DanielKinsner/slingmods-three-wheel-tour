@@ -78,26 +78,29 @@ let opponents = RIVALS.map((name, i) => ({
   done: 0,
 }));
 const clock = new FixedClock();
-let raceId='', progress:RaceProgress[]=[];
+let raceId = '',
+  progress: RaceProgress[] = [];
 let raceDifficulty: Difficulty = 'easy';
 let raceNight = false;
 let garageTab = 'build';
-function loadTrack(night = save.settings.night && [1,4].includes(selected)) {
+function loadTrack(night = save.settings.night && [1, 4].includes(selected)) {
   world.rgb = save.rgb;
   world.rgbCycle = save.rgbCycle;
   world.load(TRACKS[selected], PAINTS[save.paint].color, night);
-  world.customize(save.rims,save.exhaust);
+  world.customize(save.rims, save.exhaust);
 }
 function difficultyPicker() {
   return `<div class="difficulty-picker" role="group" aria-label="Race difficulty">${(['easy', 'hard'] as const).map((d) => `<button data-difficulty="${d}" aria-pressed="${save.settings.difficulty === d}"><b>${DIFFICULTIES[d].name}</b><small>${d === 'hard' ? '+30% RACE PURSE' : 'STEERING ASSIST'}</small></button>`).join('')}</div><p class="mode-description">${DIFFICULTIES[save.settings.difficulty].description}</p>`;
 }
 function nightPicker() {
-  return [1,4].includes(selected)
+  return [1, 4].includes(selected)
     ? `<div class="time-picker" role="group" aria-label="Coastal lighting"><button data-night="day" aria-pressed="${!world.night}">SUNSET</button><button data-night="night" aria-pressed="${world.night}">AFTER DARK <span>↗</span></button></div>`
     : '';
 }
 function personalBest() {
-  return save.bests[bestKey(TRACKS[selected].id, laps, save.settings.difficulty, world.night)+'-'+RULES_VERSION];
+  return save.bests[
+    bestKey(TRACKS[selected].id, laps, save.settings.difficulty, world.night) + '-' + RULES_VERSION
+  ];
 }
 let lastReward: ReturnType<typeof rewardRace> | null = null;
 const taps = new Map<string, number>();
@@ -106,6 +109,20 @@ const keys = new Set<string>();
 const touch = new Set<string>();
 const touchHeld = (k: string) => touch.has(k) || (taps.get('touch-' + k) || 0) > performance.now();
 let lastFrame = performance.now();
+let lastFrameMs = 0;
+const measuredFrames: number[] = [];
+function frameProfile() {
+  const sorted = [...measuredFrames].sort((a, b) => a - b);
+  const at = (q: number) => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * q))] || 0;
+  return {
+    samples: sorted.length,
+    p50: at(0.5),
+    p95: at(0.95),
+    p99: at(0.99),
+    max: at(1),
+    over33ms: sorted.filter((x) => x > 33.34).length,
+  };
+}
 let lastCount = 4;
 const circuits = TRACKS.map((t) => new Circuit(t));
 const icons = {
@@ -144,7 +161,7 @@ function briefing(quick = false) {
   const c = CHAPTERS[Math.min(save.chapter, 7)];
   audio.stopVoice();
   if (!quick) selected = c.track;
-  loadTrack(quick ? save.settings.night && [1,4].includes(selected) : save.chapter === 3);
+  loadTrack(quick ? save.settings.night && [1, 4].includes(selected) : save.chapter === 3);
   if (!quick) void audio.voice(`brief-${Math.min(save.chapter, 7)}`);
   const t = TRACKS[selected];
   app.innerHTML = `<div class="menu-screen sub-screen">${header('tour')}<main class="briefing"><button class="back" data-action="home">← BACK TO THE TOUR</button><div class="eyebrow">${quick ? 'PICK YOUR PLAYGROUND' : `CHAPTER ${String(Math.min(save.chapter + 1, 8)).padStart(2, '0')} / 08`}</div><h1>${quick ? t.name : c.title}</h1><div class="location-line">${t.location.toUpperCase()} <span>/</span> ${t.state}</div>${quick ? `<p class="brief-text">${t.subtitle} Six riders. One finish line. Earn credits, chase your personal best, and make the next garage visit count.</p><div class="quick-tracks">${TRACKS.map((t, i) => `<button class="chip ${selected === i ? 'selected' : ''}" data-quicktrack="${i}">${t.location}</button>`).join('')}</div><label class="lap-select">RACE LENGTH <select id="laps" aria-label="Race length"><option value="1" ${laps === 1 ? 'selected' : ''}>1 lap · Sprint</option><option value="2" ${laps === 2 ? 'selected' : ''}>2 laps · Main event</option></select></label>` : `<div class="radio-message"><span class="radio-avatar">${c.contact[0]}</span><div><span class="eyebrow">${c.contact}</span><p>${c.text}</p></div></div>`}${difficultyPicker()}${quick ? nightPicker() : world.night ? '<div class="night-label">DAYTONA AFTER DARK · RGB NIGHT RUN</div>' : ''}<div class="race-detail"><div><small>OBJECTIVE</small><strong>${quick ? 'Race for the podium' : c.goal}</strong></div><div><small>${quick ? 'PERSONAL BEST' : 'SPONSOR BONUS'}</small><strong>${quick ? (personalBest() ? formatTime(personalBest()) : 'SET YOUR FIRST TIME') : `◈ ${c.reward.toLocaleString()} CR`}</strong></div></div><button class="primary" data-action="race">LET’S RIDE ${icons.arrow}</button><div class="brief-controls"><kbd>A</kbd><kbd>D</kbd> STEER <span>·</span> <kbd>SPACE</kbd> DRIFT <span>·</span> <kbd>SHIFT</kbd> BOOST</div></main><div class="brief-map">${trackMap(selected)}<span>${(circuits[selected].length / 1000).toFixed(2)} KM / LAP</span></div></div>`;
@@ -160,7 +177,7 @@ function garage() {
   world.rgb = save.rgb;
   world.rgbCycle = save.rgbCycle;
   world.repaint(PAINTS[save.paint].color);
-  world.customize(save.rims,save.exhaust);
+  world.customize(save.rims, save.exhaust);
   app.innerHTML = `<div class="menu-screen garage-screen">${header('garage')}<main class="garage-main"><div class="garage-heading"><button class="back" data-action="home">← BACK TO THE TOUR</button><div class="eyebrow">SLINGMODS / PERFORMANCE STUDIO</div><h1>BUILT<br><em>BY YOU.</em></h1><p>Real parts. Your signature.</p><button class="night-drive-link" data-action="night-drive">TAKE IT OUT AFTER DARK ↗</button></div><section class="garage-shop" aria-label="Vehicle upgrades"><div class="garage-tabs" role="group" aria-label="Garage panels"><button data-garagetab="build" aria-pressed="${garageTab === 'build'}">YOUR BUILD <span>${save.upgrades.power + save.upgrades.grip + save.upgrades.boost}/9</span></button><button data-garagetab="catalog" aria-pressed="${garageTab === 'catalog'}">REAL PARTS <span>06</span></button></div>${
     garageTab === 'catalog'
       ? `<div class="catalog-grid">${PRODUCTS.map(productTile).join('')}</div>`
@@ -171,7 +188,7 @@ function garage() {
             p = stageProduct(u.id, Math.min(level, 2));
           return `<article class="upgrade"><div class="upgrade-head"><span class="upgrade-icon">${u.icon}</span><div><h2>${u.name}</h2><small>${max ? 'BUILD COMPLETE' : `STAGE ${level + 1} / 3`}</small></div><span class="level">${[0, 1, 2].map((i) => `<i class="${i < level ? 'filled' : ''}"></i>`).join('')}</span></div>${p ? `<a class="featured-part" href="${p.url}" target="_blank" rel="noopener noreferrer"><img src="${p.image}" alt="${p.shortName}"><span><small>${p.brand}</small><strong>${p.shortName}</strong><em>${p.fitment}</em><b>REAL PRODUCT ↗</b></span></a>` : `<p>${u.id === 'power' ? 'Crew calibration · a fictional game upgrade.' : u.description}</p>`}<button class="upgrade-buy" data-upgrade="${u.id}" ${max || save.credits < cost ? 'disabled' : ''}><span>${max ? 'INSTALLED' : `INSTALL STAGE ${level + 1}`}</span><strong>${max ? '✓' : `◈ ${cost.toLocaleString()} CR`}</strong></button></article>`;
         }).join('')
-  }<div class="garage-note">Credits and performance boosts are game values. Photos and links feature actual SlingMods products. Check each product page for current fitment, requirements, and pricing.</div></section><div class="vehicle-customization"><div class="photo-tools"><button data-action="photo">SAVE BUILD PHOTO ↗</button><select aria-label="Studio lighting" data-studio><option value="studio" ${world.studioMood==='studio'?'selected':''}>STUDIO LIGHT</option><option value="warm" ${world.studioMood==='warm'?'selected':''}>WARM LIGHT</option><option value="night" ${world.studioMood==='night'?'selected':''}>RGB NIGHT</option></select></div><div class="owner-spec"><label>TRANSMISSION<select data-owner="transmission"><option value="automatic" ${save.transmission==='automatic'?'selected':''}>Automatic</option><option value="manual" ${save.transmission==='manual'?'selected':''}>Manual · Q / E</option></select></label><label>WHEEL FINISH<select data-owner="rims">${['graphite','silver','bronze'].map(v=>`<option ${save.rims===v?'selected':''}>${v}</option>`).join('')}</select></label><label>EXHAUST FINISH<select data-owner="exhaust">${['standard','sport'].map(v=>`<option ${save.exhaust===v?'selected':''}>${v}</option>`).join('')}</select></label></div><div class="vehicle-views" role="group" aria-label="Vehicle views"><button aria-pressed="${world.vehicleView === 0}" data-view="0">FRONT ¾</button><button aria-pressed="${world.vehicleView === 0.9}" data-view="0.9">SIDE</button><button aria-pressed="${world.vehicleView === 2.1}" data-view="2.1">REAR ¾</button></div><div class="paint-picker"><span class="eyebrow">BODY COLOR</span><div>${PAINTS.map((p, i) => `<button aria-label="${p.name}" aria-pressed="${save.paint === i}" class="swatch ${save.paint === i ? 'selected' : ''}" data-paint="${i}" style="--paint:${p.color}"></button>`).join('')}</div><span>${PAINTS[save.paint].name}</span></div><div class="rgb-picker"><span class="eyebrow">RGB UNDERGLOW <small>FREE IN GAME</small></span><div>${RGB_COLORS.map((p, i) => `<button aria-label="${p.name} underglow" aria-pressed="${save.rgb === i && !save.rgbCycle}" data-rgb="${i}" style="--paint:${p.color}" class="swatch ${save.rgb === i && !save.rgbCycle ? 'selected' : ''}"></button>`).join('')}<button class="rgb-cycle" data-action="rgb-cycle" aria-pressed="${save.rgbCycle}">SPECTRUM</button></div><a href="${PRODUCTS.find((p) => p.id === 'rgb')!.url}" target="_blank" rel="noopener noreferrer">INSPIRED BY TRICLED · SHOP THE KIT ↗</a></div></div></main></div>`;
+  }<div class="garage-note">Credits and performance boosts are game values. Photos and links feature actual SlingMods products. Check each product page for current fitment, requirements, and pricing.</div></section><div class="vehicle-customization"><div class="photo-tools"><button data-action="photo">SAVE BUILD PHOTO ↗</button><select aria-label="Studio lighting" data-studio><option value="studio" ${world.studioMood === 'studio' ? 'selected' : ''}>STUDIO LIGHT</option><option value="warm" ${world.studioMood === 'warm' ? 'selected' : ''}>WARM LIGHT</option><option value="night" ${world.studioMood === 'night' ? 'selected' : ''}>RGB NIGHT</option></select></div><div class="owner-spec"><label>TRANSMISSION<select data-owner="transmission"><option value="automatic" ${save.transmission === 'automatic' ? 'selected' : ''}>Automatic</option><option value="manual" ${save.transmission === 'manual' ? 'selected' : ''}>Manual · Q / E</option></select></label><label>WHEEL FINISH<select data-owner="rims">${['graphite', 'silver', 'bronze'].map((v) => `<option ${save.rims === v ? 'selected' : ''}>${v}</option>`).join('')}</select></label><label>EXHAUST FINISH<select data-owner="exhaust">${['standard', 'sport'].map((v) => `<option ${save.exhaust === v ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div><div class="vehicle-views" role="group" aria-label="Vehicle views"><button aria-pressed="${world.vehicleView === 0}" data-view="0">FRONT ¾</button><button aria-pressed="${world.vehicleView === 0.9}" data-view="0.9">SIDE</button><button aria-pressed="${world.vehicleView === 2.1}" data-view="2.1">REAR ¾</button></div><div class="paint-picker"><span class="eyebrow">BODY COLOR</span><div>${PAINTS.map((p, i) => `<button aria-label="${p.name}" aria-pressed="${save.paint === i}" class="swatch ${save.paint === i ? 'selected' : ''}" data-paint="${i}" style="--paint:${p.color}"></button>`).join('')}</div><span>${PAINTS[save.paint].name}</span></div><div class="rgb-picker"><span class="eyebrow">RGB UNDERGLOW <small>FREE IN GAME</small></span><div>${RGB_COLORS.map((p, i) => `<button aria-label="${p.name} underglow" aria-pressed="${save.rgb === i && !save.rgbCycle}" data-rgb="${i}" style="--paint:${p.color}" class="swatch ${save.rgb === i && !save.rgbCycle ? 'selected' : ''}"></button>`).join('')}<button class="rgb-cycle" data-action="rgb-cycle" aria-pressed="${save.rgbCycle}">SPECTRUM</button></div><a href="${PRODUCTS.find((p) => p.id === 'rgb')!.url}" target="_blank" rel="noopener noreferrer">INSPIRED BY TRICLED · SHOP THE KIT ↗</a></div></div></main></div>`;
 }
 function modal(type: 'help' | 'settings' | 'pause' | 'reset') {
   if (screen === 'race') paused = true;
@@ -228,7 +245,7 @@ function startRace(restart = false) {
   player.lane = -2.5;
   player.boost = 100 + save.upgrades.boost * 24;
   opponents = RIVALS.map((name, i) => ({
-  ...newDriver(),
+    ...newDriver(),
     name,
     distance: 11 + i * 7,
     lane: i % 2 ? -3 : 3,
@@ -245,23 +262,36 @@ function startRace(restart = false) {
   notice = '';
   noticeTime = 0;
   clock.reset();
-  raceId=crypto.randomUUID();
-  progress=[player,...opponents].map(()=>new RaceProgress(makeGates(world.circuit),laps,world.circuit.length));
-  spawnVehicle(player,world.circuit,0,-2.5);
-  opponents.forEach((o,i)=>spawnVehicle(o,world.circuit,11+i*7,i%2?-3:3));
+  raceId = crypto.randomUUID();
+  progress = [player, ...opponents].map(
+    () => new RaceProgress(makeGates(world.circuit), laps, world.circuit.length),
+  );
+  spawnVehicle(player, world.circuit, 0, -2.5);
+  opponents.forEach((o, i) => spawnVehicle(o, world.circuit, 11 + i * 7, i % 2 ? -3 : 3));
   keys.clear();
   taps.clear();
   touch.clear();
   renderHUD();
 }
 function renderHUD() {
-  app.innerHTML = `<div class="race-screen"><div class="race-top"><div class="race-position"><span id="position">6</span><small>/ 6<br>POSITION</small></div><div class="race-event"><span class="eyebrow">${raceChapter !== null ? `CHAPTER ${raceChapter + 1} · ${CHAPTERS[raceChapter].goal}` : 'QUICK RACE'} · ${raceDifficulty.toUpperCase()}${raceNight ? ' / NIGHT' : ''}</span><strong>${TRACKS[selected].name}</strong><span id="lap">LAP 1 / ${laps}</span></div><div class="timing"><strong id="time">0:00.00</strong><span>RACE TIME</span><button class="icon-button" data-action="pause" aria-label="Pause race">Ⅱ</button></div></div><div id="leaderboard" class="leaderboard"></div><div id="race-notice" class="race-notice"></div><div id="crew-subtitle" class="crew-subtitle" aria-live="polite"></div><div id="countdown" class="countdown">3</div><div class="race-bottom"><div class="minimap-wrap"><canvas id="minimap" width="240" height="220" aria-label="Circuit map with racers"></canvas><span>${TRACKS[selected].location.toUpperCase()}</span></div><div class="race-tips"><span><kbd>A</kbd><kbd>D</kbd> STEER</span><span><kbd>SPACE</kbd> DRIFT</span><span><kbd>SHIFT</kbd> BOOST</span><span><kbd>S</kbd> BRAKE</span><span><kbd>R</kbd> RECOVER</span><span><kbd>C</kbd> CAMERA</span><span><kbd>Q</kbd><kbd>E</kbd> SHIFT</span></div><div class="speedometer"><div class="speed-read"><span id="speed">0</span><small>MPH<br><b id="gear">N</b></small></div><div class="tachometer" aria-label="Engine RPM"><i id="rpm-fill"></i></div><div class="rpm-label"><span id="rpm-value">1200 RPM</span><span>REDLINE 8500</span></div><div class="boost-label"><span>ϟ TOUR BOOST</span><strong id="boost-value">100%</strong></div><div class="boost-bar"><i id="boost-bar"></i></div><div class="style-line"><span id="style">0 STYLE</span><span id="drive-state">READY TO RIDE</span></div></div></div><div class="touch-controls"><div><button data-touch="left" aria-label="Steer left">◀</button><button data-touch="right" aria-label="Steer right">▶</button></div><div><button data-action="camera" aria-label="Change camera">VIEW</button><button data-action="recover">RESET</button>${save.transmission==='manual'?'<button data-action="shift-down">− GEAR</button><button data-action="shift-up">+ GEAR</button>':''}<button data-touch="throttle" class="touch-throttle" aria-label="Accelerate">GAS</button><button data-touch="brake">BRAKE</button><button data-touch="drift">DRIFT</button><button data-touch="boost" class="touch-boost">ϟ BOOST</button></div></div><div class="speed-vignette" id="speed-vignette"></div></div>`;
+  app.innerHTML = `<div class="race-screen"><div class="race-top"><div class="race-position"><span id="position">6</span><small>/ 6<br>POSITION</small></div><div class="race-event"><span class="eyebrow">${raceChapter !== null ? `CHAPTER ${raceChapter + 1} · ${CHAPTERS[raceChapter].goal}` : 'QUICK RACE'} · ${raceDifficulty.toUpperCase()}${raceNight ? ' / NIGHT' : ''}</span><strong>${TRACKS[selected].name}</strong><span id="lap">LAP 1 / ${laps}</span></div><div class="timing"><strong id="time">0:00.00</strong><span>RACE TIME</span><button class="icon-button" data-action="pause" aria-label="Pause race">Ⅱ</button></div></div><div id="leaderboard" class="leaderboard"></div><div id="race-notice" class="race-notice"></div><div id="crew-subtitle" class="crew-subtitle" aria-live="polite"></div><div id="countdown" class="countdown">3</div><div class="race-bottom"><div class="minimap-wrap"><canvas id="minimap" width="240" height="220" aria-label="Circuit map with racers"></canvas><span>${TRACKS[selected].location.toUpperCase()}</span></div><div class="race-tips"><span><kbd>A</kbd><kbd>D</kbd> STEER</span><span><kbd>SPACE</kbd> DRIFT</span><span><kbd>SHIFT</kbd> BOOST</span><span><kbd>S</kbd> BRAKE</span><span><kbd>R</kbd> RECOVER</span><span><kbd>C</kbd> CAMERA</span><span><kbd>Q</kbd><kbd>E</kbd> SHIFT</span></div><div class="speedometer"><div class="speed-read"><span id="speed">0</span><small>MPH<br><b id="gear">N</b></small></div><div class="tachometer" aria-label="Engine RPM"><i id="rpm-fill"></i></div><div class="rpm-label"><span id="rpm-value">1200 RPM</span><span>REDLINE 8500</span></div><div class="boost-label"><span>ϟ TOUR BOOST</span><strong id="boost-value">100%</strong></div><div class="boost-bar"><i id="boost-bar"></i></div><div class="style-line"><span id="style">0 STYLE</span><span id="drive-state">READY TO RIDE</span></div></div></div><div class="touch-controls"><div><button data-touch="left" aria-label="Steer left">◀</button><button data-touch="right" aria-label="Steer right">▶</button></div><div><button data-action="camera" aria-label="Change camera">VIEW</button><button data-action="recover">RESET</button>${save.transmission === 'manual' ? '<button data-action="shift-down">− GEAR</button><button data-action="shift-up">+ GEAR</button>' : ''}<button data-touch="throttle" class="touch-throttle" aria-label="Accelerate">GAS</button><button data-touch="brake">BRAKE</button><button data-touch="drift">DRIFT</button><button data-touch="boost" class="touch-boost">ϟ BOOST</button></div></div><div class="speed-vignette" id="speed-vignette"></div></div>`;
   setupTouch();
 }
 function rank() {
-  return [{name:'YOU',distance:player.distance,done:progress[0]?.finishedAt || 0},...opponents].map((r,i)=>({
-    ...r,valid:progress[i] ? progress[i].validProgress+clamp(r.distance-progress[i].validProgress,0,world.circuit.length/32) : r.distance,
-  })).sort((a,b)=>a.done&&b.done?a.done-b.done:a.done?-1:b.done?1:b.valid-a.valid);
+  return [
+    { name: 'YOU', distance: player.distance, done: progress[0]?.finishedAt || 0 },
+    ...opponents,
+  ]
+    .map((r, i) => ({
+      ...r,
+      valid: progress[i]
+        ? progress[i].validProgress +
+          clamp(r.distance - progress[i].validProgress, 0, world.circuit.length / 32)
+        : r.distance,
+    }))
+    .sort((a, b) =>
+      a.done && b.done ? a.done - b.done : a.done ? -1 : b.done ? 1 : b.valid - a.valid,
+    );
 }
 function notify(msg: string, time = 2) {
   notice = msg;
@@ -271,7 +301,7 @@ function updateHud() {
   if (screen !== 'race') return;
   const position = rank().findIndex((r) => r.name === 'YOU') + 1;
   $('position').textContent = String(position);
-  $('crew-subtitle').textContent=audio.activeSubtitle;
+  $('crew-subtitle').textContent = audio.activeSubtitle;
   $('time').textContent = formatTime(raceTime);
   $('speed').textContent = String(Math.round(Math.abs(player.speed) * 2.237));
   const telemetry = engineMix(player.telemetry);
@@ -296,14 +326,15 @@ function updateHud() {
   $('race-notice').textContent =
     countdown > 0
       ? ''
-      : progress[0]?.wrongWay ? 'WRONG WAY · TURN AROUND OR PRESS R'
-      : noticeTime > 0
-        ? notice
-        : player.drift > 0.3
-          ? `DRIFT +${Math.floor(player.drift * 65)}`
-          : player.draft > 0
-            ? 'SLIPSTREAM · BOOST RECHARGING'
-            : '';
+      : progress[0]?.wrongWay
+        ? 'WRONG WAY · TURN AROUND OR PRESS R'
+        : noticeTime > 0
+          ? notice
+          : player.drift > 0.3
+            ? `DRIFT +${Math.floor(player.drift * 65)}`
+            : player.draft > 0
+              ? 'SLIPSTREAM · BOOST RECHARGING'
+              : '';
   $('speed-vignette').classList.toggle('boosting', player.boosting && save.settings.motion);
   $('leaderboard').innerHTML = rank()
     .map(
@@ -378,7 +409,7 @@ function input() {
   };
 }
 let gamepadPause = false;
-let gamepadEdges=[false,false,false,false];
+let gamepadEdges = [false, false, false, false];
 function step(dt: number) {
   if (paused || finish) return;
   if (countdown > 0) {
@@ -409,41 +440,88 @@ function step(dt: number) {
     ? 1
     : 0;
   if (player.draft) player.style += dt * 17;
-  const racers=[player,...opponents];
-  racers.forEach((p,i)=>{
-    if(progress[i].finishedAt!==null)return;
-    const from=positionOf(p), controls=i===0?input():aiInput(p,world.circuit,racers,opponents[i-1].skill,raceDifficulty,i);
-    const oldHit=p.hit;
-    simulateVehicle(p,controls,world.circuit,i===0?save.upgrades:{power:raceDifficulty==='hard'?1:0,grip:0,boost:0},dt,i===0?raceDifficulty:'hard',i>0||save.transmission==='automatic',world.collision);
-    progress[i].cross(from,positionOf(p),raceTime,dt);
-    progress[i].wrongWay=Math.cos(p.pose!.yaw-Math.atan2(world.circuit.at(p.distance).t.x,world.circuit.at(p.distance).t.z))*Math.sign(p.speed)<-.25;
-    if(i===0&&p.hit>oldHit){notify('BARRIER CONTACT · EASE IT BACK',1);audio.effect('impact',.35);}
-    if(i>0&&progress[i].finishedAt!==null)opponents[i-1].done=progress[i].finishedAt!;
+  const racers = [player, ...opponents];
+  racers.forEach((p, i) => {
+    if (progress[i].finishedAt !== null) return;
+    const from = positionOf(p),
+      controls =
+        i === 0
+          ? input()
+          : aiInput(p, world.circuit, racers, opponents[i - 1].skill, raceDifficulty, i);
+    const oldHit = p.hit;
+    simulateVehicle(
+      p,
+      controls,
+      world.circuit,
+      i === 0 ? save.upgrades : { power: raceDifficulty === 'hard' ? 1 : 0, grip: 0, boost: 0 },
+      dt,
+      i === 0 ? raceDifficulty : 'hard',
+      i > 0 || save.transmission === 'automatic',
+      world.collision,
+    );
+    progress[i].cross(from, positionOf(p), raceTime, dt);
+    progress[i].wrongWay =
+      Math.cos(
+        p.pose!.yaw -
+          Math.atan2(world.circuit.at(p.distance).t.x, world.circuit.at(p.distance).t.z),
+      ) *
+        Math.sign(p.speed) <
+      -0.25;
+    if (i === 0 && p.hit > oldHit) {
+      notify('BARRIER CONTACT · EASE IT BACK', 1);
+      audio.effect('impact', 0.35);
+    }
+    if (i > 0 && progress[i].finishedAt !== null) opponents[i - 1].done = progress[i].finishedAt!;
   });
   // Chassis contact between racers; no position or pace teleporting.
-  for(let i=0;i<racers.length;i++)for(let j=i+1;j<racers.length;j++){
-    const a=racers[i],b=racers[j],dx=a.pose!.x-b.pose!.x,dz=a.pose!.z-b.pose!.z,d=Math.hypot(dx,dz);
-    if(d<1.8&&d>.001){const correction=(1.8-d)*.5;
-      a.pose!.x+=dx/d*correction;a.pose!.z+=dz/d*correction;b.pose!.x-=dx/d*correction;b.pose!.z-=dz/d*correction;
-      if(a.hit<=0&&b.hit<=0){a.speed*=.85;b.speed*=.85;a.hit=b.hit=.45;}
+  for (let i = 0; i < racers.length; i++)
+    for (let j = i + 1; j < racers.length; j++) {
+      const a = racers[i],
+        b = racers[j],
+        dx = a.pose!.x - b.pose!.x,
+        dz = a.pose!.z - b.pose!.z,
+        d = Math.hypot(dx, dz);
+      if (d < 1.8 && d > 0.001) {
+        const correction = (1.8 - d) * 0.5;
+        a.pose!.x += (dx / d) * correction;
+        a.pose!.z += (dz / d) * correction;
+        b.pose!.x -= (dx / d) * correction;
+        b.pose!.z -= (dz / d) * correction;
+        if (a.hit <= 0 && b.hit <= 0) {
+          a.speed *= 0.85;
+          b.speed *= 0.85;
+          a.hit = b.hit = 0.45;
+        }
+      }
+    }
+  const newLap = progress[0].lap + 1;
+  if (newLap > currentLap) {
+    currentLap = newLap;
+    if (newLap <= laps) {
+      notify('FINAL LAP · MAKE YOUR MOVE', 3);
+      void audio.voice('final-lap');
     }
   }
-  const newLap=progress[0].lap+1;
-  if(newLap>currentLap){currentLap=newLap;if(newLap<=laps){notify('FINAL LAP · MAKE YOUR MOVE',3);void audio.voice('final-lap');}}
-  if(progress[0].finishedAt!==null){
-    raceTime=progress[0].finishedAt;
-    finishPlace=1+opponents.filter(o=>o.done>0&&o.done<=raceTime).length;
+  if (progress[0].finishedAt !== null) {
+    raceTime = progress[0].finishedAt;
+    finishPlace = 1 + opponents.filter((o) => o.done > 0 && o.done <= raceTime).length;
     finishRace();
   }
 }
 function finishRace() {
   finish = true;
   screen = 'results';
-  const key = bestKey(TRACKS[selected].id, laps, raceDifficulty, raceNight)+'-'+RULES_VERSION;
+  const key = bestKey(TRACKS[selected].id, laps, raceDifficulty, raceNight) + '-' + RULES_VERSION;
   const isBest = !save.bests[key] || raceTime < save.bests[key];
   if (isBest) save.bests[key] = raceTime;
-  lastReward = commitRace(save,{id:raceId,place:finishPlace,chapter:raceChapter,style:player.style,difficulty:raceDifficulty});
-  if(!lastReward)return;
+  lastReward = commitRace(save, {
+    id: raceId,
+    place: finishPlace,
+    chapter: raceChapter,
+    style: player.style,
+    difficulty: raceDifficulty,
+  });
+  if (!lastReward) return;
   persist();
   void audio.voice('finish');
   audio.tone(523, 0.3, 0.2);
@@ -452,9 +530,11 @@ function finishRace() {
   const c = raceChapter !== null ? CHAPTERS[raceChapter] : null;
   app.innerHTML = `<div class="results-screen">${header()}<main class="results"><div class="eyebrow">${lastReward.complete ? 'CHAPTER COMPLETE' : finishPlace === 1 ? 'FIRST TO THE FLAG' : 'RACE COMPLETE'}</div><h1>${finishPlace === 1 ? 'WHAT. A. RIDE.' : finishPlace <= 3 ? 'PODIUM ENERGY.' : 'KEEP CHASING.'}</h1><div class="result-position"><strong>${finishPlace}<sup>${['ST', 'ND', 'RD', 'TH', 'TH', 'TH'][finishPlace - 1]}</sup></strong><div><span>${TRACKS[selected].location}</span><b>${formatTime(raceTime)}</b><small>${isBest ? 'NEW PERSONAL BEST' : `BEST ${formatTime(save.bests[key])}`}</small></div></div><p class="result-story">${lastReward.complete ? c!.after : c ? `The crew is still with you. ${c.goal} to move the story forward. Spend your winnings on an upgrade and take another run.` : 'Another finish. Another step toward your perfect build. Spend your credits in the SlingMods garage or chase a faster time.'}</p><div class="earnings"><div><span>RACE PURSE${raceDifficulty === 'hard' ? ' +30%' : ''}</span><b>+${lastReward.base}</b></div><div><span>STYLE BONUS</span><b>+${lastReward.bonus}</b></div><div><span>SPONSOR BONUS</span><b>+${lastReward.sponsor}</b></div><div class="total"><span>CREDITS EARNED</span><b>◈ ${lastReward.total.toLocaleString()}</b></div></div><div class="result-actions"><button class="primary" data-action="garage">VISIT THE GARAGE ${icons.arrow}</button><button class="secondary" data-action="${lastReward.complete && save.chapter < 8 ? 'campaign' : 'restart'}">${lastReward.complete && save.chapter < 8 ? 'NEXT CHAPTER' : 'RACE AGAIN'}</button><button class="text-button" data-action="home">THE TOUR ↗</button></div></main></div>`;
 }
-function recover(){
-  spawnVehicle(player,world.circuit,progress[0].recoveryDistance,0);progress[0].resets++;
-  world.cameraReady=false;notify('RECOVERED TO LAST VALID CHECKPOINT',2);
+function recover() {
+  spawnVehicle(player, world.circuit, progress[0].recoveryDistance, 0);
+  progress[0].resets++;
+  world.cameraReady = false;
+  notify('RECOVERED TO LAST VALID CHECKPOINT', 2);
 }
 function setupTouch() {
   app.querySelectorAll<HTMLButtonElement>('[data-touch]').forEach((b) => {
@@ -522,14 +602,14 @@ app.addEventListener('click', async (e) => {
   }
   if (b.dataset.track !== undefined) {
     selected = Number(b.dataset.track);
-    if(selected===4)await loadMiamiAssets();
+    if (selected === 4) await loadMiamiAssets();
     loadTrack();
     renderHome();
     return;
   }
   if (b.dataset.quicktrack !== undefined) {
     selected = Number(b.dataset.quicktrack);
-    if(selected===4)await loadMiamiAssets();
+    if (selected === 4) await loadMiamiAssets();
     briefing(true);
     return;
   }
@@ -564,11 +644,17 @@ app.addEventListener('click', async (e) => {
   if (action === 'garage') garage();
   if (action === 'race') startRace();
   if (action === 'restart') startRace(true);
-  if(action==='photo'){world.photoPending=true;toast('Saving your rendered build photo.');}
-  if(action==='camera'){world.cockpit=!world.cockpit;world.cameraReady=false;}
-  if(action==='recover'&&countdown<=0)recover();
-  if(action==='shift-up')shift(player.telemetry,1);
-  if(action==='shift-down')shift(player.telemetry,-1);
+  if (action === 'photo') {
+    world.photoPending = true;
+    toast('Saving your rendered build photo.');
+  }
+  if (action === 'camera') {
+    world.cockpit = !world.cockpit;
+    world.cameraReady = false;
+  }
+  if (action === 'recover' && countdown <= 0) recover();
+  if (action === 'shift-up') shift(player.telemetry, 1);
+  if (action === 'shift-down') shift(player.telemetry, -1);
   if (action === 'pause') modal('pause');
   if (action === 'close') closeModal();
   if (action === 'help') modal('help');
@@ -596,12 +682,15 @@ app.addEventListener('click', async (e) => {
 });
 app.addEventListener('change', (e) => {
   const target = e.target as HTMLInputElement;
-  if(target.hasAttribute('data-studio'))world.setStudioMood(target.value);
-  const owner=target.dataset.owner;
-  if(owner==='transmission')save.transmission=target.value as Save['transmission'];
-  if(owner==='rims')save.rims=target.value as Save['rims'];
-  if(owner==='exhaust')save.exhaust=target.value as Save['exhaust'];
-  if(owner){persist();world.customize(save.rims,save.exhaust);}
+  if (target.hasAttribute('data-studio')) world.setStudioMood(target.value);
+  const owner = target.dataset.owner;
+  if (owner === 'transmission') save.transmission = target.value as Save['transmission'];
+  if (owner === 'rims') save.rims = target.value as Save['rims'];
+  if (owner === 'exhaust') save.exhaust = target.value as Save['exhaust'];
+  if (owner) {
+    persist();
+    world.customize(save.rims, save.exhaust);
+  }
   const k = target.dataset.setting;
   if (k) {
     if (k === 'quality') {
@@ -659,8 +748,12 @@ window.addEventListener('keydown', (e) => {
     paused ? closeModal() : modal('pause');
     return;
   }
-  if(!e.repeat && e.code==='KeyC'){world.cockpit=!world.cockpit;world.cameraReady=false;}
-  if(!e.repeat&&!paused&&save.transmission==='manual'&&['KeyQ','KeyE'].includes(e.code))shift(player.telemetry,e.code==='KeyE'?1:-1);
+  if (!e.repeat && e.code === 'KeyC') {
+    world.cockpit = !world.cockpit;
+    world.cameraReady = false;
+  }
+  if (!e.repeat && !paused && save.transmission === 'manual' && ['KeyQ', 'KeyE'].includes(e.code))
+    shift(player.telemetry, e.code === 'KeyE' ? 1 : -1);
   if (e.code === 'KeyR' && !paused && countdown <= 0) recover();
   keys.add(e.code);
   if (!e.repeat) taps.set(e.code, performance.now() + 150);
@@ -686,6 +779,11 @@ function frame(now: number) {
   const rawDt = Math.max(0, (now - lastFrame) / 1000);
   const dt = Math.min(rawDt, 0.05);
   lastFrame = now;
+  lastFrameMs = rawDt * 1000;
+  if (screen === 'race' && !paused && !document.hidden && countdown <= 0) {
+    measuredFrames.push(lastFrameMs);
+    if (measuredFrames.length > 18000) measuredFrames.shift();
+  }
   if (rawDt > 0) world.frameMs += (rawDt * 1000 - world.frameMs) * 0.03;
   world.qualityClock += dt;
   if (world.quality === 'auto' && world.qualityClock > 6) {
@@ -702,13 +800,27 @@ function frame(now: number) {
       const press = !!gp?.buttons[9]?.pressed;
       if (press && !gamepadPause) modal('pause');
       gamepadPause = press;
-      const buttons=[!!gp?.buttons[2]?.pressed,!!gp?.buttons[3]?.pressed,!!gp?.buttons[1]?.pressed,!!gp?.buttons[10]?.pressed];
-      buttons.forEach((pressed,i)=>{if(!pressed||gamepadEdges[i])return;
-        if(i<2&&save.transmission==='manual')shift(player.telemetry,i===0?-1:1);
-        if(i===2&&countdown<=0)recover();if(i===3){world.cockpit=!world.cockpit;world.cameraReady=false;}
-      });gamepadEdges=buttons;
-      world.interpolationAlpha=clock.advance(rawDt,step);
-      if(clock.pausedForStall){modal('pause');notify('PAUSED AFTER A LONG FRAME',3);}
+      const buttons = [
+        !!gp?.buttons[2]?.pressed,
+        !!gp?.buttons[3]?.pressed,
+        !!gp?.buttons[1]?.pressed,
+        !!gp?.buttons[10]?.pressed,
+      ];
+      buttons.forEach((pressed, i) => {
+        if (!pressed || gamepadEdges[i]) return;
+        if (i < 2 && save.transmission === 'manual') shift(player.telemetry, i === 0 ? -1 : 1);
+        if (i === 2 && countdown <= 0) recover();
+        if (i === 3) {
+          world.cockpit = !world.cockpit;
+          world.cameraReady = false;
+        }
+      });
+      gamepadEdges = buttons;
+      world.interpolationAlpha = clock.advance(rawDt, step);
+      if (clock.pausedForStall) {
+        modal('pause');
+        notify('PAUSED AFTER A LONG FRAME', 3);
+      }
       hudTick += dt;
       if (hudTick > 0.07) {
         updateHud();
@@ -728,12 +840,13 @@ function frame(now: number) {
             : 'menu',
       save.settings.motion,
     );
+    if (progress[0]) world.checkpointDistance = progress[0].gates[progress[0].next].distance;
     audio.update(
       player,
       screen === 'race' && !paused && countdown <= 0,
       save.settings,
       !$('overlay'),
-      ['coast','miami'].includes(TRACKS[selected].id),
+      ['coast', 'miami'].includes(TRACKS[selected].id),
     );
   }
   requestAnimationFrame(frame);
@@ -772,20 +885,31 @@ Object.defineProperty(window, '__tour', {
     carScreen: world.cars[0]?.position.clone().project(world.camera).toArray(),
     vehicleUpY: world.cars.map((car) => car.matrixWorld.elements[5]),
     triangles: world.renderer.info.render.triangles,
-    cpu: world.cpu,
+    cpu: { ...world.cpu },
     pixelRatio: world.renderer.getPixelRatio(),
     contacts: world.collision.contacts,
     screen,
     paused,
     countdown,
     raceTime,
-    checkpoints:progress.map(p=>({next:p.next,lap:p.lap,finishedAt:p.finishedAt,resets:p.resets})),
-    player: { ...player },
-    opponents: opponents.map((o) => ({ ...o })),
+    checkpoints: progress.map((p) => ({
+      next: p.next,
+      lap: p.lap,
+      finishedAt: p.finishedAt,
+      resets: p.resets,
+    })),
+    player: structuredClone(player),
+    opponents: opponents.map((o) => structuredClone(o)),
     track: selected,
     length: world.circuit?.length,
     backend: world.backend,
     frameMs: world.frameMs,
+    lastFrameMs,
+    frameProfile: frameProfile(),
+    viewport: [innerWidth, innerHeight],
+    drawingBuffer: [canvas.width, canvas.height],
+    textures: world.renderer.info.memory.textures,
+    geometries: world.renderer.info.memory.geometries,
     drawCalls: world.renderer.info.render.drawCalls,
     curve: world.circuit?.at(player.distance).curve,
     save: structuredClone(save),

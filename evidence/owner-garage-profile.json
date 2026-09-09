@@ -1,0 +1,36 @@
+{
+  "label": "owner-garage",
+  "original": "captures/gameplay-1788988729430.webm",
+  "profile": "captures/profile-1788988729430.json",
+  "editedVideo": "owner-garage.mp4",
+  "editing": "Downscaled to1920width at30fps; results tail shortened. Audio retained with no loudness normalization. Any pauses remain; no speed changes.",
+  "device": "Windows desktop / RTX4080 / Core i9-12900K / Chrome; not midrange or mobile hardware",
+  "renderer": "WebGPU",
+  "activeSamples": 0,
+  "lastRaceTime": 0,
+  "sampledCpuFrameMs": null,
+  "smoothedFrameMsNotRawDistribution": null,
+  "drawCalls": null,
+  "triangles": null,
+  "actualFrameDistribution": {
+    "samples": 0,
+    "p50": 0,
+    "p95": 0,
+    "p99": 0,
+    "max": 0,
+    "over33ms": 0
+  },
+  "viewport": [
+    2560,
+    1215
+  ],
+  "drawingBuffer": [
+    3840,
+    1822
+  ],
+  "textures": 66,
+  "sampledOutputPeakDb": -31.286529673504052,
+  "audioListeningApproval": false,
+  "GPUFrameTime": "Not measured; CPU submission time and rAF intervals are not GPU timer-query results",
+  "captureLimitation": "Early mutable CPU and nested telemetry snapshots are invalid; excluded. Actual media and primitive time/frame values remain valid."
+}
