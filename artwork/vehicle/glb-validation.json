@@ -7,10 +7,10 @@
     "animationContract": true,
     "wheelTransforms": true,
     "customizationMaterials": true,
-    "triangles": 50960,
+    "triangles": 51096,
     "meshes": 45,
-    "bytes": 2210820,
-    "sha256": "2db3eba5915598503183d0ce80ddee1818a307ab26738a703fdab534ef338bb0"
+    "bytes": 2209140,
+    "sha256": "5329f63f5c54add4d9d73f08501dafe2dc5e27350707494d08fcc5f15e5be362"
   },
   {
     "tier": "lod",
@@ -20,9 +20,9 @@
     "animationContract": true,
     "wheelTransforms": true,
     "customizationMaterials": true,
-    "triangles": 21992,
+    "triangles": 22050,
     "meshes": 45,
-    "bytes": 1167564,
-    "sha256": "74fe47ca9fa943fad21c31cc4b6a0b51ff56abcd7308f86b793483affb54c767"
+    "bytes": 1167208,
+    "sha256": "b3a4b4d46dc973e18a1ce3617f6f07891bf65a675b11ac97f6c713ea3021b066"
   }
 ]

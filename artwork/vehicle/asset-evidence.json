@@ -33,34 +33,34 @@
     "max": [
       1.003749966621399,
       1.3170340061187744,
-      1.9957982301712036
+      2.0102715492248535
     ],
     "size": [
       2.007499933242798,
       1.3190036714076996,
-      3.859985589981079
+      3.874458909034729
     ]
   },
   "high": {
-    "triangles": 50960,
+    "triangles": 51096,
     "meshes": 45
   },
   "low": {
-    "triangles": 21992,
+    "triangles": 22050,
     "meshes": 45
   },
   "files": {
     "public/models/slingshot-r-hero.glb": {
-      "bytes": 2210820,
-      "sha256": "2db3eba5915598503183d0ce80ddee1818a307ab26738a703fdab534ef338bb0"
+      "bytes": 2209140,
+      "sha256": "5329f63f5c54add4d9d73f08501dafe2dc5e27350707494d08fcc5f15e5be362"
     },
     "public/models/slingshot-r-lod.glb": {
-      "bytes": 1167564,
-      "sha256": "74fe47ca9fa943fad21c31cc4b6a0b51ff56abcd7308f86b793483affb54c767"
+      "bytes": 1167208,
+      "sha256": "b3a4b4d46dc973e18a1ce3617f6f07891bf65a675b11ac97f6c713ea3021b066"
     },
     "artwork/vehicle/slingshot-r-inspired.blend": {
-      "bytes": 3953316,
-      "sha256": "56ebf13e8f5225034859cf05a80e82aa6d8e0de350fb28f6becf1afad39fffe9"
+      "bytes": 3961774,
+      "sha256": "878049549f17e04d819eb5c84736a0a026d156c387f04c7b3b2f92114f868f6c"
     },
     "artwork/vehicle/rubber-micro-normal.png": {
       "bytes": 38419,
