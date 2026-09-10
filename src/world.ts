@@ -799,7 +799,8 @@ export class World {
     const c = this.cars[0];
     if (!c) return;
     const finish = c.userData.wheelFinish as T.MeshStandardMaterial | undefined;
-    finish?.color.set(rims === 'silver' ? '#c1c9ce' : rims === 'bronze' ? '#947446' : '#262b31');
+    // 'graphite' is the factory machined-face look: dark silver rather than near-black.
+    finish?.color.set(rims === 'silver' ? '#c1c9ce' : rims === 'bronze' ? '#947446' : '#5b626a');
     for (const tip of c.userData.exhaustTips || []) {
       tip.material.color.set(exhaust === 'sport' ? '#898e96' : '#33373b');
     }
