@@ -4,6 +4,8 @@
 
 A playable, original 3D arcade racer built for SlingMods.com. Six regional circuits, an eight-chapter sponsor story, six-rider grids, Drift Attack, Free Ride, drafting, boost, and a garage funded by race winnings. The Playground update is now live at the public production link above following the owner-approved merge.
 
+**[Open the Blender review preview](https://slingmods-three-wheel-tour-git-b52fae-daniel-kinsners-projects.vercel.app/)** (existing Vercel sign-in protection). **Review branch:** `feature/blender-detail-pass` / v0.5.1 adds Blender-authored wheels/tires/brakes, animated suspension links, and detailed Harbor container/warehouse/crane/freighter assets. It preserves the approved body shape, customization and gameplay. See `STATUS.md` and `evidence/blender-upgrade/README.md` for actual images, video and validation limits. This branch does not update production until reviewed and merged.
+
 ## Repository and automatic deployment
 
 Private source: [DanielKinsner/slingmods-three-wheel-tour](https://github.com/DanielKinsner/slingmods-three-wheel-tour).

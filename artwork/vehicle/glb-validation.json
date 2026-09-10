@@ -1,28 +1,28 @@
 [
   {
     "tier": "hero",
-    "nodes": 63,
+    "nodes": 96,
     "embeddedImages": 3,
     "validHeaderLength": true,
     "animationContract": true,
     "wheelTransforms": true,
     "customizationMaterials": true,
-    "triangles": 53212,
-    "meshes": 45,
-    "bytes": 2343704,
-    "sha256": "f6fba56ef0d23821018e116da63e0880855fc5f29c1d9ffc582d35587b5f1683"
+    "triangles": 68436,
+    "meshes": 67,
+    "bytes": 3141776,
+    "sha256": "791b088b18b08eb0ab535ed61863c70bc6e8845716ce04e3cb8337426c4090e8"
   },
   {
     "tier": "lod",
-    "nodes": 63,
+    "nodes": 96,
     "embeddedImages": 3,
     "validHeaderLength": true,
     "animationContract": true,
     "wheelTransforms": true,
     "customizationMaterials": true,
-    "triangles": 22938,
-    "meshes": 45,
-    "bytes": 1227008,
-    "sha256": "de60eb0beb4beeb6bc360cbae6700fbe94c29ee3ad7c52b1967063f5ce193ca6"
+    "triangles": 29900,
+    "meshes": 67,
+    "bytes": 1440932,
+    "sha256": "d9863d5c1a6bcc8b2006a59bf40cd73588aa6432aedaa63701481bf9b447ad03"
   }
 ]

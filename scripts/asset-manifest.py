@@ -15,6 +15,7 @@ for f in sorted((ROOT/'public').rglob('*')):
   if f.suffix=='.wav':origin='Original deterministic DSP synthesis; scripts/build-surface-audio.py';usage='Original generated audio; not a field recording'
   else:origin='Existing ElevenLabs generation; AUDIO-PROVENANCE.json';usage='Preserved existing asset; commercial subscription entitlement at generation not independently reverified'
  elif n.endswith('.hdr'):origin='https://polyhaven.com/a/kloppenheim_06_puresky';usage='CC0; https://polyhaven.com/license'
+ elif n=='harbor-kit.glb':origin='Original Blender source artwork/harbor/harbor-kit.blend';usage='Original port modules and procedural wear maps; no external models or photographs'
  elif '/models/' in rel:origin='Original Blender source artwork/vehicle/slingshot-r-inspired.blend';usage='Original R-inspired approximation; reference photographs not embedded; not manufacturer CAD'
  elif '/miami/' in rel:origin='Original deterministic texture authoring; scripts/generate-miami-assets.py';usage='Original artwork; normal maps are art approximations, not scanned PBR'
  elif n in ['asphalt.webp','coastal-stucco.webp','deco-facade.webp']:origin='Existing OpenAI-generated artwork; GENERATED-ASSETS.md and artwork/textures';usage='Original generated texture; not a scan'

@@ -104,6 +104,30 @@ def torus(name,p,major,minor,mat,parent=body,axis='x',segments=48,sides=8):
  for i in range(segments):
   for j in range(sides):faces.append((i*sides+j,i*sides+(j+1)%sides,((i+1)%segments)*sides+(j+1)%sides,((i+1)%segments)*sides+j))
  return mesh(name,verts,faces,mat,parent,smooth=True)
+# A glTF-extra contract keeps authored links attached to the simulated wheel centers.
+def suspension_link(name,anchor,end,wheel_index,offset,radius=.017,spring=False):
+ length=(Vector(end)-Vector(anchor)).length
+ g=empty(name,body,anchor)
+ g.rotation_mode='QUATERNION';g.rotation_quaternion=Vector((0,0,1)).rotation_difference(co(Vector(end)-Vector(anchor)).normalized())
+ g['wheelIndex']=wheel_index;g['suspensionAnchor']=list(anchor);g['wheelOffset']=list(offset);g['restLength']=length
+ tube('Damper shaft' if spring else 'Wishbone link',[(0,0,0),(0,length,0)],radius,alloy if spring else graphite,g,sides=8)
+ if spring:
+  tube('Damper body',[(0,length*.08,0),(0,length*.55,0)],.028,graphite,g,sides=10)
+  turns=7;points=[(.037*math.cos(i/56*math.tau*turns),length*(.10+.68*i/56),.037*math.sin(i/56*math.tau*turns)) for i in range(57)]
+  tube('Working coil',points,.0065,stitch if wheel_index<2 else graphite,g,sides=6)
+ return g
+
+def annulus(name,xx,inner,outer,depth,mat,parent,segments=48):
+ verts=[];faces=[]
+ for x in [xx-depth/2,xx+depth/2]:
+  for radius in [inner,outer]:
+   for j in range(segments):a=j/segments*math.tau;verts.append((x,radius*math.cos(a),radius*math.sin(a)))
+ for j in range(segments):
+  k=(j+1)%segments
+  faces.extend([(j,k,segments+k,segments+j),(2*segments+j,3*segments+j,3*segments+k,2*segments+k),
+   (j,2*segments+j,2*segments+k,k),(segments+j,segments+k,3*segments+k,3*segments+j)])
+ return mesh(name,verts,faces,mat,parent,smooth=True)
+
 # Closed tub and rocker panels. The vehicle remains an open two-seat roadster.
 box('Floor pan',(0,.215,-.01),(1.38,.16,2.34),trim)
 box('Rear bulkhead',(0,.51,-.97),(1.37,.52,.18),trim)
@@ -237,13 +261,13 @@ for s in [-1,1]:
  for i in range(24):
   for j in range(3):a=i*4+j;af.append((a,a+1,a+5,a+4))
  mesh('Formed fender',av,af,paint,thick=.018,bevel=.005,smooth=True)
- # Suspension remains exposed in the open gap behind the fender.
+ # Four separate control arms and a coilover deform with the actual wheel contact.
+ wi=0 if s<0 else 1
  for y in [.23,.39]:
-  for z in [.7,1.42]:tube('Front wishbone',[(s*.44,y,z),(s*.858,.32,1.197)],.019,graphite)
- tube('Damper shaft',[(s*.52,.63,.96),(s*.832,.25,1.19)],.018,alloy)
- a=Vector((s*.54,.6,.97));b=Vector((s*.81,.28,1.18));axis=(b-a).normalized();v=axis.cross(Vector((0,0,1))).normalized();u=axis.cross(v)
- coil=[a+(b-a)*i/64+.033*(math.cos(i/64*math.tau*7)*v+math.sin(i/64*math.tau*7)*u) for i in range(65)]
- tube('Coil spring',coil,.007,stitch,sides=6)
+  for z in [.7,1.42]:
+   offset=(-s*.035,y-.333,0)
+   suspension_link('Suspension_%d_arm_%s_%s'%(wi,y,z),(s*.44,y,z),(s*.8425,y,1.197),wi,offset)
+ suspension_link('Suspension_%d_coil'%wi,(s*.52,.63,.96),(s*.832,.25,1.19),wi,(-s*.0455,-.083,-.007),spring=True)
 # Center opening is backed, framed and optically detailed; no glowing empty shell.
 panel('Nose bridge',[(-.4,.445,1.78),(.4,.445,1.78),(.4,.399,1.836),(-.4,.399,1.836)],paint,.028,.01)
 nv=[];nf=[]
@@ -279,7 +303,6 @@ for s in [-1,1]:
 # Single rear contact, drive housing, belt cover, rear wheel cap and low exhaust.
 tube('Rear swingarm',[(.21,.37,-.7),(.23,.333,-1.47)],.065,graphite)
 box('Belt cover',(-.15,.44,-1.23),(.08,.13,.65),trim,bevel=.04)
-tube('Rear damper',[(.1,.67,-.96),(.11,.34,-1.44)],.024,alloy)
 # Rear shoulder deck, center spine and scalloped closeout visible from chase view.
 for s in [-1,1]:
  panel('Rear shoulder deck',[(s*.095,.86,-.86),(s*.23,1.005,-.93),(s*.54,.987,-.93),(s*.70,.78,-1.18),(s*.57,.705,-1.37),(s*.16,.705,-1.37)],paint,.024,.017)
@@ -290,9 +313,7 @@ for s in [-1,1]:
  tube('Rear reflector trim',[(s*.19,.772,-1.39),(s*.36,.781,-1.389),(s*.47,.804,-1.343)],.008,alloy,sides=6)
 panel('Center tail spine left',[(-.045,.79,-.70),(0,1.04,-.76),(0,.72,-1.44),(-.08,.705,-1.35)],paint,.018,.01)
 panel('Center tail spine right',[(.045,.79,-.70),(0,1.04,-.76),(0,.72,-1.44),(.08,.705,-1.35)],paint,.018,.01)
-a=Vector((.22,.68,-1.14));b=Vector((.22,.36,-1.49));axis=(b-a).normalized();v=axis.cross(Vector((1,0,0))).normalized();u=axis.cross(v)
-tube('Rear coilover shaft',[a,b],.017,alloy)
-tube('Rear spring',[a+(b-a)*i/72+.045*(math.cos(i/72*math.tau*8)*v+math.sin(i/72*math.tau*8)*u) for i in range(73)],.008,graphite,sides=6)
+suspension_link('Suspension_2_coil',(.22,.68,-1.14),(.22,.36,-1.49),2,(.22,.006,-.02),spring=True)
 rv=[];rf=[]
 for i in range(29):
  a=.03+i/28*2.88
@@ -307,30 +328,40 @@ tube('Exhaust bore',[(.51,.26,-1.184),(.51,.26,-1.193)],.041,trim,exhaust,sides=
 rim_nodes=[]
 for index,(x,z,r,width) in enumerate([(-.8775,1.197,.333,.225),(.8775,1.197,.333,.225),(0,-1.47,.354,.305)]):
  pivot=empty('Pivot_'+str(index),None,(x,r,z));wheel=empty('Wheel_'+str(index),pivot)
- # Flattened toroidal tire profile, accurate contact radius and section width.
- v=[];f=[];profile=[(-width*.50,r*.74),(-width*.50,r*.88),(-width*.44,r*.97),(-width*.30,r),(width*.30,r),(width*.44,r*.97),(width*.50,r*.88),(width*.50,r*.74)]
- for a in range(64):
-  t=a/64*math.tau
-  for xx,rr in profile:v.append((xx,math.cos(t)*rr,math.sin(t)*rr))
- for a in range(64):
-  for j in range(len(profile)-1):f.append((a*8+j,((a+1)%64)*8+j,((a+1)%64)*8+j+1,a*8+j+1))
+ # Continuous molded tread: real recessed circumferential channels and swept sipes.
+ profile=[(-.5,.74),(-.5,.88),(-.46,.965),(-.36,.995),(-.27,1),(-.245,1),(-.23,.981),(-.195,.981),(-.18,1),(-.06,1),(-.042,.981),(-.01,.981),(.005,1),(.15,1),(.166,.981),(.198,.981),(.215,1),(.31,1),(.39,.992),(.46,.965),(.5,.88),(.5,.74)]
+ v=[];f=[];segments=96;count=len(profile)
+ for ai in range(segments):
+  angle=ai/segments*math.tau
+  for fx,fr in profile:
+   sipe=.004 if abs(fx)<.41 and ((ai+int(abs(fx)*15))%8==0) else 0
+   rr=r*fr-sipe;v.append((fx*width,math.cos(angle)*rr,math.sin(angle)*rr))
+ for ai in range(segments):
+  for j in range(count-1):f.append((ai*count+j,((ai+1)%segments)*count+j,((ai+1)%segments)*count+j+1,ai*count+j+1))
  mesh('Tire_'+str(index),v,f,rubber,wheel,smooth=True)
  for sx in [-1,1]:
-  # Fine shoulder grooves are geometry only at hero LOD.
-  for a in range(40):
-   t=a/40*math.tau
-   tube('Tread detail',[(sx*width*.35,math.cos(t)*r*1.001,math.sin(t)*r*1.001),(sx*width*.445,math.cos(t+.03)*r*.973,math.sin(t+.03)*r*.973)],.0017,trim,wheel,sides=4)
   xx=sx*width*.49;rim=empty('Rim_'+str(index)+'_'+str(sx),wheel);rim_nodes.append(rim)
-  torus('Machined rim lip',(xx,0,0),r*.722,.011,wheel_finish,rim,segments=48)
+  torus('Machined rim lip',(xx,0,0),r*.722,.010,wheel_finish,rim,segments=48)
   torus('Rim inner edge',(xx-sx*.006,0,0),r*.645,.006,graphite,rim,segments=40)
+  # Forged ribbon spokes have broad machined faces and genuine depth, not round rods.
   for i in range(5):
-   a=i/5*math.tau
+   angle=i/5*math.tau
    for sweep in [-1,1]:
-    tube('Split spoke',[(xx,.045*math.cos(a),.045*math.sin(a)),(xx,.145*math.cos(a+sweep*.07),.145*math.sin(a+sweep*.07)),(xx,r*.70*math.cos(a+sweep*.16),r*.70*math.sin(a+sweep*.16))],.013,wheel_finish,rim,sides=6)
-   torus('Lug',(xx+sx*.011,.043*math.cos(a),.043*math.sin(a)),.005,.002,wheel_finish,rim,segments=8,sides=4)
+    outline=[]
+    for radius,offset in [(.045,-.11),(.13,sweep*.07-.065),(r*.70,sweep*.16-.045),(r*.70,sweep*.16+.045),(.13,sweep*.07+.065),(.045,.11)]:
+     outline.append((xx,radius*math.cos(angle+offset),radius*math.sin(angle+offset)))
+    mesh('Forged spoke',outline,[tuple(range(6))],wheel_finish,rim,thick=.015,bevel=.002)
+   tube('Lug bolt',[(xx-sx*.005,.043*math.cos(angle),.043*math.sin(angle)),(xx+sx*.013,.043*math.cos(angle),.043*math.sin(angle))],.005,alloy,rim,sides=6)
   tube('Center hub',[(xx-sx*.01,0,0),(xx+sx*.016,0,0)],.031,graphite,rim,sides=20)
-  torus('Brake rotor',(sx*width*.20,0,0),r*.52,.018,rotor,wheel,segments=48)
+  annulus('Ventilated brake disc',sx*width*.20,.075,r*.55,.014,rotor,wheel)
+  for j in range(18):
+   a=j/18*math.tau
+   for radius in [r*.40,r*.48]:
+    tube('Disc drilled recess',[(sx*(width*.2+.008),radius*math.cos(a),radius*math.sin(a)),(sx*(width*.2+.0085),radius*math.cos(a),radius*math.sin(a))],.0036,trim,wheel,sides=6)
+  torus('Molded sidewall bead',(sx*width*.502,0,0),r*.86,.0018,rubber,wheel,segments=48,sides=4)
  box('Brake caliper',(width*.27,.09,-.115),(.047,.125,.062),stitch,pivot,bevel=.012)
+ # A recessed maker-neutral center cap preserves the wheel-finish customization.
+ # No badges or manufacturer artwork are embedded.
 # Driver is a deliberately separate stylized articulated accessory, removable in showroom.
 box('Driver torso',(.37,.77,-.49),(.28,.34,.17),graphite,ride,bevel=.075)
 bpy.ops.mesh.primitive_uv_sphere_add(segments=24,ring_count=12,radius=.12,location=co((.37,1.04,-.54)))
@@ -380,7 +411,7 @@ for o in bpy.context.scene.objects:
  if o.type=='MESH' and len(o.data.polygons)>90:
   d=o.modifiers.new('Mobile simplification','DECIMATE');d.ratio=.42
 low=stats()
-bpy.ops.export_scene.gltf(filepath=str(OUT/'slingshot-r-lod.glb'),export_format='GLB',export_yup=True,export_apply=True)
+bpy.ops.export_scene.gltf(filepath=str(OUT/'slingshot-r-lod.glb'),export_format='GLB',export_yup=True,export_apply=True,export_extras=True)
 for o in bpy.context.scene.objects:
  for m in list(o.modifiers):
   if m.type=='DECIMATE':o.modifiers.remove(m)
@@ -406,7 +437,7 @@ scene.render.resolution_x=640;scene.render.resolution_y=400;scene.cycles.samples
 for i in range(72):
  if '--stills-only' in sys.argv:break
  a=i/72*math.tau;render('turntable-%02d'%i,(5*math.sin(a),2.1,5*math.cos(a)))
-record={'id':'slingshot-r-inspired-2025','created':'2026-09-09','classification':'original Blender-authored approximation','reference':'2025 Polaris Slingshot R, ProStar generation','license':'Original project geometry; no manufacturer mesh, photo, logo or CAD included. References are not redistributed. No OEM endorsement or exact-fit claim.','units':'metres, Y up, +Z forward','wheelCenters':[[-.8775,.333,1.197],[.8775,.333,1.197],[0,.354,-1.47]],'frontTrack':1.755,'wheelbase':2.667,'measuredBounds':measured_bounds,'high':high,'low':low,'files':{}}
+record={'id':'slingshot-r-inspired-2025','created':'2026-09-10','classification':'original Blender-authored approximation','reference':'2025 Polaris Slingshot R, ProStar generation','license':'Original project geometry; no manufacturer mesh, photo, logo or CAD included. References are not redistributed. No OEM endorsement or exact-fit claim.','units':'metres, Y up, +Z forward','wheelCenters':[[-.8775,.333,1.197],[.8775,.333,1.197],[0,.354,-1.47]],'frontTrack':1.755,'wheelbase':2.667,'measuredBounds':measured_bounds,'high':high,'low':low,'files':{}}
 for p in [OUT/'slingshot-r-hero.glb',OUT/'slingshot-r-lod.glb',ART/'slingshot-r-inspired.blend',*ART.glob('*micro-normal.png')]:
  record['files'][str(p.relative_to(ROOT)).replace('\\','/')]={'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
 (ART/'asset-evidence.json').write_text(json.dumps(record,indent=2),encoding='utf-8')
