@@ -51,9 +51,10 @@ The reduced GLB is a real decimated tier, not a label on the full mesh. Root
 integration decides when to request it; both tiers must not be loaded needlessly
 on initial startup. It reduces triangles and transfer, but not draw-call count.
 
-The central projector center is `(0, 0.480, 1.839)` in metres. Outer LEDs follow
-the upper brow from approximately `(±0.58, .542, 1.806)` to
-`(±.935, .698, 1.717)`; lighting glows should follow these positions.
+The lofted 2025 body (see `vehicle-lofts.md`) moved the lamps: the centre light bar is
+centred at `(0, 0.565, 1.94)`, the brow slashes run from `(±0.58, 0.47, 1.905)` to
+`(±0.89, 0.575, 1.885)`, and the corner accents from `(±0.905, 0.30, 1.87)` to
+`(±0.92, 0.44, 1.86)`. `src/lighting.ts` halo strips and headlight spots follow these.
 
 ## Rebuild and evidence
 

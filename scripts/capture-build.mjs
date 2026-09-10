@@ -89,6 +89,22 @@ await page.waitForTimeout(800);
 await page.click('[data-action="race"]');
 await page.waitForTimeout(6500);
 await page.screenshot({ path: `${out}/race.png` });
+// Night race on the coast: headlight spots and halos must sit on the lofted nose.
+await page.goto('http://127.0.0.1:5173/?webgl=1');
+await page.locator('[data-action="quick"]').waitFor({ timeout: 90000 });
+await page.waitForFunction(() => window.__tour?.drawCalls > 0, {}, { timeout: 90000 });
+await page.click('[data-action="quick"]');
+await page.waitForTimeout(600);
+await page.click('[data-night="night"]').catch(() => {});
+await page.waitForTimeout(400);
+await page.click('[data-action="race"]');
+await page.waitForTimeout(6500);
+await page.keyboard.press('KeyC');
+await page.waitForTimeout(1200);
+await page.screenshot({ path: `${out}/race-night-cockpit.png` });
+await page.keyboard.press('KeyC');
+await page.waitForTimeout(800);
+await page.screenshot({ path: `${out}/race-night.png` });
 const raceParts = await page.evaluate(() => {
   const t = window.__tour;
   return { playMode: t?.playMode, drawCalls: t?.drawCalls };
