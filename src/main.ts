@@ -114,10 +114,18 @@ function wheelPicker() {
     },
   ).join('')}</div><p>Original in-game wheel designs. Buy once, swap any time.</p></article>`;
 }
-function fittedParts() {
+function buildNames() {
   const ids = installedParts(buildSpec());
   const names: string[] = ids.flatMap((id) => PRODUCTS.find((p) => p.id === id)?.shortName ?? []);
   if (save.wheels > 0) names.push(`${WHEELS[save.wheels].name} wheels`);
+  return names;
+}
+/** Spec line for the build photo: paint first, then everything bolted on. */
+function photoSpecLine() {
+  return [PAINTS[save.paint].name, ...buildNames()].join('  ·  ').toUpperCase();
+}
+function fittedParts() {
+  const names = buildNames();
   return `<div class="fitted-parts"><span class="eyebrow">ON THE CAR</span>${names.length ? names.map((n) => `<i>${n}</i>`).join('') : '<i class="muted">Stock. Win races, then come back.</i>'}</div>`;
 }
 function difficultyPicker() {
@@ -804,6 +812,7 @@ app.addEventListener('click', async (e) => {
   if (action === 'race') startRace();
   if (action === 'restart') startRace(true);
   if (action === 'photo') {
+    world.photoSpec = photoSpecLine();
     world.photoPending = true;
     toast('Saving your rendered build photo.');
   }

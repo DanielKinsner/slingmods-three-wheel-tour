@@ -234,6 +234,8 @@ export class World {
   cockpit = false;
   interpolationAlpha = 1;
   photoPending = false;
+  /** One-line spec (paint, wheels, real parts) stamped onto the build photo. */
+  photoSpec = '';
   studioMood = 'studio';
   checkpointDistance = 0;
   showCheckpoints = true;
@@ -1039,7 +1041,7 @@ export class World {
       photo.height = this.canvas.height;
       const ctx = photo.getContext('2d')!;
       ctx.drawImage(this.canvas, 0, 0);
-      const band = Math.max(70, photo.height * 0.09);
+      const band = Math.max(70, photo.height * (this.photoSpec ? 0.12 : 0.09));
       ctx.fillStyle = '#10151eee';
       ctx.fillRect(0, photo.height - band, photo.width, band);
       if (brandImage)
@@ -1050,8 +1052,18 @@ export class World {
       ctx.fillText(
         'MY BUILD / THREE-WHEEL TOUR',
         photo.width - band * 0.3,
-        photo.height - band * 0.42,
+        photo.height - band * (this.photoSpec ? 0.56 : 0.42),
       );
+      if (this.photoSpec) {
+        // Shrink the spec line until it fits beside the logo.
+        let size = band * 0.16;
+        ctx.fillStyle = '#d7dce3';
+        do {
+          ctx.font = `500 ${size}px Barlow, sans-serif`;
+          size -= 1;
+        } while (ctx.measureText(this.photoSpec).width > photo.width - band * 3.2 && size > 8);
+        ctx.fillText(this.photoSpec, photo.width - band * 0.3, photo.height - band * 0.24);
+      }
       photo.toBlob((blob) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob),

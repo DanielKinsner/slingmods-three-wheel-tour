@@ -81,6 +81,12 @@ for (const [view, name] of [
 await page.selectOption('[data-studio]', 'night');
 await page.waitForTimeout(1500);
 await page.screenshot({ path: `${out}/garage-night.png` });
+// The build photo download carries the spec line; save it for review.
+const [download] = await Promise.all([
+  page.waitForEvent('download', { timeout: 20000 }),
+  page.click('[data-action="photo"]'),
+]);
+await download.saveAs(`${out}/build-photo.png`);
 // Parts must survive into a race: start a quick race on the coast and grab the chase view.
 await page.click('[data-action="home"]');
 await page.waitForTimeout(800);

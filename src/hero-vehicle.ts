@@ -108,9 +108,10 @@ export function makeHeroVehicle(
     if (original.name === 'Windscreen') {
       object.castShadow = false;
       object.material.transparent = true;
-      object.material.opacity = 0.16;
-      object.material.roughness = 0.16;
-      object.material.envMapIntensity = 0.32;
+      // Smoked deflector: darker and glossier than the old clear screen.
+      object.material.opacity = 0.42;
+      object.material.roughness = 0.1;
+      object.material.envMapIntensity = 0.5;
       object.material.depthWrite = false;
       object.material.side = T.DoubleSide;
     }

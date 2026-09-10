@@ -43,8 +43,16 @@ Key proportions read from the overlays and used in the lofts:
   eight-point rows put a centre spine over a wide shoulder deck that overhangs a narrow
   lower body. Tail lamps sit on the rear face.
 
+- **Tail lamps**: six-point housing and lens panels wrapping each deck corner, an LED bar
+  and an amber reflector. The rear mudguard is a narrow black arc hugging the tire.
+- **Dashboard**: a lofted cowl (`Dashboard cowl`) with a binnacle hood over the gauges.
+- **Windscreen**: smoked deflector (darker base colour, 0.45 alpha in Blender, 0.42 opacity
+  in `src/hero-vehicle.ts`).
+
 Interior heights (dashboard, gauges, steering, windscreen, mirrors) were raised with the
-cowl. Wheel nodes, pivots, material names and the animation contract are unchanged, so
+cowl, and the in-game cockpit eye point moved to `(0.365, 1.19, -0.6)` in `src/world.ts`.
+Headlight halos and spotlights in `src/lighting.ts` sit on the light bar, brow slashes and
+corner accents. Wheel nodes, pivots, material names and the animation contract are unchanged, so
 `src/hero-vehicle.ts` and `scripts/validate-hero.py` did not need edits.
 
 ## Rebuild

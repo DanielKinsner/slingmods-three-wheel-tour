@@ -33,9 +33,10 @@ lamp=material('FrontLamp',(.82,.93,1),.05,.16,0,3)
 tail=material('TailLamp',(.8,.008,.015),.08,.2,0,2)
 amber=material('MarkerLamp',(1,.32,.015),0,.2,0,.4)
 screen=material('InstrumentDisplay',(.03,.27,.36),0,.29,0,.5)
-glass=material('Windscreen',(.19,.29,.34),0,.12,.5)
-glass.diffuse_color=(.19,.29,.34,.27)
-glass.node_tree.nodes.get('Principled BSDF').inputs['Alpha'].default_value=.27
+# Smoked deflector like the production screen, not clear glass.
+glass=material('Windscreen',(.08,.11,.14),0,.1,.6)
+glass.diffuse_color=(.08,.11,.14,.45)
+glass.node_tree.nodes.get('Principled BSDF').inputs['Alpha'].default_value=.45
 glass.surface_render_method='DITHERED'
 # Original subtle PBR microdetail. These are authored synthetic pores, not scans.
 def microdetail(mat,name,seed,strength):

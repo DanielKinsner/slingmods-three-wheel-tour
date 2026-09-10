@@ -9,8 +9,8 @@
     "customizationMaterials": true,
     "triangles": 55210,
     "meshes": 45,
-    "bytes": 2451692,
-    "sha256": "966836194991a82cd4a122dea021c6117c241ef3182ef34c5dd953a02ab3ad3f"
+    "bytes": 2451708,
+    "sha256": "df3ea4b062996fbd65f0e14286961ec005f98a02c873a9751ab733af30827f29"
   },
   {
     "tier": "lod",
@@ -22,7 +22,7 @@
     "customizationMaterials": true,
     "triangles": 24654,
     "meshes": 45,
-    "bytes": 1298300,
-    "sha256": "bcbf985359d09703fd0796fea4a31562a90a38b215807f03dddeaf23a615e71e"
+    "bytes": 1298316,
+    "sha256": "f1068a3d7a33bc5f54752c73549e518811960d3005888799103e63b9f59e33fd"
   }
 ]
