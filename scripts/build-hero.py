@@ -363,7 +363,7 @@ bpy.ops.export_scene.gltf(filepath=str(OUT/'slingshot-r-hero.glb'),export_format
 for o in bpy.context.scene.objects:
  if o.type=='MESH' and len(o.data.polygons)>90:
   # Smooth lofted paint keeps more of its curvature on the reduced tier; trim/interior reduce harder.
-  d=o.modifiers.new('Mobile simplification','DECIMATE');d.ratio=.55 if 'BodyPaint' in o.name else .4
+  d=o.modifiers.new('Mobile simplification','DECIMATE');d.ratio=.8 if 'BodyPaint' in o.name else .38
 low=stats()
 bpy.ops.export_scene.gltf(filepath=str(OUT/'slingshot-r-lod.glb'),export_format='GLB',export_yup=True,export_apply=True)
 for o in bpy.context.scene.objects:
