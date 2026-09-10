@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "bb1f6631b543322ac9c237181a88fec97cfa1127",
+  "deployment": "dpl_6FrMAK3i5duhpBDdAoiaJpxx2EUs",
+  "url": "https://slingmods-three-wheel-tour-3g8z1uml8-daniel-kinsners-projects.vercel.app/",
+  "branchAlias": "https://slingmods-three-wheel-tour-git-b52fae-daniel-kinsners-projects.vercel.app/",
+  "target": "preview",
+  "state": "READY",
+  "vercelTestsPassed": 117,
+  "githubStatus": "success",
+  "verification": "Authenticated Vercel CLI GET; protection remains enabled. CLI generated a project protection bypass token in its local ignored configuration; token values not printed or recorded. No personal browser used.",
+  "html": "Matches the local build after removing only Vercel-injected preview feedback script. JS/CSS/GLBs match byte for byte.",
+  "files": [
+    {
+      "file": "dist/assets/index-DY9OIWvu.js",
+      "bytes": 1183099,
+      "sha256": "1f5decd8864d5b03b8081880404dca18d9ade44a8eac8a23ef3cdbdd4a8cbbcd",
+      "remoteMatches": true
+    },
+    {
+      "file": "dist/assets/index-UjAHhiPa.css",
+      "bytes": 44750,
+      "sha256": "b9b1610972ba2ffbef2160544452cff5df7d8d2f600ec6e0017d8a18f906cef0",
+      "remoteMatches": true
+    },
+    {
+      "file": "public/models/harbor-kit.glb",
+      "bytes": 3820100,
+      "sha256": "a90ac70a0adc33d96f144b7c84879277f6583849a783dcd08a8304ff564f18ef",
+      "remoteMatches": true
+    },
+    {
+      "file": "public/models/slingshot-r-hero.glb",
+      "bytes": 3141776,
+      "sha256": "791b088b18b08eb0ab535ed61863c70bc6e8845716ce04e3cb8337426c4090e8",
+      "remoteMatches": true
+    },
+    {
+      "file": "public/models/slingshot-r-lod.glb",
+      "bytes": 1440932,
+      "sha256": "d9863d5c1a6bcc8b2006a59bf40cd73588aa6432aedaa63701481bf9b447ad03",
+      "remoteMatches": true
+    }
+  ]
+}

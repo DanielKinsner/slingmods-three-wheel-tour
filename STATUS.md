@@ -3,7 +3,7 @@
 
 ## Blender detail pass — September 10, v0.5.1 preview
 
-Implemented on `feature/blender-detail-pass`, based on production `744c111`. The current public main domain remains the owner-approved Playground release; this pass is a separate review preview. No production merge or SlingMods storefront change is authorized by this checkpoint.
+Implemented on `feature/blender-detail-pass`, based on production `744c111`. [Open the Blender preview](https://slingmods-three-wheel-tour-git-b52fae-daniel-kinsners-projects.vercel.app/). Verified deployment `dpl_6FrMAK3i5duhpBDdAoiaJpxx2EUs` from `bb1f663`: Ready, 117 Vercel tests passed, GitHub success. Authenticated remote JS/CSS and all three model bytes match the tested local build; HTML differs only by Vercel's preview-feedback injection. Existing preview sign-in protection remains enabled. See `evidence/blender-upgrade/deployment.json` and draft PR #1. The current public main domain remains the owner-approved Playground release; this pass is a separate review preview. No production merge or SlingMods storefront change is authorized by this checkpoint.
 
 Actual Blender 4.5.3 LTS background authoring and export: recessed tire channels/sipes, broader split spokes, machined lips, lug hardware, annular brake discs and fixed calipers. Eleven authored wishbone/coilover links follow the contact-seated wheel hubs while retaining their body anchors. The existing body silhouette, wheel centers, five paint colors, wheel/exhaust finishes and RGB choices remain. Full/reduced GLBs and editable `.blend` master are included. This is still original R-inspired art, not OEM CAD or a new physical suspension solver.
 
