@@ -21,6 +21,8 @@ Verified: 122 tests, typecheck and production build; headless WebGL garage captu
 
 - **Install moment and rival builds.** Newly bought parts drop in with a short overshoot bounce (`world.highlightNext` → `spawning`), and the five rivals carry seeded random builds (exhaust, coilovers, wheel sets, finishes) so the grid is not six stock cars. Stock wheel finish is the factory machined dark silver.
 
+- **Sharpened per the owner ("sharper lines, more aggressive").** Edge-split creases at 28°, V hood spine with a shoulder line, flat-topped angular fender pods, hard deck and flank edges. Verified on both GLB tiers, in the garage, race, phone layout, and against a production `npm run build` served by `vite preview` (`BASE_URL` on the capture script).
+
 Open and blocked on the owner:
 
 - **Owner look check in Chrome (WebGPU).** All captures so far are headless WebGL; the studio renders darker there. Open the garage on this branch and say whether the body reads as a Slingshot to you.

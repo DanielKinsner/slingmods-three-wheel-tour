@@ -55,6 +55,15 @@ Headlight halos and spotlights in `src/lighting.ts` sit on the light bar, brow s
 corner accents. Wheel nodes, pivots, material names and the animation contract are unchanged, so
 `src/hero-vehicle.ts` and `scripts/validate-hero.py` did not need edits.
 
+## Creases
+
+The owner's note was that the real car has sharper, more aggressive lines. Smooth lofts now
+run through an edge-split at 28° in `mesh()`, so any bend sharper than that keeps a hard
+shading break while gentle curvature stays smooth. The hood crown is a V spine
+(`0.05·(1−|u|)`) with a crisp shoulder line at 62% of the half width, the pods have a flat
+top between two corners and a near-vertical outer face, and the deck and flanks carry hard
+shoulder edges. Bevels stayed small (4–7 mm) so the creases read.
+
 ## Rebuild
 
 ```powershell

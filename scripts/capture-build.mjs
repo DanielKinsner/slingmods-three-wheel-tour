@@ -11,6 +11,8 @@ const executablePath = candidates
   .map((n) => join(storage, n, 'chrome-headless-shell-win64', 'chrome-headless-shell.exe'))
   .find(existsSync);
 const out = process.argv[2] || 'shots';
+// Point at a production preview with BASE_URL=http://127.0.0.1:4173 (default: Vite dev server).
+const BASE = process.env.BASE_URL || 'http://127.0.0.1:5173';
 const seedArg = process.argv.slice(3).find((a) => !a.startsWith('--'));
 const seed = JSON.parse(
   seedArg ||
@@ -38,7 +40,7 @@ const page = await context.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
-await page.goto('http://127.0.0.1:5173/?webgl=1');
+await page.goto(`${BASE}/?webgl=1`);
 await page.locator('[data-action="quick"]').waitFor({ timeout: 90000 });
 await page.waitForFunction(() => window.__tour?.drawCalls > 0, {}, { timeout: 90000 });
 await page.click('[data-action="garage"]');
@@ -101,7 +103,7 @@ await page.click('[data-action="race"]');
 await page.waitForTimeout(6500);
 await page.screenshot({ path: `${out}/race.png` });
 // Night race on the coast: headlight spots and halos must sit on the lofted nose.
-await page.goto('http://127.0.0.1:5173/?webgl=1');
+await page.goto(`${BASE}/?webgl=1`);
 await page.locator('[data-action="quick"]').waitFor({ timeout: 90000 });
 await page.waitForFunction(() => window.__tour?.drawCalls > 0, {}, { timeout: 90000 });
 await page.click('[data-action="quick"]');
