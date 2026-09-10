@@ -73,6 +73,9 @@ def mesh(name,verts,faces,mat,parent=body,thick=0,bevel=0,smooth=False):
  if bevel:
   m=o.modifiers.new('Manufactured edge radii','BEVEL'); m.width=bevel;m.segments=2
   bpy.ops.object.modifier_apply(modifier=m.name)
+ if smooth:
+  m=o.modifiers.new('Crease split','EDGE_SPLIT'); m.split_angle=math.radians(28); m.use_edge_sharp=True
+  bpy.ops.object.modifier_apply(modifier=m.name)
  if bevel or thick:
   m=o.modifiers.new('Panel normals','WEIGHTED_NORMAL'); m.keep_sharp=True
   bpy.ops.object.modifier_apply(modifier=m.name)
@@ -198,20 +201,20 @@ def hood_station(z):
  return (HOOD[0][1],HOOD[0][2]) if z>HOOD[0][0] else (HOOD[-1][1],HOOD[-1][2])
 def hood_top(z,u):
  y,_=hood_station(z)
- return y+.035*(1-u*u)-.03*max(0,abs(u)-.75)/.25
+ return y+.05*(1-abs(u))-.045*max(0,abs(u)-.62)/.38+.012*max(0,1-abs(abs(u)-.62)/.08)
 hood_sections=[]
 for z,y,w in HOOD:
- hood_sections.append([(w*u,hood_top(z,u),z) for u in [0,.12,.24,.36,.48,.6,.7,.8,.9,1.0]]+[(w+.02,hood_top(z,1)-.035,z),(w+.03,hood_top(z,1)-.07,z)])
+ hood_sections.append([(w*u,hood_top(z,u),z) for u in [0,.1,.2,.3,.4,.5,.62,.72,.82,.91,1.0]]+[(w+.02,hood_top(z,1)-.035,z),(w+.03,hood_top(z,1)-.07,z)])
 loft('Hood',hood_sections,paint,thick=.022,bevel=.006)
-POD=[(1.90,[(.64,.60),(.78,.60),(.88,.56),(.92,.46),(.90,.34),(.86,.27)]),
- (1.80,[(.66,.68),(.82,.68),(.94,.63),(.985,.52),(.97,.36),(.90,.26)]),
- (1.62,[(.68,.78),(.86,.78),(.97,.72),(1.00,.58),(.995,.50),(.98,.44)]),
- (1.40,[(.70,.84),(.87,.84),(.985,.77),(1.00,.62),(.995,.57),(.985,.54)]),
- (1.20,[(.71,.86),(.87,.86),(.985,.79),(1.00,.64),(.995,.59),(.985,.56)]),
- (1.00,[(.72,.85),(.87,.85),(.985,.78),(1.00,.63),(.995,.58),(.985,.55)]),
- (.82,[(.73,.83),(.86,.82),(.97,.75),(.985,.61),(.965,.54),(.95,.49)]),
- (.66,[(.74,.80),(.82,.79),(.90,.73),(.90,.64),(.87,.57),(.83,.51)]),
- (.56,[(.69,.79),(.72,.78),(.75,.74),(.75,.69),(.74,.63),(.71,.57)])]
+POD=[(1.90,[(.64,.60),(.80,.60),(.90,.55),(.93,.44),(.90,.33),(.86,.27)]),
+ (1.80,[(.66,.68),(.84,.68),(.96,.61),(.99,.50),(.97,.35),(.90,.26)]),
+ (1.62,[(.68,.78),(.88,.78),(.985,.70),(1.00,.56),(.995,.49),(.98,.44)]),
+ (1.40,[(.70,.84),(.89,.84),(.995,.75),(1.00,.60),(.995,.56),(.985,.54)]),
+ (1.20,[(.71,.86),(.89,.86),(.995,.77),(1.00,.62),(.995,.58),(.985,.56)]),
+ (1.00,[(.72,.85),(.89,.85),(.995,.76),(1.00,.61),(.995,.57),(.985,.55)]),
+ (.82,[(.73,.83),(.88,.82),(.98,.73),(.985,.59),(.965,.53),(.95,.49)]),
+ (.66,[(.74,.80),(.83,.79),(.91,.71),(.90,.62),(.87,.56),(.83,.51)]),
+ (.56,[(.69,.79),(.72,.78),(.76,.73),(.75,.68),(.74,.62),(.71,.57)])]
 def pod_section(z,pts):
  w=hood_station(z)[1];return [(w+.03,hood_top(z,1)-.07,z),(w+.05,hood_top(z,1)-.03,z)]+[(x,y,z) for x,y in pts]
 loft('Fender pod',[pod_section(z,pts) for z,pts in POD],paint,thick=.02,bevel=.006)
@@ -267,7 +270,7 @@ for s in [-1,1]:
   box('Hood vent',(s*.36,hood_top(z,.36/hood_station(z)[1])+.004,z),(.105,.006,.023),trim,bevel=.004)
 # Painted cockpit flanks: (z, shoulder x, shoulder y). Open black tub below the hip line.
 FLANK=[(.05,.66,.95),(-.15,.74,.90),(-.35,.80,.85),(-.55,.84,.82),(-.75,.85,.81),(-.92,.83,.81)]
-loft('Cockpit flank',[[(x-.06,y+.005,z),(x,y,z),(x+.025,y-.11,z),(x+.005,y-.27,z),(x-.06,y-.40,z)] for z,x,y in FLANK],paint,thick=.02,bevel=.006)
+loft('Cockpit flank',[[(x-.06,y+.002,z),(x,y,z),(x+.03,y-.10,z),(x+.03,y-.24,z),(x-.06,y-.40,z)] for z,x,y in FLANK],paint,thick=.02,bevel=.004)
 # Single rear contact, drive housing, belt cover, rear wheel cap and low exhaust.
 tube('Rear swingarm',[(.21,.37,-.7),(.23,.333,-1.47)],.065,graphite)
 box('Belt cover',(-.15,.44,-1.23),(.08,.13,.65),trim,bevel=.04)
@@ -276,7 +279,7 @@ tube('Rear damper',[(.1,.67,-.96),(.11,.34,-1.44)],.024,alloy)
 DECK=[(-.86,1.0,.92,1.0),(-1.05,.93,.885,1.0),(-1.25,.83,.81,.98),(-1.42,.75,.735,.92),(-1.55,.69,.68,.78)]
 deck_sections=[]
 for z,spine,deck,k in DECK:
- deck_sections.append([(0,spine,z),(.07,deck+.04,z),(.20*k,deck,z),(.50*k,deck-.005,z),(.74*k,deck-.04,z),(.86*k,deck-.15,z),(.80*k,deck-.30,z),(.62*k,deck-.38,z)])
+ deck_sections.append([(0,spine,z),(.05,deck+.03,z),(.20*k,deck,z),(.55*k,deck-.005,z),(.80*k,deck-.02,z),(.87*k,deck-.16,z),(.80*k,deck-.30,z),(.62*k,deck-.38,z)])
 loft('Rear deck',deck_sections,paint,thick=.022,bevel=.007)
 for s in [-1,1]:
  panel('Tail lamp housing',[(s*.10,.72,-1.555),(s*.42,.735,-1.55),(s*.66,.70,-1.45),(s*.64,.61,-1.44),(s*.44,.66,-1.545),(s*.10,.655,-1.555)],trim,.025,.008)
