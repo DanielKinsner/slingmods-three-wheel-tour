@@ -19,6 +19,8 @@ Verified: 122 tests, typecheck and production build; headless WebGL garage captu
 
 - **Detail pass (self-judged against the references, owner away).** Angular tail lamp clusters with LED bars, narrow black rear mudguard, lofted dashboard cowl with gauge binnacle, smoked windscreen, headlight halos and spotlights moved onto the new nose (night race and cockpit captures verified), cockpit eye point raised over the 0.95 m cowl, and the build photo now stamps paint, wheel set and every real part as a spec line. `scripts/capture-build.mjs` covers garage views, RGB night, a day race, a night race, the cockpit, the photo download and a `--mobile` phone layout.
 
+- **Install moment and rival builds.** Newly bought parts drop in with a short overshoot bounce (`world.highlightNext` → `spawning`), and the five rivals carry seeded random builds (exhaust, coilovers, wheel sets, finishes) so the grid is not six stock cars. Stock wheel finish is the factory machined dark silver.
+
 Open and blocked on the owner:
 
 - **Owner look check in Chrome (WebGPU).** All captures so far are headless WebGL; the studio renders darker there. Open the garage on this branch and say whether the body reads as a Slingshot to you.

@@ -93,6 +93,25 @@ export const INSTALLS: Record<string, InstallStep[]> = {
   ],
 };
 export const installFor = (id: string, stage: number) => INSTALLS[id]?.[stage];
+/** Scene-graph group names each install step adds, so the garage can animate just that part. */
+export const PART_GROUPS: Record<string, string[]> = {
+  exhaust: ['Dual rear exit exhaust'],
+  mounts: ['Sway bar mounting brackets'],
+  links: ['Sway bar end links'],
+  shocks: ['Front coilover', 'Rear coilover'],
+  wheels: ['Aftermarket wheel'],
+};
+/** A believable random build for a rival, seeded so the grid is stable per race. */
+export function rivalBuild(seed: number): Omit<BuildSpec, 'quality'> {
+  const r = (n: number) =>
+    Math.floor(((((Math.sin(seed * 12.9898 + n * 78.233) * 43758.5453) % 1) + 1) % 1) * 4);
+  return {
+    upgrades: { power: r(1) % 3, grip: r(2), boost: 0 },
+    wheels: r(3),
+    lighting: 1,
+    rims: (['graphite', 'silver', 'bronze'] as const)[r(4) % 3],
+  };
+}
 
 /** Which product ids are physically on the car for a given spec, for the garage parts list. */
 export function installedParts(spec: BuildSpec): string[] {

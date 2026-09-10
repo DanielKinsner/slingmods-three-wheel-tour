@@ -136,3 +136,19 @@ describe('real parts on the build', () => {
     );
   });
 });
+
+describe('install moments and rival builds', () => {
+  it('every product-backed install step maps to a scene group name that applyBuild creates', async () => {
+    const { PART_GROUPS, rivalBuild } = await import('./parts');
+    const car = stubHero();
+    applyBuild(car, spec({ upgrades: { power: 2, grip: 3, boost: 0 }, wheels: 1 }));
+    for (const names of Object.values(PART_GROUPS))
+      for (const name of names) expect(car.getObjectByName(name), name).toBeDefined();
+    const a = rivalBuild(3),
+      b = rivalBuild(3);
+    expect(a).toEqual(b);
+    expect(a.wheels).toBeGreaterThanOrEqual(0);
+    expect(a.wheels).toBeLessThan(WHEELS.length);
+    expect(a.upgrades.grip).toBeLessThanOrEqual(3);
+  });
+});

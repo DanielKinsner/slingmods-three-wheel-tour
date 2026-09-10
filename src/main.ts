@@ -883,7 +883,10 @@ app.addEventListener('change', (e) => {
 /** The payoff for winning: swing the camera to the new part and name the real product. */
 function installMoment(step: ReturnType<typeof installFor>) {
   if (step?.mood === 'night') world.setStudioMood('night');
-  if (step) world.vehicleView = step.view;
+  if (step) {
+    world.vehicleView = step.view;
+    world.highlightNext = [step.id];
+  }
   garage();
   audio.effect('install', 0.55);
   toast(

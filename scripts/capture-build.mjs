@@ -81,6 +81,11 @@ for (const [view, name] of [
 await page.selectOption('[data-studio]', 'night');
 await page.waitForTimeout(1500);
 await page.screenshot({ path: `${out}/garage-night.png` });
+// Buying a wheel set should drop the new wheels in with a bounce: catch it mid-animation.
+await page.click('[data-wheel="3"]').catch(() => {});
+await page.waitForTimeout(140);
+await page.screenshot({ path: `${out}/install-moment.png` });
+await page.waitForTimeout(900);
 // The build photo download carries the spec line; save it for review.
 const [download] = await Promise.all([
   page.waitForEvent('download', { timeout: 20000 }),

@@ -1,7 +1,7 @@
 import { buildRoadDetails } from './road-details';
 import { RouteTokens } from './playground';
 import { loadHeroAsset, makeHeroVehicle } from './hero-vehicle';
-import { applyBuild, type BuildSpec } from './parts';
+import { applyBuild, rivalBuild, PART_GROUPS, type BuildSpec } from './parts';
 import { buildMiami } from './miami';
 import * as T from 'three/webgpu';
 import { makeVehicle } from './vehicle';
@@ -236,6 +236,9 @@ export class World {
   photoPending = false;
   /** One-line spec (paint, wheels, real parts) stamped onto the build photo. */
   photoSpec = '';
+  /** Install ids whose parts should drop in with a bounce on the next applyBuild. */
+  highlightNext: string[] = [];
+  spawning: { object: T.Object3D; t: number; y: number }[] = [];
   studioMood = 'studio';
   checkpointDistance = 0;
   showCheckpoints = true;
@@ -434,6 +437,8 @@ export class World {
       ),
     ];
     this.cars.forEach((c) => this.root.add(c));
+    // Rivals run their own believable builds so the grid is not six stock cars.
+    this.cars.slice(1).forEach((c, i) => applyBuild(c, { ...rivalBuild(i + 1), quality: 'low' }));
     this.carLights = this.cars.map((c, i) => vehicleLighting(c, i === 0));
     this.showroom = makeShowroom(this.root);
     this.inShowroom = false;
@@ -814,6 +819,19 @@ export class World {
   ) {
     const start = performance.now();
     this.elapsed += dt;
+    // Freshly installed parts drop in and settle with a small overshoot.
+    this.spawning = this.spawning.filter((s) => {
+      s.t = Math.min(1, s.t + dt * 2.2);
+      const k = 1 - Math.pow(1 - s.t, 3);
+      const overshoot = 1 + 0.18 * Math.sin(s.t * Math.PI) * (1 - s.t);
+      s.object.scale.setScalar(k * overshoot);
+      s.object.position.y = s.y + (1 - k) * 0.35;
+      if (s.t >= 1) {
+        s.object.scale.setScalar(1);
+        s.object.position.y = s.y;
+      }
+      return s.t < 1;
+    });
     this.environment?.update(this.elapsed, motion);
     this.miami?.update(this.elapsed, motion);
     this.cpu.environment = performance.now() - start;
@@ -1092,5 +1110,15 @@ export class World {
     const hero = this.cars[0];
     if (!hero) return;
     applyBuild(hero, { ...spec, quality: this.quality === 'low' ? 'low' : 'full' });
+    const names = new Set(this.highlightNext.flatMap((id) => PART_GROUPS[id] ?? []));
+    this.highlightNext = [];
+    this.spawning = [];
+    if (names.size)
+      hero.traverse((o) => {
+        if (names.has(o.name)) {
+          o.scale.setScalar(0.001);
+          this.spawning.push({ object: o, t: 0, y: o.position.y });
+        }
+      });
   }
 }
