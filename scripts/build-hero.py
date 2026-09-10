@@ -192,7 +192,7 @@ def hood_top(z,u):
  return y+.035*(1-u*u)-.03*max(0,abs(u)-.75)/.25
 hood_sections=[]
 for z,y,w in HOOD:
- hood_sections.append([(w*u,hood_top(z,u),z) for u in [0,.25,.5,.72,.88,1.0]]+[(w+.02,hood_top(z,1)-.035,z),(w+.03,hood_top(z,1)-.07,z)])
+ hood_sections.append([(w*u,hood_top(z,u),z) for u in [0,.12,.24,.36,.48,.6,.7,.8,.9,1.0]]+[(w+.02,hood_top(z,1)-.035,z),(w+.03,hood_top(z,1)-.07,z)])
 loft('Hood',hood_sections,paint,thick=.022,bevel=.006)
 POD=[(1.90,[(.64,.60),(.78,.60),(.88,.56),(.92,.46),(.90,.34),(.86,.27)]),
  (1.80,[(.66,.68),(.82,.68),(.94,.63),(.985,.52),(.97,.36),(.90,.26)]),

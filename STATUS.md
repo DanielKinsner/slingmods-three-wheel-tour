@@ -15,9 +15,11 @@ Done on the branch so far (all tests and the TypeScript/Vite build pass; commits
 
 Verified: 122 tests, typecheck and production build; headless WebGL garage captures at 1920×1080 (front, side, rear, RGB night) show the parts with no console errors. Not verified: WebGPU desktop look, physical phone, race-time visuals of the parts by a human.
 
+- **Lofted body (owner approved the Blender download).** Portable Blender 4.5.3 lives in the ignored `work/` folder (sha256 verified). The hood, fender pods, nose, cockpit flanks and rear deck are now cross-section lofts sized from the reference photos with an overlay check; see `docs/vehicle-lofts.md`. Nose has a dark trapezoid mouth, light bar, slatted corner intakes and angular headlamp slashes. Both GLB tiers pass `scripts/validate-hero.py` (hero ~53k, reduced ~23k triangles). The in-game garage, race and 390×844 mobile layout were captured headlessly with no console errors.
+
 Open and blocked on the owner:
 
-- **Body accuracy is gated on Blender.** `C:\Program Files\Blender Foundation\Blender 4.5` has no executable on this machine and `work/blender-runtime` is absent. Reshaping the nose, fenders and side blades against `D:\slingshot angles` needs a portable Blender download (about 300 MB from blender.org) or a purchased game-ready Slingshot model. Awaiting the owner's go-ahead on either.
+- **Owner look check in Chrome (WebGPU).** All captures so far are headless WebGL; the studio renders darker there. Open the garage on this branch and say whether the body reads as a Slingshot to you.
 - Wheel designs are original in-game art; real SlingMods wheel products need links and photos from the owner before they can be named.
 - Headless WebGL renders the studio darker than the WebGPU desktop path; part materials were tuned to read in both, but the final look should be judged in Chrome.
 
