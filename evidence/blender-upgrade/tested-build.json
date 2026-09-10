@@ -1,0 +1,33 @@
+{
+  "build": "0.5.1-blender-preview",
+  "branch": "feature/blender-detail-pass",
+  "files": {
+    "dist/assets/index-DY9OIWvu.js": {
+      "bytes": 1183099,
+      "sha256": "1f5decd8864d5b03b8081880404dca18d9ade44a8eac8a23ef3cdbdd4a8cbbcd"
+    },
+    "dist/assets/index-UjAHhiPa.css": {
+      "bytes": 44750,
+      "sha256": "b9b1610972ba2ffbef2160544452cff5df7d8d2f600ec6e0017d8a18f906cef0"
+    },
+    "dist/index.html": {
+      "bytes": 2162,
+      "sha256": "23885a5228b6c522817f5fc13cf5323d6df2c7655dd07e00302c547662bcf691"
+    },
+    "public/models/harbor-kit.glb": {
+      "bytes": 3820100,
+      "sha256": "a90ac70a0adc33d96f144b7c84879277f6583849a783dcd08a8304ff564f18ef"
+    },
+    "public/models/slingshot-r-hero.glb": {
+      "bytes": 3141776,
+      "sha256": "791b088b18b08eb0ab535ed61863c70bc6e8845716ce04e3cb8337426c4090e8"
+    },
+    "public/models/slingshot-r-lod.glb": {
+      "bytes": 1440932,
+      "sha256": "d9863d5c1a6bcc8b2006a59bf40cd73588aa6432aedaa63701481bf9b447ad03"
+    }
+  },
+  "tests": 117,
+  "renderLane": "Isolated headless Chromium, ANGLE D3D11 WebGL 2",
+  "evidence": "final-visuals.json"
+}

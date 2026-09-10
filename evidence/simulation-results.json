@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-09T22:59:12.393Z",
+  "generated": "2026-09-10T16:26:52.800Z",
   "scope": "Node deterministic simulation tests; no browser or physical-device claim",
   "simStep": 0.016666666666666666,
   "upgrades": {

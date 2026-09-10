@@ -1,5 +1,19 @@
-# SlingMods Three-Wheel Tour — Playground live
+# SlingMods Three-Wheel Tour — Blender detail preview
 
+
+## Blender detail pass — September 10, v0.5.1 preview
+
+Implemented on `feature/blender-detail-pass`, based on production `744c111`. The current public main domain remains the owner-approved Playground release; this pass is a separate review preview. No production merge or SlingMods storefront change is authorized by this checkpoint.
+
+Actual Blender 4.5.3 LTS background authoring and export: recessed tire channels/sipes, broader split spokes, machined lips, lug hardware, annular brake discs and fixed calipers. Eleven authored wishbone/coilover links follow the contact-seated wheel hubs while retaining their body anchors. The existing body silhouette, wheel centers, five paint colors, wheel/exhaust finishes and RGB choices remain. Full/reduced GLBs and editable `.blend` master are included. This is still original R-inspired art, not OEM CAD or a new physical suspension solver.
+
+Harbor now uses an original Blender modular kit: corrugated paired containers with locking hardware, pitched warehouses with loading bays/clerestories/gutters, trussed gantry cranes with cables and operator cabs, and a shaped freighter with bridge/funnels/railings. Five original packed paint-wear maps, shared materials and static batching; mobile-sized screens retain simpler repeated cargo stacks. Props are seated on the lower apron. Each scene owns its asset clones so scene disposal cannot invalidate the cache. A missing kit retains playable procedural scenery.
+
+Validation: 117 tests pass, including four tests of the actual exported rig hierarchies through unequal travel, roll, yaw and steering; TypeScript/Vite build and both GLB validators pass. Isolated headless Windows Chromium/ANGLE WebGL exercised garage paint/rim/RGB choices, 1.44 km of Harbor Free Ride by virtual gamepad, day/night, cockpit, a six-car Smokies race segment, Harbor reload and saved customization across reload. Zero game errors/warnings or unexpected pauses in that pass. Mobile 390×844 emulation fetched only the reduced vehicle (eleven links); it is not physical-device or touch-hardware proof. Default renderer selection fell back to WebGL 2 here, so this pass does not certify WebGPU execution. Actual screenshots, telemetry and a silent gameplay excerpt are indexed in `evidence/blender-upgrade/README.md`.
+
+Measured render cost is higher: full car 68,436 triangles / 3,141,776 bytes; reduced 29,900 / 1,440,932, both 67 mesh groups (formerly 45). Harbor kit is 3,820,100 bytes and preloads at boot. Final headless run at 1440×900: day-drive frame p95 16.7 ms; combined day/night/race/reload p95 16.8 ms, maximum 50.1 ms across 4,405 sampled race frames, nine above 33.34 ms. Renderer counters reached roughly 1.68 million submitted triangles in Harbor and 797 draws in the six-car segment, including renderer passes. These are local diagnostics, not GPU timings, a physical-phone result, a complete new benchmark or a promise of 60 fps on customer hardware.
+
+Campaign/rules/rewards/steering/audio files are unchanged; all six routes and eight chapters remain. Original audio files retain their hashes, with no new generation, spend or mix changes. Source/evidence checkpoints accompany the preview. Current five neutral renders and two closeups are new; older turntable frames/recordings remain historical. OEM validation, broader hardware/performance testing and the previously documented human listening/campaign-balancing gaps remain open.
 
 ## Owner-approved production merge — September 9
 
