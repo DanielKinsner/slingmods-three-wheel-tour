@@ -99,12 +99,13 @@ await page.click('[data-night="night"]').catch(() => {});
 await page.waitForTimeout(400);
 await page.click('[data-action="race"]');
 await page.waitForTimeout(6500);
+await page.screenshot({ path: `${out}/race-night.png` });
+// A screenshot blurs the page and the game auto-pauses on lost focus; dismiss before continuing.
+await page.click('[data-action="close"]').catch(() => {});
+await page.waitForTimeout(300);
 await page.keyboard.press('KeyC');
 await page.waitForTimeout(1200);
 await page.screenshot({ path: `${out}/race-night-cockpit.png` });
-await page.keyboard.press('KeyC');
-await page.waitForTimeout(800);
-await page.screenshot({ path: `${out}/race-night.png` });
 const raceParts = await page.evaluate(() => {
   const t = window.__tour;
   return { playMode: t?.playMode, drawCalls: t?.drawCalls };

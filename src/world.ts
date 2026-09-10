@@ -894,7 +894,8 @@ export class World {
       if (this.cockpit) {
         desired
           .copy(this.cars[0].position)
-          .add(new T.Vector3(0.365, 1.07, -0.57).applyQuaternion(this.cars[0].quaternion));
+          // Driver eye point above the lofted 0.95 m cowl, looking through the taller screen.
+          .add(new T.Vector3(0.365, 1.19, -0.6).applyQuaternion(this.cars[0].quaternion));
         target.copy(desired).addScaledVector(forward.clone().lerp(look, 0.25), 30);
         target.y -= 2.5;
       }
