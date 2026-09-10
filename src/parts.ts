@@ -180,8 +180,8 @@ function dualExhaust(parent: T.Object3D) {
     [
       [0.5, 0.27, 0.15],
       [0.5, 0.27, -0.7],
-      [0.36, 0.34, -1.05],
-      [0, 0.4, -1.28],
+      [0.36, 0.34, -1.1],
+      [0, 0.38, -1.4],
     ],
     0.032,
     m.ceramic,
@@ -192,21 +192,22 @@ function dualExhaust(parent: T.Object3D) {
     path(
       g,
       [
-        [0, 0.4, -1.28],
-        [side * 0.36, 0.5, -1.36],
-        [side * 0.5, 0.56, -1.44],
+        [0, 0.38, -1.4],
+        [side * 0.3, 0.44, -1.5],
+        [side * 0.42, 0.48, -1.57],
       ],
       0.03,
       m.ceramic,
       true,
     ).name = 'Tailpipe';
-    const tip = box(g, m.polished, 0.15, 0.085, 0.09, side * 0.53, 0.565, -1.47, 0.012);
+    // Tips clear the boat-tail's rear face (Z -1.55) and sit just under the tail lamps.
+    const tip = box(g, m.polished, 0.15, 0.085, 0.09, side * 0.45, 0.485, -1.61, 0.012);
     tip.rotation.z = side * 0.28;
     tip.name = 'Exhaust tip';
-    const bore = box(g, m.black, 0.12, 0.058, 0.02, side * 0.53, 0.565, -1.515);
+    const bore = box(g, m.black, 0.12, 0.058, 0.02, side * 0.45, 0.485, -1.655);
     bore.rotation.z = side * 0.28;
     bore.name = 'Exhaust bore';
-    const flange = box(g, m.brushed, 0.17, 0.1, 0.012, side * 0.53, 0.565, -1.43, 0.004);
+    const flange = box(g, m.brushed, 0.17, 0.1, 0.012, side * 0.45, 0.485, -1.57, 0.004);
     flange.rotation.z = side * 0.28;
     flange.name = 'Tip flange';
   }
@@ -338,7 +339,7 @@ export function applyBuild(car: T.Group, spec: BuildSpec) {
       // Rearward of the tire so the side and rear views can see it past the closed fender.
       coilover(parts, V(side * 0.74, 0.26, 0.86), V(side * 0.58, 0.66, 0.8)).name =
         'Front coilover';
-    coilover(parts, V(0.3, 0.29, -1.36), V(0.32, 0.73, -1.1), 0.95).name = 'Rear coilover';
+    coilover(parts, V(0.3, 0.29, -1.36), V(0.3, 0.66, -1.16), 0.95).name = 'Rear coilover';
   }
   const design = WHEELS[spec.wheels] ?? WHEELS[0];
   if (design.id !== 'stock') {
