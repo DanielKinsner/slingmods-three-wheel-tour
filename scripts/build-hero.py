@@ -150,7 +150,15 @@ for s in [-1,1]:
  box('Mirror housing',(s*.81,1.07,.105),(.19,.074,.07),graphite,bevel=.026)
  box('Mirror glass',(s*.81,1.068,.064),(.15,.047,.008),alloy,bevel=.012)
 # Formed dashboard, touchscreen, pedals and two gauges.
-box('Dashboard',(0,.84,.052),(1.25,.24,.22),trim,bevel=.06)
+dv=[];df=[]
+for j in range(13):
+ u=j/12*2-1
+ dv.extend([(u*.62,.955-.06*u*u,.14),(u*.62,.93-.05*u*u,-.02),(u*.62,.83-.04*u*u,-.08),(u*.62,.72,.0),(u*.62,.72,.16)])
+ if j<12:
+  for k in range(4):a=j*5+k;df.append((a,a+1,a+6,a+5))
+  df.append((j*5+4,j*5,j*5+5,j*5+9))
+mesh('Dashboard cowl',dv,df,trim,thick=.015,bevel=.006,smooth=True)
+box('Gauge binnacle hood',(.37,.975,-.04),(.30,.03,.16),trim,bevel=.012)
 box('Screen housing',(0,.89,-.083),(.23,.18,.034),graphite,bevel=.014)
 box('Screen display',(0,.897,-.103),(.189,.126,.004),screen,bevel=.004)
 for x in [-.075,0,.075]:box('Console button',(x,.766,-.115),(.031,.021,.015),alloy,bevel=.004)
@@ -270,19 +278,20 @@ for z,spine,deck,k in DECK:
  deck_sections.append([(0,spine,z),(.07,deck+.04,z),(.20*k,deck,z),(.50*k,deck-.005,z),(.74*k,deck-.04,z),(.86*k,deck-.15,z),(.80*k,deck-.30,z),(.62*k,deck-.38,z)])
 loft('Rear deck',deck_sections,paint,thick=.022,bevel=.007)
 for s in [-1,1]:
- tube('Tail optical housing',[(s*.12,.69,-1.545),(s*.38,.70,-1.54),(s*.575,.745,-1.47),(s*.632,.66,-1.43)],.031,trim,sides=8)
- tube('Tail angular lens',[(s*.12,.694,-1.575),(s*.38,.705,-1.57),(s*.575,.75,-1.50),(s*.632,.665,-1.46)],.012,tail,sides=8)
- tube('Rear reflector trim',[(s*.19,.731,-1.548),(s*.36,.74,-1.547),(s*.47,.763,-1.5)],.008,alloy,sides=6)
+ panel('Tail lamp housing',[(s*.10,.72,-1.555),(s*.42,.735,-1.55),(s*.66,.70,-1.45),(s*.64,.61,-1.44),(s*.44,.66,-1.545),(s*.10,.655,-1.555)],trim,.025,.008)
+ panel('Tail lamp lens',[(s*.12,.71,-1.575),(s*.41,.724,-1.57),(s*.63,.69,-1.475),(s*.62,.63,-1.465),(s*.43,.672,-1.565),(s*.12,.665,-1.575)],tail,.008,.004)
+ tube('Tail LED bar',[(s*.14,.70,-1.585),(s*.40,.712,-1.58),(s*.61,.68,-1.49)],.007,lamp,sides=5)
+ box('Rear reflector',(s*.30,.655,-1.578),(.14,.018,.01),amber,bevel=.004)
  panel('Rear valance',[(s*.18,.62,-1.49),(s*.56,.62,-1.49),(s*.64,.44,-1.40),(s*.35,.31,-1.20),(s*.18,.39,-1.18)],trim,.027,.013)
 a=Vector((.22,.68,-1.14));b=Vector((.22,.36,-1.49));axis=(b-a).normalized();v=axis.cross(Vector((1,0,0))).normalized();u=axis.cross(v)
 tube('Rear coilover shaft',[a,b],.017,alloy)
 tube('Rear spring',[a+(b-a)*i/72+.045*(math.cos(i/72*math.tau*8)*v+math.sin(i/72*math.tau*8)*u) for i in range(73)],.008,graphite,sides=6)
 rv=[];rf=[]
 for i in range(29):
- a=.03+i/28*2.88
- for x in [-.184,.184]:rv.append((x,.354+math.sin(a)*.405,-1.47+math.cos(a)*.405))
+ a=.35+i/28*2.3
+ for x in [-.168,.168]:rv.append((x,.354+math.sin(a)*.385,-1.47+math.cos(a)*.385))
  if i<28:rf.append((2*i,2*i+1,2*i+3,2*i+2))
-mesh('Rear wheel mudguard',rv,rf,graphite,thick=.013,smooth=True)
+mesh('Rear wheel mudguard',rv,rf,trim,thick=.011,smooth=True)
 exhaust=empty('Exhaust',body)
 tube('Exhaust pipe',[(.42,.27,.17),(.56,.26,-.49),(.51,.26,-1.05)],.028,rotor,exhaust)
 tube('Exhaust canister',[(.51,.26,-.58),(.51,.26,-1.10)],.07,graphite,exhaust,sides=16)

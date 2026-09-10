@@ -22,22 +22,46 @@ export function glowTexture() {
 
 /** Surface-aligned halos: always face the nose, never the camera or the rear of the car. */
 function frontLampHalo(width: number, hero = false) {
-  const strips = [
-    [
-      [-0.127, hero ? 0.48 : 0.518, hero ? 1.844 : 1.655],
-      [0.127, hero ? 0.48 : 0.518, hero ? 1.844 : 1.655],
-    ],
-  ];
+  // Hero positions follow the lofted 2025 nose: centre light bar, rising brow slash on each
+  // pod front and a short vertical accent beside the corner intake.
+  const strips = hero
+    ? [
+        [
+          [-0.16, 0.565, 1.958],
+          [0.16, 0.565, 1.958],
+        ],
+      ]
+    : [
+        [
+          [-0.127, 0.518, 1.655],
+          [0.127, 0.518, 1.655],
+        ],
+      ];
   for (const side of [-1, 1]) {
-    strips.push([
-      [side * 0.589, 0.537, 1.797],
-      [side * 0.704, 0.571, 1.783],
-      [side * 0.938, 0.68, 1.739],
-    ]);
-    strips.push([
-      [side * 0.9, 0.28, 1.847],
-      [side * 0.928, 0.47, 1.821],
-    ]);
+    strips.push(
+      hero
+        ? [
+            [side * 0.58, 0.47, 1.945],
+            [side * 0.74, 0.52, 1.94],
+            [side * 0.89, 0.575, 1.92],
+          ]
+        : [
+            [side * 0.589, 0.537, 1.797],
+            [side * 0.704, 0.571, 1.783],
+            [side * 0.938, 0.68, 1.739],
+          ],
+    );
+    strips.push(
+      hero
+        ? [
+            [side * 0.905, 0.3, 1.89],
+            [side * 0.92, 0.44, 1.88],
+          ]
+        : [
+            [side * 0.9, 0.28, 1.847],
+            [side * 0.928, 0.47, 1.821],
+          ],
+    );
   }
   const vertices: number[] = [];
   const uvs: number[] = [];
@@ -83,7 +107,10 @@ export function environmentTexture(studio = false) {
   x.fillRect(0, 0, 1024, 512);
   if (studio) {
     // Broad softboxes trace the sculpted panels without razor-thin white streaks.
-    for (const [cx, cy, w, h] of [[200, 115, 220, 70], [705, 155, 280, 60]]) {
+    for (const [cx, cy, w, h] of [
+      [200, 115, 220, 70],
+      [705, 155, 280, 60],
+    ]) {
       const soft = x.createLinearGradient(0, cy - h / 2, 0, cy + h / 2);
       soft.addColorStop(0, 'rgba(238,246,255,0)');
       soft.addColorStop(0.3, 'rgba(238,246,255,.85)');
@@ -277,7 +304,7 @@ export function vehicleLighting(car: T.Group, main: boolean) {
     car.add(light);
     for (const x of [-0.72, 0.72]) {
       const head = new T.SpotLight(0xe4efff, 230, 84, 0.4, 0.78, 1.7);
-      head.position.set(x, 0.59, 1.78);
+      head.position.set(x, 0.55, 1.9);
       head.target.position.set(x, 0.03, 29);
       car.add(head, head.target);
       headlights.push(head);
