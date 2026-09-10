@@ -17,6 +17,8 @@ Verified: 122 tests, typecheck and production build; headless WebGL garage captu
 
 - **Lofted body (owner approved the Blender download).** Portable Blender 4.5.3 lives in the ignored `work/` folder (sha256 verified). The hood, fender pods, nose, cockpit flanks and rear deck are now cross-section lofts sized from the reference photos with an overlay check; see `docs/vehicle-lofts.md`. Nose has a dark trapezoid mouth, light bar, slatted corner intakes and angular headlamp slashes. Both GLB tiers pass `scripts/validate-hero.py` (hero ~53k, reduced ~23k triangles). The in-game garage, race and 390×844 mobile layout were captured headlessly with no console errors.
 
+- **Detail pass (self-judged against the references, owner away).** Angular tail lamp clusters with LED bars, narrow black rear mudguard, lofted dashboard cowl with gauge binnacle, smoked windscreen, headlight halos and spotlights moved onto the new nose (night race and cockpit captures verified), cockpit eye point raised over the 0.95 m cowl, and the build photo now stamps paint, wheel set and every real part as a spec line. `scripts/capture-build.mjs` covers garage views, RGB night, a day race, a night race, the cockpit, the photo download and a `--mobile` phone layout.
+
 Open and blocked on the owner:
 
 - **Owner look check in Chrome (WebGPU).** All captures so far are headless WebGL; the studio renders darker there. Open the garage on this branch and say whether the body reads as a Slingshot to you.
