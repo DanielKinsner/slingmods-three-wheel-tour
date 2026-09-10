@@ -11,8 +11,9 @@ const executablePath = candidates
   .map((n) => join(storage, n, 'chrome-headless-shell-win64', 'chrome-headless-shell.exe'))
   .find(existsSync);
 const out = process.argv[2] || 'shots';
+const seedArg = process.argv.slice(3).find((a) => !a.startsWith('--'));
 const seed = JSON.parse(
-  process.argv[3] ||
+  seedArg ||
     '{"version":2,"credits":20000,"chapter":3,"races":6,"wins":3,"upgrades":{"power":2,"grip":3,"boost":1},"wheels":2,"ownedWheels":[0,2],"lighting":1,"paint":6,"rgb":1,"rgbCycle":false,"settings":{"sound":false,"music":false,"voice":false}}',
 );
 await mkdir(out, { recursive: true });
@@ -21,9 +22,13 @@ const browser = await chromium.launch({
   executablePath,
   args: ['--use-angle=d3d11'],
 });
+// --mobile checks the garage at a phone viewport (390x844) instead of desktop.
+const mobile = process.argv.includes('--mobile');
 const context = await browser.newContext({
-  viewport: { width: 1920, height: 1080 },
+  viewport: mobile ? { width: 390, height: 844 } : { width: 1920, height: 1080 },
   deviceScaleFactor: 2,
+  isMobile: mobile,
+  hasTouch: mobile,
 });
 await context.addInitScript(
   (s) => localStorage.setItem('slingmods-tour-v1', JSON.stringify(s)),
@@ -38,6 +43,22 @@ await page.locator('[data-action="quick"]').waitFor({ timeout: 90000 });
 await page.waitForFunction(() => window.__tour?.drawCalls > 0, {}, { timeout: 90000 });
 await page.click('[data-action="garage"]');
 await page.waitForTimeout(2500);
+if (mobile) {
+  await page.screenshot({ path: `${out}/mobile-garage.png`, fullPage: true });
+  await page.click('[data-garagetab="build"]').catch(() => {});
+  await page.waitForTimeout(500);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+  console.log(
+    JSON.stringify({
+      errors,
+      out,
+      overflow,
+      lowTier: await page.evaluate(() => window.__tour?.build),
+    }),
+  );
+  await browser.close();
+  process.exit(0);
+}
 for (const [view, name] of [
   [0, 'front'],
   [0.9, 'side'],

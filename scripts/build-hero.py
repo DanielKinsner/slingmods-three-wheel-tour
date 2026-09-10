@@ -221,8 +221,9 @@ for s in [-1,1]:
    t=j/4;p=Vector(a).lerp(Vector(b),t)
    tube('Optical lens divider',[(p.x,p.y-.009,p.z+.028),(p.x,p.y+.015,p.z+.028)],.0026,alloy,sides=4)
  box('Amber marker',(s*.92,.52,1.87),(.022,.061,.018),amber,bevel=.007)
- tube('Lower accent socket',[(s*.86,.30,1.82),(s*.90,.48,1.80)],.025,trim)
- tube('Lower accent optic',[(s*.86,.30,1.847),(s*.90,.48,1.827)],.011,lamp)
+ panel('Corner intake',[(s*.70,.46,1.925),(s*.90,.44,1.90),(s*.88,.27,1.905),(s*.66,.27,1.935)],trim,.02,.006)
+ for j in range(4):tube('Intake slat',[(s*(.72+j*.05),.29,1.94-j*.006),(s*(.73+j*.05),.44,1.935-j*.006)],.008,graphite,sides=5)
+ tube('Lower accent optic',[(s*.905,.30,1.87),(s*.92,.44,1.86)],.009,lamp)
  panel('Chin splitter',[(s*.02,.165,1.95),(s*.60,.165,1.92),(s*.94,.19,1.82),(s*.94,.19,1.60),(s*.70,.17,1.64),(s*.02,.165,1.68)],trim,.035,.01)
  # Suspension remains exposed in the open gap behind the fender.
  for y in [.23,.39]:
@@ -237,20 +238,20 @@ panel('Nose lower lip',[(-.34,.245,1.85),(0,.245,1.93),(.34,.245,1.85),(.40,.20,
 for s in [-1,1]:panel('Nose cheek',[(s*.42,.52,1.87),(s*.40,.20,1.86),(s*.34,.245,1.85),(s*.39,.52,1.86)],paint,.03,.008)
 panel('Grille mouth',[(-.39,.52,1.86),(0,.52,1.935),(.39,.52,1.86),(.34,.245,1.85),(0,.245,1.895),(-.34,.245,1.85)],trim,.02,.006)
 box('Radiator backing',(0,.38,1.83),(.56,.20,.02),trim,bevel=.01)
-for j in range(5):
- for i in range(15):
-  x=(i-7)*.043+(j%2)*.021;y=.29+j*.038
-  if abs(x)>.31+j*.012:continue
-  zz=1.905-abs(x)*.2
-  pts=[(x+.024*math.cos(k/6*math.tau),y+.016*math.sin(k/6*math.tau),zz) for k in range(7)]
-  tube('Honeycomb grille',pts,.0036,graphite,sides=4)
-box('Projector recess',(0,.56,1.935),(.34,.075,.04),trim,bevel=.012)
-for x in [-.112,-.056,0,.056,.112]:
- box('Projector reflector',(x,.56,1.95-abs(x)*.2),(.049,.05,.009),alloy,bevel=.009)
- box('Projector lens',(x,.56,1.957-abs(x)*.2),(.036,.03,.01),lamp,bevel=.008)
+for j in range(7):
+ for i in range(23):
+  x=(i-11)*.03+(j%2)*.015;y=.275+j*.033
+  if abs(x)>.30+j*.012:continue
+  zz=1.9-abs(x)*.2
+  pts=[(x+.016*math.cos(k/6*math.tau),y+.011*math.sin(k/6*math.tau),zz) for k in range(7)]
+  tube('Honeycomb grille',pts,.0028,graphite,sides=3)
+box('Projector recess',(0,.565,1.935),(.40,.06,.04),trim,bevel=.01)
+for x in [-.14,-.07,0,.07,.14]:
+ box('Projector reflector',(x,.565,1.95-abs(x)*.2),(.06,.04,.009),alloy,bevel=.009)
+ box('Projector lens',(x,.565,1.957-abs(x)*.2),(.048,.024,.01),lamp,bevel=.006)
 tube('Projector eyebrow',[(-.22,.61,1.91),(0,.625,1.965),(.22,.61,1.91)],.012,paint,sides=6)
-box('Scoop inlet',(0,hood_top(.42,0)+.012,.42),(.185,.040,.06),trim,bevel=.009)
-panel('Scoop top',[(-.105,hood_top(.22,0)+.002,.22),(-.105,hood_top(.40,0)+.04,.40),(.105,hood_top(.40,0)+.04,.40),(.105,hood_top(.22,0)+.002,.22)],paint,.014,.005)
+box('Scoop inlet',(0,hood_top(.46,0)+.014,.46),(.26,.034,.05),trim,bevel=.008)
+panel('Scoop top',[(-.10,hood_top(.16,0)+.002,.16),(-.145,hood_top(.44,0)+.036,.44),(.145,hood_top(.44,0)+.036,.44),(.10,hood_top(.16,0)+.002,.16)],paint,.014,.005)
 for s in [-1,1]:
  for j in range(4):
   z=.37+j*.072
@@ -361,7 +362,8 @@ bpy.ops.export_scene.gltf(filepath=str(OUT/'slingshot-r-hero.glb'),export_format
 # Separate real reduced LOD file keeps network and vertex cost selectable.
 for o in bpy.context.scene.objects:
  if o.type=='MESH' and len(o.data.polygons)>90:
-  d=o.modifiers.new('Mobile simplification','DECIMATE');d.ratio=.42
+  # Smooth lofted paint keeps more of its curvature on the reduced tier; trim/interior reduce harder.
+  d=o.modifiers.new('Mobile simplification','DECIMATE');d.ratio=.55 if 'BodyPaint' in o.name else .4
 low=stats()
 bpy.ops.export_scene.gltf(filepath=str(OUT/'slingshot-r-lod.glb'),export_format='GLB',export_yup=True,export_apply=True)
 for o in bpy.context.scene.objects:
