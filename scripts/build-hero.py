@@ -109,10 +109,7 @@ box('Floor pan',(0,.215,-.01),(1.38,.16,2.34),trim)
 box('Rear bulkhead',(0,.51,-.97),(1.37,.52,.18),trim)
 box('Transmission tunnel',(0,.47,-.22),(.20,.36,1.43),graphite)
 for s in [-1,1]:
- panel('Rocker outer',[(s*.68,.2,-1.02),(s*.81,.27,-.65),(s*.81,.37,.25),(s*.65,.51,.79),(s*.58,.29,.85)],paint,.025,.018)
  tube('Lower sill',[(s*.7,.22,-.99),(s*.8,.25,-.6),(s*.8,.29,.14),(s*.66,.35,.72)],.034,graphite)
- panel('Upper sideblade',[(s*.69,.77,-.92),(s*.79,.5,-.72),(s*.79,.41,.05),(s*.69,.54,.55),(s*.70,.43,-.12)],paint,.017,.01)
- panel('Seat rear fairing',[(s*.09,.56,-1.12),(s*.18,.83,-.98),(s*.59,.91,-.94),(s*.71,.69,-1.08),(s*.61,.38,-1.2)],paint,.022,.014)
  # Forged hoop shape: polygonal trapezoid, not round roll-cage tube.
  hoop=[(s*.17,.66,-.82),(s*.18,1.17,-.88),(s*.24,1.29,-.88),(s*.52,1.29,-.88),(s*.59,1.17,-.88),(s*.65,.66,-.82)]
  tube('Forged roll hoop',hoop,.033,graphite,sides=6)
@@ -149,21 +146,21 @@ for s in [-1,1]:
   box('Harness slot',(x+sx*.071,.925,-.754),(.073,.025,.012),trim,bevel=.011)
  for j in range(4):tube('Cushion stitching',[(x-.11,.504,-.45-j*.043),(x+.11,.504,-.45-j*.043)],.0015,graphite,sides=4)
  # Mirrors on clearly separate stalks.
- tube('Mirror arm',[(s*.61,.72,.17),(s*.76,.89,.1)],.015,graphite)
- box('Mirror housing',(s*.77,.902,.105),(.19,.074,.07),graphite,bevel=.026)
- box('Mirror glass',(s*.77,.9,.064),(.15,.047,.008),alloy,bevel=.012)
+ tube('Mirror arm',[(s*.64,.93,.16),(s*.80,1.06,.10)],.015,graphite)
+ box('Mirror housing',(s*.81,1.07,.105),(.19,.074,.07),graphite,bevel=.026)
+ box('Mirror glass',(s*.81,1.068,.064),(.15,.047,.008),alloy,bevel=.012)
 # Formed dashboard, touchscreen, pedals and two gauges.
-box('Dashboard',(0,.69,.052),(1.25,.24,.22),trim,bevel=.06)
-box('Screen housing',(0,.74,-.083),(.23,.18,.034),graphite,bevel=.014)
-box('Screen display',(0,.747,-.103),(.189,.126,.004),screen,bevel=.004)
-for x in [-.075,0,.075]:box('Console button',(x,.616,-.115),(.031,.021,.015),alloy,bevel=.004)
+box('Dashboard',(0,.84,.052),(1.25,.24,.22),trim,bevel=.06)
+box('Screen housing',(0,.89,-.083),(.23,.18,.034),graphite,bevel=.014)
+box('Screen display',(0,.897,-.103),(.189,.126,.004),screen,bevel=.004)
+for x in [-.075,0,.075]:box('Console button',(x,.766,-.115),(.031,.021,.015),alloy,bevel=.004)
 for x in [.28,.46]:
- torus('Gauge bezel',(x,.769,-.076),.07,.008,alloy,axis='z',segments=32)
- box('Gauge face',(x,.77,-.073),(.124,.124,.015),trim,bevel=.05)
- needle=empty('SpeedNeedle' if x==.28 else 'RpmNeedle',body,(x,.769,-.089))
+ torus('Gauge bezel',(x,.919,-.076),.07,.008,alloy,axis='z',segments=32)
+ box('Gauge face',(x,.92,-.073),(.124,.124,.015),trim,bevel=.05)
+ needle=empty('SpeedNeedle' if x==.28 else 'RpmNeedle',body,(x,.919,-.089))
  tube('Gauge needle',[(0,0,0),(-.027,.034,0)],.003,tail,needle)
 for x in [.31,.43]:box('Pedal',(x,.28,.21),(.055,.09,.033),alloy,bevel=.005)
-steer=empty('Steering',body,(.37,.739,-.207))
+steer=empty('Steering',body,(.37,.86,-.207))
 torus('Steering rim',(0,0,0),.135,.014,leather,steer,axis='z',segments=48)
 for angle in [0,2.2,4.08]:tube('Steering spoke',[(0,0,0),(.115*math.sin(angle),.115*math.cos(angle),0)],.014,graphite,steer)
 box('Steering hub',(0,0,.0),(.085,.076,.034),graphite,steer,bevel=.025)
@@ -172,71 +169,61 @@ box('Gear knob',(.07,.657,-.431),(.045,.038,.05),leather,bevel=.018)
 # Swept wind deflector, low enough to retain the characteristic open silhouette.
 wv=[];wf=[]
 for i in range(25):
- x=(i/24-.5)*1.23;z=.19-.1*(x/.615)**2;y=.73
- wv.extend([(x,y,z),(x,y+.2+.025*math.cos(x*4),z-.058)])
+ x=(i/24-.5)*1.25;z=.10-.1*(x/.625)**2;y=.95
+ wv.extend([(x,y,z),(x,y+.27+.025*math.cos(x*4),z-.08)])
  if i<24:wf.append((2*i,2*i+2,2*i+3,2*i+1))
 mesh('Windscreen',wv,wf,glass,thick=.003,smooth=True)
-# Main hood loft: central muscular crown, a crisp valley inside each front brow.
-rows=[(-.005,.73,.60),(.18,.77,.64),(.32,.79,.66),(.50,.79,.67),(.67,.77,.66),(.84,.73,.66),(1.0,.68,.66),(1.16,.63,.63),(1.3,.59,.59),(1.44,.545,.54),(1.56,.50,.48),(1.68,.471,.44),(1.78,.445,.40)]
-def hood_height(z,y,u):
- # Distinct central shoulder and two recessed longitudinal channels. Keep the
- # existing outer boundaries so the opaque wing/nose returns still seal.
- nose_blend=max(0,min(1,(z-1.3)/.48));nose_blend=nose_blend*nose_blend*(3-2*nose_blend)
- crown=(.058+.05*nose_blend)*(1-u*u)
- channel=.031*math.exp(-((abs(u)-.63)/.14)**2)*math.sin(min(1,max(0,z/1.78))*math.pi)
- ridge=.014*math.exp(-((abs(u)-.36)/.12)**2)*math.sin(min(1,max(0,z/1.78))*math.pi)
- return y+crown-channel+ridge
-vs=[];fs=[];n=28
-for z,y,w in rows:
- for j in range(n+1):u=j/n*2-1;vs.append((w*u,hood_height(z,y,u),z))
-for i in range(len(rows)-1):
- for j in range(n):a=i*(n+1)+j;fs.append((a,a+1,a+n+2,a+n+1))
-mesh('Hood crown',vs,fs,paint,thick=.022,bevel=.005,smooth=True)
+# --- Front clip: lofted centre hood/nose and two fender pods, proportioned from the owner's
+# reference angles (hood rising to a ~0.95 m cowl, fender pods ~0.89 m, long low nose). ---
+def loft(name,sections,mat,thick=.02,bevel=.005,mirror=True):
+ n=len(sections[0]);verts=[p for sec in sections for p in sec];faces=[]
+ for i in range(len(sections)-1):
+  for j in range(n-1):a=i*n+j;faces.append((a,a+1,a+n+1,a+n))
+ mesh(name,verts,faces,mat,thick=thick,bevel=bevel,smooth=True)
+ if mirror:mesh(name,[(-x,y,z) for x,y,z in verts],[tuple(reversed(f)) for f in faces],mat,thick=thick,bevel=bevel,smooth=True)
+HOOD=[(1.95,.62,.36),(1.86,.66,.42),(1.70,.71,.48),(1.50,.76,.53),(1.30,.80,.56),(1.10,.835,.585),(.85,.875,.60),(.60,.91,.62),(.35,.935,.63),(.10,.955,.64),(-.02,.96,.645)]
+def hood_station(z):
+ for (z1,y1,w1),(z0,y0,w0) in zip(HOOD,HOOD[1:]):
+  if z0<=z<=z1:
+   t=(z1-z)/(z1-z0);return y1+(y0-y1)*t,w1+(w0-w1)*t
+ return (HOOD[0][1],HOOD[0][2]) if z>HOOD[0][0] else (HOOD[-1][1],HOOD[-1][2])
+def hood_top(z,u):
+ y,_=hood_station(z)
+ return y+.035*(1-u*u)-.03*max(0,abs(u)-.75)/.25
+hood_sections=[]
+for z,y,w in HOOD:
+ hood_sections.append([(w*u,hood_top(z,u),z) for u in [0,.25,.5,.72,.88,1.0]]+[(w+.02,hood_top(z,1)-.035,z),(w+.03,hood_top(z,1)-.07,z)])
+loft('Hood',hood_sections,paint,thick=.022,bevel=.006)
+POD=[(1.90,[(.62,.60),(.75,.61),(.86,.58),(.91,.48),(.89,.36),(.85,.28)]),
+ (1.80,[(.62,.68),(.76,.70),(.92,.66),(.98,.54),(.96,.36),(.88,.26)]),
+ (1.62,[(.64,.78),(.80,.81),(.95,.75),(1.00,.60),(.99,.50),(.97,.44)]),
+ (1.40,[(.66,.84),(.80,.865),(.95,.80),(1.00,.64),(.995,.58),(.985,.55)]),
+ (1.20,[(.67,.86),(.80,.885),(.95,.82),(1.00,.66),(.995,.60),(.985,.57)]),
+ (1.00,[(.68,.85),(.80,.87),(.95,.80),(1.00,.65),(.995,.59),(.985,.56)]),
+ (.82,[(.69,.83),(.80,.835),(.94,.77),(.98,.63),(.965,.55),(.95,.50)]),
+ (.66,[(.70,.80),(.78,.79),(.86,.75),(.88,.66),(.86,.58),(.82,.52)]),
+ (.56,[(.67,.79),(.70,.78),(.73,.75),(.74,.70),(.73,.64),(.70,.58)])]
+def pod_section(z,pts):
+ w=hood_station(z)[1];return [(w+.03,hood_top(z,1)-.07,z),(w+.05,hood_top(z,1)-.03,z)]+[(x,y,z) for x,y in pts]
+loft('Fender pod',[pod_section(z,pts) for z,pts in POD],paint,thick=.02,bevel=.006)
 for s in [-1,1]:
- # Continuous opaque return under the crown; no accidental view through the nose.
- v=[];f=[]
- for z,y,w in rows:v.extend([(s*w,y,z),(s*(w-.008),max(.31,y-.18),z)])
- for i in range(len(rows)-1):f.append((2*i,2*i+1,2*i+3,2*i+2))
- mesh('Hood inner return',v,f,graphite,thick=.012)
- # Swooping outer wing blends its elevated fender into the central V-shaped nose.
- grid=[[(.40,.445,1.78),(.58,.565,1.69),(.97,.744,1.55)],[(.48,.50,1.56),(.65,.655,1.38),(.98,.78,1.32)],[(.59,.59,1.3),(.67,.716,1.05),(.94,.774,1.04)],[(.66,.68,1.0),(.68,.726,.86),(.84,.705,.69)]]
- verts=[(s*x,y,z) for row in grid for x,y,z in row];faces=[]
- for i in range(3):
-  for j in range(2):a=i*3+j;faces.append((a,a+1,a+4,a+3))
- mesh('Sculpted upper wing',verts,faces,paint,thick=.025,bevel=.007,smooth=True)
- # A separate dark blade makes the shape legible without flat black hood acreage.
- panel('Wing contrast blade',[(s*.57,.576,1.69),(s*.963,.751,1.55),(s*.966,.787,1.34),(s*.64,.665,1.43)],graphite,.009,.004)
- panel('Painted fascia upper',[(s*.41,.44,1.79),(s*.98,.72,1.59),(s*.984,.6,1.73),(s*.57,.365,1.87)],paint,.03,.008)
- panel('Fascia lower',[(s*.57,.365,1.87),(s*.984,.6,1.73),(s*.974,.22,1.8),(s*.43,.155,1.90)],paint,.027,.009)
- panel('Fascia inner closeout',[(s*.4,.44,1.79),(s*.57,.365,1.87),(s*.43,.155,1.90),(s*.48,.245,1.894),(s*.4,.40,1.836)],paint,.025,.005)
- panel('Fascia side closure',[(s*.98,.72,1.59),(s*.98,.54,1.29),(s*.984,.255,1.57),(s*.974,.22,1.8)],paint,.028,.009)
- panel('Intake shadow',[(s*.615,.286,1.878),(s*.92,.493,1.806),(s*.927,.249,1.84)],trim,.012,.006)
- for j in range(4):tube('Intake vertical louver',[(s*(.69+j*.054),.267,1.875-j*.01),(s*(.69+j*.054),.318+j*.038,1.866-j*.01)],.009,graphite)
- # Deep optical housings and layered lenses, matching the R-style upward signature.
- brow=[(s*.58,.539,1.77),(s*.707,.586,1.744),(s*.935,.695,1.681)]
+ cap=[(s*x,y,z) for x,y,z in pod_section(1.90,POD[0][1])]+[(s*.55,.30,1.90)]
+ mesh('Pod front cap',cap,[tuple(range(len(cap))) if s>0 else tuple(reversed(range(len(cap))))],paint,thick=.02,bevel=.006)
+ panel('Fascia wedge',[(s*.36,.62,1.88),(s*.52,.58,1.86),(s*.85,.28,1.86),(s*.40,.20,1.86)],paint,.028,.008)
+ # Angular headlamp slash across each pod front, amber marker at the outer corner.
+ brow=[(s*.60,.50,1.91),(s*.74,.53,1.905),(s*.87,.555,1.89)]
  tube('Headlight socket',brow,.036,trim,sides=8)
  tube('Headlight reflector',[(x,y+.003,z+.013) for x,y,z in brow],.019,alloy,sides=8)
  tube('Front accent optic',[(x,y+.003,z+.026) for x,y,z in brow],.010,lamp,sides=8)
- # Painted eyebrow surrounds the recessed lens, with an opaque black optical bed.
  tube('Headlight upper eyelid',[(x,y+.039,z+.026) for x,y,z in brow],.013,paint,sides=6)
  for a,b in zip(brow[:-1],brow[1:]):
   for j in range(1,4):
    t=j/4;p=Vector(a).lerp(Vector(b),t)
    tube('Optical lens divider',[(p.x,p.y-.009,p.z+.028),(p.x,p.y+.015,p.z+.028)],.0026,alloy,sides=4)
- tube('Lower accent socket',[(s*.917,.28,1.86),(s*.942,.479,1.821)],.025,trim)
- tube('Lower accent optic',[(s*.917,.28,1.887),(s*.942,.479,1.848)],.011,lamp)
- box('Amber marker',(s*.965,.63,1.744),(.022,.061,.018),amber,bevel=.007)
- tube('Splitter wing',[(s*.40,.145,1.895),(s*.83,.158,1.872),(s*.974,.184,1.785),(s*.974,.22,1.60)],.016,graphite)
- # Wheel arch is a formed cap with thickness; intentionally exposed behind it.
- av=[];af=[]
- for i in range(25):
-  a=-.05+i/24*2.84
-  for j in range(4):
-   x=.76+j*.071;r=.384+.008*math.sin(j/3*math.pi)
-   av.append((s*x,.333+math.sin(a)*r,1.197+math.cos(a)*r))
- for i in range(24):
-  for j in range(3):a=i*4+j;af.append((a,a+1,a+5,a+4))
- mesh('Formed fender',av,af,paint,thick=.018,bevel=.005,smooth=True)
+ box('Amber marker',(s*.92,.52,1.87),(.022,.061,.018),amber,bevel=.007)
+ tube('Lower accent socket',[(s*.86,.30,1.82),(s*.90,.48,1.80)],.025,trim)
+ tube('Lower accent optic',[(s*.86,.30,1.847),(s*.90,.48,1.827)],.011,lamp)
+ panel('Chin splitter',[(s*.02,.165,1.95),(s*.60,.165,1.92),(s*.94,.19,1.82),(s*.94,.19,1.60),(s*.70,.17,1.64),(s*.02,.165,1.68)],trim,.035,.01)
  # Suspension remains exposed in the open gap behind the fender.
  for y in [.23,.39]:
   for z in [.7,1.42]:tube('Front wishbone',[(s*.44,y,z),(s*.858,.32,1.197)],.019,graphite)
@@ -244,52 +231,51 @@ for s in [-1,1]:
  a=Vector((s*.54,.6,.97));b=Vector((s*.81,.28,1.18));axis=(b-a).normalized();v=axis.cross(Vector((0,0,1))).normalized();u=axis.cross(v)
  coil=[a+(b-a)*i/64+.033*(math.cos(i/64*math.tau*7)*v+math.sin(i/64*math.tau*7)*u) for i in range(65)]
  tube('Coil spring',coil,.007,stitch,sides=6)
-# Center opening is backed, framed and optically detailed; no glowing empty shell.
-panel('Nose bridge',[(-.4,.445,1.78),(.4,.445,1.78),(.4,.399,1.836),(-.4,.399,1.836)],paint,.028,.01)
-nv=[];nf=[]
-for j in range(13):
- u=j/12*2-1;nv.extend([(.4*u,hood_height(1.78,.445,u),1.78),(.4*u,.414,1.831)])
- if j<12:nf.append((j*2,j*2+1,j*2+3,j*2+2))
-mesh('Closed hood leading edge',nv,nf,paint,thick=.015,bevel=.004,smooth=True)
-panel('Grille surround',[(-.4,.4,1.836),(.4,.4,1.836),(.48,.245,1.894),(.40,.16,1.908),(-.4,.16,1.908),(-.48,.245,1.894)],graphite,.025,.012)
-box('Radiator backing',(0,.289,1.873),(.77,.22,.035),trim,bevel=.024)
+# Nose face with a wide dark grille mouth, centre light bar and painted eyebrow.
+panel('Nose upper face L',[(-.36,.62,1.88),(0,.62,1.97),(0,.50,1.96),(-.37,.50,1.87)],paint,.03,.01)
+panel('Nose upper face R',[(0,.62,1.97),(.36,.62,1.88),(.37,.50,1.87),(0,.50,1.96)],paint,.03,.01)
+panel('Nose lower lip L',[(-.30,.25,1.85),(0,.25,1.92),(0,.20,1.92),(-.40,.20,1.86)],paint,.03,.01)
+panel('Nose lower lip R',[(0,.25,1.92),(.30,.25,1.85),(.40,.20,1.86),(0,.20,1.92)],paint,.03,.01)
+for s in [-1,1]:panel('Nose cheek',[(s*.37,.50,1.87),(s*.40,.20,1.86),(s*.30,.25,1.85),(s*.33,.50,1.855)],paint,.03,.008)
+panel('Grille mouth L',[(-.33,.50,1.855),(0,.50,1.925),(0,.25,1.885),(-.30,.25,1.85)],trim,.02,.006)
+panel('Grille mouth R',[(0,.50,1.925),(.33,.50,1.855),(.30,.25,1.85),(0,.25,1.885)],trim,.02,.006)
+box('Radiator backing',(0,.38,1.83),(.56,.20,.02),trim,bevel=.01)
 for j in range(5):
- for i in range(17):
-  x=(i-8)*.043+(j%2)*.021;y=.205+j*.038
-  if abs(x)>.362:continue
-  pts=[(x+.024*math.cos(k/6*math.tau),y+.016*math.sin(k/6*math.tau),1.903) for k in range(7)]
+ for i in range(15):
+  x=(i-7)*.043+(j%2)*.021;y=.29+j*.038
+  if abs(x)>.27+j*.01:continue
+  zz=1.905-abs(x)*.2
+  pts=[(x+.024*math.cos(k/6*math.tau),y+.016*math.sin(k/6*math.tau),zz) for k in range(7)]
   tube('Honeycomb grille',pts,.0036,graphite,sides=4)
-box('Projector recess',(0,.480,1.805),(.40,.102,.060),trim,bevel=.017)
-pv=[];pf=[]
-for j in range(13):
- u=j/12*2-1;pv.extend([(.23*u,hood_height(1.78,.445,.23*u/.4)+.003,1.785),(.19*u,.523,1.847)])
- if j<12:pf.append((2*j,2*j+1,2*j+3,2*j+2))
-mesh('Integrated projector eyebrow',pv,pf,paint,thick=.012,bevel=.004,smooth=True)
-for s in [-1,1]:
- panel('Projector cheek',[(s*.23,.52,1.785),(s*.19,.523,1.847),(s*.19,.428,1.847),(s*.26,.427,1.82)],paint,.014,.006)
+box('Projector recess',(0,.56,1.935),(.34,.075,.04),trim,bevel=.012)
 for x in [-.112,-.056,0,.056,.112]:
- box('Projector reflector',(x,.480,1.832),(.049,.057,.009),alloy,bevel=.009)
- box('Projector lens',(x,.480,1.839),(.036,.034,.01),lamp,bevel=.008)
-box('Scoop inlet',(0,.853,.40),(.185,.040,.06),trim,bevel=.009)
-panel('Scoop top',[(-.105,.843,.21),(-.105,.888,.37),(.105,.888,.37),(.105,.843,.21)],paint,.014,.005)
+ box('Projector reflector',(x,.56,1.95-abs(x)*.2),(.049,.05,.009),alloy,bevel=.009)
+ box('Projector lens',(x,.56,1.957-abs(x)*.2),(.036,.03,.01),lamp,bevel=.008)
+tube('Projector eyebrow',[(-.22,.61,1.91),(0,.625,1.965),(.22,.61,1.91)],.012,paint,sides=6)
+box('Scoop inlet',(0,hood_top(.42,0)+.012,.42),(.185,.040,.06),trim,bevel=.009)
+panel('Scoop top',[(-.105,hood_top(.22,0)+.002,.22),(-.105,hood_top(.40,0)+.04,.40),(.105,hood_top(.40,0)+.04,.40),(.105,hood_top(.22,0)+.002,.22)],paint,.014,.005)
 for s in [-1,1]:
  for j in range(4):
-  z=.37+j*.072;y=.79 if z<=.5 else .79-(z-.5)*.12
-  box('Hood vent',(s*.40,hood_height(z,y,.4/.66)+.003,z),(.105,.006,.023),trim,bevel=.004)
+  z=.37+j*.072
+  box('Hood vent',(s*.36,hood_top(z,.36/hood_station(z)[1])+.004,z),(.105,.006,.023),trim,bevel=.004)
+# Painted cockpit flanks: (z, shoulder x, shoulder y). Open black tub below the hip line.
+FLANK=[(.05,.66,.95),(-.15,.74,.90),(-.35,.80,.85),(-.55,.84,.82),(-.75,.85,.81),(-.92,.83,.81)]
+loft('Cockpit flank',[[(x-.06,y+.005,z),(x,y,z),(x+.025,y-.11,z),(x+.005,y-.27,z),(x-.06,y-.40,z)] for z,x,y in FLANK],paint,thick=.02,bevel=.006)
 # Single rear contact, drive housing, belt cover, rear wheel cap and low exhaust.
 tube('Rear swingarm',[(.21,.37,-.7),(.23,.333,-1.47)],.065,graphite)
 box('Belt cover',(-.15,.44,-1.23),(.08,.13,.65),trim,bevel=.04)
 tube('Rear damper',[(.1,.67,-.96),(.11,.34,-1.44)],.024,alloy)
-# Rear shoulder deck, center spine and scalloped closeout visible from chase view.
+# Rear deck: centre spine over a wide shoulder deck that cantilevers past the narrow lower body.
+DECK=[(-.86,1.0,.92,1.0),(-1.05,.93,.885,1.0),(-1.25,.83,.81,.98),(-1.42,.75,.735,.92),(-1.55,.69,.68,.78)]
+deck_sections=[]
+for z,spine,deck,k in DECK:
+ deck_sections.append([(0,spine,z),(.07,deck+.04,z),(.20*k,deck,z),(.50*k,deck-.005,z),(.74*k,deck-.04,z),(.86*k,deck-.15,z),(.80*k,deck-.30,z),(.62*k,deck-.38,z)])
+loft('Rear deck',deck_sections,paint,thick=.022,bevel=.007)
 for s in [-1,1]:
- panel('Rear shoulder deck',[(s*.095,.86,-.86),(s*.23,1.005,-.93),(s*.54,.987,-.93),(s*.70,.78,-1.18),(s*.57,.705,-1.37),(s*.16,.705,-1.37)],paint,.024,.017)
- panel('Rear quarter return',[(s*.70,.78,-1.18),(s*.57,.705,-1.37),(s*.58,.425,-1.24),(s*.69,.42,-.97)],paint,.022,.012)
- panel('Rear valance',[(s*.18,.69,-1.325),(s*.56,.69,-1.325),(s*.64,.44,-1.235),(s*.35,.31,-1.10),(s*.18,.39,-1.08)],trim,.027,.013)
- tube('Tail optical housing',[(s*.12,.731,-1.388),(s*.38,.741,-1.391),(s*.575,.788,-1.298),(s*.632,.705,-1.262)],.031,trim,sides=8)
- tube('Tail angular lens',[(s*.12,.735,-1.418),(s*.38,.746,-1.421),(s*.575,.793,-1.329),(s*.632,.71,-1.292)],.012,tail,sides=8)
- tube('Rear reflector trim',[(s*.19,.772,-1.39),(s*.36,.781,-1.389),(s*.47,.804,-1.343)],.008,alloy,sides=6)
-panel('Center tail spine left',[(-.045,.79,-.70),(0,1.04,-.76),(0,.72,-1.44),(-.08,.705,-1.35)],paint,.018,.01)
-panel('Center tail spine right',[(.045,.79,-.70),(0,1.04,-.76),(0,.72,-1.44),(.08,.705,-1.35)],paint,.018,.01)
+ tube('Tail optical housing',[(s*.12,.69,-1.545),(s*.38,.70,-1.54),(s*.575,.745,-1.47),(s*.632,.66,-1.43)],.031,trim,sides=8)
+ tube('Tail angular lens',[(s*.12,.694,-1.575),(s*.38,.705,-1.57),(s*.575,.75,-1.50),(s*.632,.665,-1.46)],.012,tail,sides=8)
+ tube('Rear reflector trim',[(s*.19,.731,-1.548),(s*.36,.74,-1.547),(s*.47,.763,-1.5)],.008,alloy,sides=6)
+ panel('Rear valance',[(s*.18,.62,-1.49),(s*.56,.62,-1.49),(s*.64,.44,-1.40),(s*.35,.31,-1.20),(s*.18,.39,-1.18)],trim,.027,.013)
 a=Vector((.22,.68,-1.14));b=Vector((.22,.36,-1.49));axis=(b-a).normalized();v=axis.cross(Vector((1,0,0))).normalized();u=axis.cross(v)
 tube('Rear coilover shaft',[a,b],.017,alloy)
 tube('Rear spring',[a+(b-a)*i/72+.045*(math.cos(i/72*math.tau*8)*v+math.sin(i/72*math.tau*8)*u) for i in range(73)],.008,graphite,sides=6)
