@@ -1,35 +1,35 @@
 # SlingMods Three-Wheel Tour — Playground live
 
-## In progress — `feature/legit-slingshot` (branch only, not merged)
+## In progress — `feature/legit-slingshot` (branch only, not merged) — packed up September 9
 
-Goal, per the owner on September 9: build the game out for fun. Make the hero read as a real 2025 Slingshot R and have actual SlingMods products bolt onto the car as races are won. Store integration, embedding and coupons are out of scope.
+Owner direction: build the game out for fun. Make the hero read as a real 2025 Slingshot R and have actual SlingMods products bolt onto the car as races are won. Store integration, embedding and coupons are out of scope. The owner's one look note so far: "sharper lines, more aggressive", which the crease pass addressed.
 
-Done on the branch so far (all tests and the TypeScript/Vite build pass; commits pushed):
+### What changed (23 commits on the branch)
 
-- **Factory paint palette.** The paint picker now lists the 2025 Polaris trim colors by name (Slingshot Red, Jet Black, Liquid Lime, Graphite Gloss, Royal Red, Royal Red Crystal, Nightfall) with SlingMods red kept first. Crystal finishes get a glassier clearcoat.
-- **Real parts on the car** (`src/parts.ts`). Buying Power stage 2 hides the stock exhaust and bolts on a Thermal-style dual rear-exit; Apex stages 1–3 add sway bar brackets, billet end links and DDMWorks-style coilovers (front pair behind the tires, rear beside the wheel). The cold air intake stays a stat plus product card because it lives under the closed hood.
-- **Wheel sets.** New garage section with four original designs (stock, six-spoke, mesh, concave). Buy once, swap free; drawn inside the GLB wheel nodes so they roll and steer.
-- **Underglow is now the TricLED kit.** The RGB picker is locked until the kit is bought (450 CR). Saves that had already raced keep it free.
-- **Install moment.** Every purchase swings the garage camera to the part and names the real product. Parts persist into races.
-- `scripts/capture-build.mjs` seeds a full build and screenshots the garage headlessly; `.claude/launch.json` starts the Vite dev server for browser checks.
+- **Body rebuilt as lofted sections** sized from `D:\slingshot angles` with an overlay tool: hood rising to a 0.95 m cowl, 0.89 m fender pods, long low V nose with a dark trapezoid mouth, light bar, slatted corner intakes and angular headlamp slashes, open black flanks, painted cockpit hips, boat-tail deck with angular LED tail lamp clusters. Edge-split creases at 28°, V hood spine, hard fender and deck edges. Wider R-style seats, lofted dash cowl, smoked screen, tapered cast swingarm. See `docs/vehicle-lofts.md`.
+- **Real parts on the car** (`src/parts.ts`): Thermal-style dual exhaust behind the tail, DDMWorks-style coilovers (front pair behind the tires, rear beside the wheel), billet end links and brackets. Intake stays a card because it lives under the closed hood.
+- **Wheel sets** (four original designs, buy once, swap free), **TricLED underglow kit** gating the RGB picker (450 CR; saves that had raced keep it free), **2025 factory paint names** with crystal clearcoat.
+- **Feel**: install moment swings the camera and names the product; new parts drop in with a bounce; rivals carry seeded random builds; the build photo stamps a spec line; cockpit eye point raised; headlight halos and spots moved to the new nose.
+- **Tooling**: portable Blender 4.5.3 in the ignored `work/` folder (sha256 verified, must be re-downloaded on another machine); `scripts/capture-build.mjs` (garage views, RGB night, day and night race, cockpit, install moment, photo download, `--mobile`, `BASE_URL` for a production preview); `.claude/launch.json` for the Vite dev server.
 
-Verified: 122 tests, typecheck and production build; headless WebGL garage captures at 1920×1080 (front, side, rear, RGB night) show the parts with no console errors. Not verified: WebGPU desktop look, physical phone, race-time visuals of the parts by a human.
+### Verified
 
-- **Lofted body (owner approved the Blender download).** Portable Blender 4.5.3 lives in the ignored `work/` folder (sha256 verified). The hood, fender pods, nose, cockpit flanks and rear deck are now cross-section lofts sized from the reference photos with an overlay check; see `docs/vehicle-lofts.md`. Nose has a dark trapezoid mouth, light bar, slatted corner intakes and angular headlamp slashes. Both GLB tiers pass `scripts/validate-hero.py` (hero ~53k, reduced ~23k triangles). The in-game garage, race and 390×844 mobile layout were captured headlessly with no console errors.
+- 123 tests, typecheck and `npm run build` green on the final commit; both GLB tiers pass `scripts/validate-hero.py` (hero 55,670 / reduced 24,981 triangles).
+- Headless WebGL captures in `evidence/legit-slingshot/`: garage front/side/rear, RGB night, day race, night race, cockpit, install moment, build photo, 390×844 mobile layout, and the production `dist/` served by `vite preview`. No console errors in any run.
+- Silhouette overlays against the reference photos (side, front, rear) in the same folder.
 
-- **Detail pass (self-judged against the references, owner away).** Angular tail lamp clusters with LED bars, narrow black rear mudguard, lofted dashboard cowl with gauge binnacle, smoked windscreen, headlight halos and spotlights moved onto the new nose (night race and cockpit captures verified), cockpit eye point raised over the 0.95 m cowl, and the build photo now stamps paint, wheel set and every real part as a spec line. `scripts/capture-build.mjs` covers garage views, RGB night, a day race, a night race, the cockpit, the photo download and a `--mobile` phone layout.
+### Not verified
 
-- **Install moment and rival builds.** Newly bought parts drop in with a short overshoot bounce (`world.highlightNext` → `spawning`), and the five rivals carry seeded random builds (exhaust, coilovers, wheel sets, finishes) so the grid is not six stock cars. Stock wheel finish is the factory machined dark silver.
+- Human look in Chrome (WebGPU), physical phone, controller, audio. Headless WebGL renders the studio darker than Chrome.
+- The procedural fallback car in `src/vehicle.ts` (used only if the GLB fails to load) is still the old shape.
 
-- **Sharpened per the owner ("sharper lines, more aggressive").** Edge-split creases at 28°, V hood spine with a shoulder line, flat-topped angular fender pods, hard deck and flank edges. Verified on both GLB tiers, in the garage, race, phone layout, and against a production `npm run build` served by `vite preview` (`BASE_URL` on the capture script).
+### Open threads / next steps
 
-Open and blocked on the owner:
-
-- **Owner look check in Chrome (WebGPU).** All captures so far are headless WebGL; the studio renders darker there. Open the garage on this branch and say whether the body reads as a Slingshot to you.
-- Wheel designs are original in-game art; real SlingMods wheel products need links and photos from the owner before they can be named.
-- Headless WebGL renders the studio darker than the WebGPU desktop path; part materials were tuned to read in both, but the final look should be judged in Chrome.
-
-
+1. Owner opens the garage in Chrome on this branch with a full build and says what still reads wrong; then tune the lofts (crease angle and hood V depth are the two knobs in `scripts/build-hero.py`).
+2. Real SlingMods wheel product links and photos, so the wheel sets can be named after actual parts.
+3. Optional: hood-up garage view so the intake can be drawn; the Body_BodyPaint mesh is merged, so the hood would need to be its own node.
+4. Optional: update the procedural fallback car to the new silhouette, or drop it.
+5. Merge to `main` only on explicit owner approval; Vercel auto-deploys `main`.
 
 ## Owner-approved production merge — September 9
 
