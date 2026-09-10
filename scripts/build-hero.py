@@ -122,7 +122,7 @@ for s in [-1,1]:
  # Shoulder wings taper into an integrated headrest instead of stacked boxes.
  x=s*.37
  box('Seat base',(x,.44,-.52),(.44,.10,.49),trim,bevel=.045)
- seat_rows=[(.51,.16,-.63),(.60,.185,-.67),(.76,.205,-.73),(.89,.205,-.77),(.95,.151,-.80),(1.065,.119,-.83),(1.105,.083,-.837)]
+ seat_rows=[(.51,.17,-.63),(.60,.20,-.67),(.76,.225,-.73),(.89,.225,-.77),(.97,.21,-.80),(1.04,.17,-.82),(1.12,.13,-.835),(1.16,.09,-.84)]
  sv=[];sf=[]
  for y,w,z in seat_rows:
   for j in range(9):
@@ -272,7 +272,7 @@ for s in [-1,1]:
 FLANK=[(.05,.66,.95),(-.15,.74,.90),(-.35,.80,.85),(-.55,.84,.82),(-.75,.85,.81),(-.92,.83,.81)]
 loft('Cockpit flank',[[(x-.06,y+.002,z),(x,y,z),(x+.03,y-.10,z),(x+.03,y-.24,z),(x-.06,y-.40,z)] for z,x,y in FLANK],paint,thick=.02,bevel=.004)
 # Single rear contact, drive housing, belt cover, rear wheel cap and low exhaust.
-tube('Rear swingarm',[(.21,.37,-.7),(.23,.333,-1.47)],.065,graphite)
+loft('Rear swingarm',[[(.17,.30,-.70),(.17,.46,-.70),(.31,.46,-.70),(.31,.30,-.70),(.17,.30,-.70)],[(.19,.31,-1.10),(.19,.42,-1.10),(.30,.42,-1.10),(.30,.31,-1.10),(.19,.31,-1.10)],[(.20,.32,-1.47),(.20,.38,-1.47),(.28,.38,-1.47),(.28,.32,-1.47),(.20,.32,-1.47)]],alloy,thick=0,bevel=.01,mirror=False)
 box('Belt cover',(-.15,.44,-1.23),(.08,.13,.65),trim,bevel=.04)
 tube('Rear damper',[(.1,.67,-.96),(.11,.34,-1.44)],.024,alloy)
 # Rear deck: centre spine over a wide shoulder deck that cantilevers past the narrow lower body.
