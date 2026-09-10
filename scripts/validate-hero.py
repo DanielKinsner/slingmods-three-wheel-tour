@@ -5,7 +5,7 @@ import hashlib, json, struct
 root = Path(__file__).resolve().parents[1]
 report=[]
 expected=[[-.8775,.333,1.197],[.8775,.333,1.197],[0,.354,-1.47]]
-for tier,budget in [('hero',58000),('lod',26000)]:
+for tier,budget in [('hero',72000),('lod',32000)]:
     path=root/f'public/models/slingshot-r-{tier}.glb'
     data=path.read_bytes()
     magic,version,length=struct.unpack_from('<III',data)
@@ -25,7 +25,11 @@ for tier,budget in [('hero',58000),('lod',26000)]:
         assert name in materials,name
     triangles=sum(gltf['accessors'][p['indices']]['count']//3 for m in gltf['meshes'] for p in m['primitives'])
     assert triangles<budget,(tier,triangles,budget)
-    assert len(gltf['meshes'])<=48
+    assert len(gltf['meshes'])<=70
+    links=[n for n in gltf['nodes'] if 'suspensionAnchor' in n.get('extras',{})]
+    assert len(links)==11
+    assert [sum(n['extras']['wheelIndex']==i for n in links) for i in range(3)]==[5,5,1]
+    assert all(n['extras']['restLength']>0 for n in links)
     assert all('uri' not in image for image in gltf['images'])
     report.append({'tier':tier,'nodes':len(gltf['nodes']),'embeddedImages':len(gltf['images']),'validHeaderLength':True,'animationContract':True,'wheelTransforms':True,'customizationMaterials':True,'triangles':triangles,'meshes':len(gltf['meshes']),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
 assert report[1]['triangles']<report[0]['triangles']*.55

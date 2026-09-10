@@ -1,0 +1,31 @@
+{
+  "modules": [
+    {
+      "module": "PortContainer",
+      "triangles": 5744,
+      "ceiling": 6000,
+      "drawGroups": 4
+    },
+    {
+      "module": "PortWarehouse",
+      "triangles": 12602,
+      "ceiling": 13000,
+      "drawGroups": 5
+    },
+    {
+      "module": "PortCrane",
+      "triangles": 3588,
+      "ceiling": 4000,
+      "drawGroups": 5
+    },
+    {
+      "module": "PortFreighter",
+      "triangles": 7080,
+      "ceiling": 7500,
+      "drawGroups": 5
+    }
+  ],
+  "bytes": 3820100,
+  "embeddedImages": 5,
+  "sha256": "a90ac70a0adc33d96f144b7c84879277f6583849a783dcd08a8304ff564f18ef"
+}

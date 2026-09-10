@@ -1,6 +1,7 @@
 import { buildRoadDetails } from './road-details';
 import { RouteTokens } from './playground';
-import { loadHeroAsset, makeHeroVehicle } from './hero-vehicle';
+import { loadHarborAssets } from './harbor-assets';
+import { loadHeroAsset, makeHeroVehicle, updateHeroSuspension } from './hero-vehicle';
 import { buildMiami } from './miami';
 import * as T from 'three/webgpu';
 import { makeVehicle } from './vehicle';
@@ -271,6 +272,7 @@ export class World {
     await this.renderer.init();
     await Promise.all([
       loadSurfaceAssets(),
+      loadHarborAssets(),
       ...(matchMedia('(max-width:800px)').matches
         ? [loadHeroAsset('low')]
         : [loadHeroAsset(), loadHeroAsset('low')]),
@@ -722,6 +724,7 @@ export class World {
       if (pivot.userData.rest) pivot.position.copy(pivot.userData.rest);
       if (i < 2) pivot.rotation.y = slipAngle * 1.4;
     });
+    updateHeroSuspension(car);
   }
   placeSimCar(car: T.Group, p: Driver) {
     if (!p.pose) {
@@ -782,6 +785,7 @@ export class World {
           Math.sign(t.steeringAngle) * Math.atan2(2.667, turnRadius + (inner ? -0.8775 : 0.8775));
       }
     });
+    updateHeroSuspension(car);
   }
   setStudioMood(mood: string) {
     this.studioMood = mood;

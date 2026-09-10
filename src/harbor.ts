@@ -3,6 +3,7 @@ import { box, mesh, rod, mat, V, batch, rng } from './geometry';
 import { canvasTexture, label, surface } from './materials';
 import type { Circuit } from './world';
 import type { CollisionWorld } from './collision';
+import { harborInstances } from './harbor-assets';
 
 /** Original modular port kit: no downloaded models, added lights use the shared pool. */
 export function buildHarbor(
@@ -13,6 +14,9 @@ export function buildHarbor(
 ) {
   const kit = new T.Group();
   root.add(kit);
+  const authored = harborInstances(night);
+  // Keep the simpler repeating cargo stacks on small screens; landmarks retain their detail.
+  const detailedCargo = !matchMedia('(max-width:800px)').matches;
   const streetLights: T.Vector3[] = [],
     random = rng(503);
   const steel = mat(0x324c56, 0.62, 0.5),
@@ -52,6 +56,8 @@ export function buildHarbor(
     const a = circuit.at(distance),
       g = new T.Group();
     g.position.copy(a.p).addScaledVector(a.r, lane);
+    // Off-road art sits on the apron, which is lower than the road centerline.
+    if (Math.abs(lane) > 20) g.position.y = circuit.terrainAt(g.position.x, g.position.z).height;
     g.rotation.y = Math.atan2(a.t.x, a.t.z);
     kit.add(g);
     return g;
@@ -67,25 +73,37 @@ export function buildHarbor(
     for (let j = 0; j < 1 + (i % 3); j++) {
       const m = box(g, containerMats[(i + j) % 4], 5, 2.65, 12, 0, 1.33 + j * 2.68, 0);
       collision.add(m);
-      for (const x of [-2.2, 2.2]) box(g, ivory, 0.08, 2.4, 0.1, x, 1.35 + j * 2.68, 6.06);
+      const cargo = detailedCargo ? authored('PortContainer', colors[(i + j) % 4]) : null;
+      if (cargo) {
+        cargo.position.y = j * 2.68;
+        g.add(cargo);
+        m.removeFromParent();
+        m.geometry.dispose();
+      } else {
+        for (const x of [-2.2, 2.2]) box(g, ivory, 0.08, 2.4, 0.1, x, 1.35 + j * 2.68, 6.06);
+      }
     }
     batch(g);
   }
   // Warehouse apron and dock doors form the close foreground on the opening straight.
   for (let i = 0; i < 4; i++) {
     const g = place(80 + i * 85, -49);
-    box(g, concrete, 35, 9, 52, 0, 4.3, 0);
-    box(g, dark, 37, 0.5, 54, 0, 9, 0);
-    for (let z = -18; z <= 18; z += 12) {
-      box(g, steel, 0.12, 5, 8, 17.6, 2.5, z);
-      box(g, lamp, 0.25, 0.12, 7, 17.8, 5.4, z);
+    const warehouse = authored('PortWarehouse');
+    if (warehouse) g.add(warehouse);
+    else {
+      box(g, concrete, 35, 9, 52, 0, 4.3, 0);
+      box(g, dark, 37, 0.5, 54, 0, 9, 0);
+      for (let z = -18; z <= 18; z += 12) {
+        box(g, steel, 0.12, 5, 8, 17.6, 2.5, z);
+        box(g, lamp, 0.25, 0.12, 7, 17.8, 5.4, z);
+      }
     }
     const sign = mesh(
       new T.PlaneGeometry(19, 2),
       new T.MeshBasicMaterial({ map: label(`PIER 0${i + 1} / FREIGHT`) }),
       g,
-      17.7,
-      7.1,
+      17.9,
+      8.05,
       0,
     );
     sign.rotation.y = Math.PI / 2;
@@ -109,6 +127,11 @@ export function buildHarbor(
   // Port cranes: tall readable silhouettes, geometry stays outside the route corridor.
   for (let i = 0; i < 4; i++) {
     const g = place(circuit.length * (0.38 + i * 0.075), -52);
+    const crane = authored('PortCrane');
+    if (crane) {
+      g.add(crane);
+      continue;
+    }
     for (const x of [-10, 10])
       for (const z of [-9, 9]) {
         rod(g, V(x, 0, z), V(x * 0.7, 37, z * 0.7), 0.65, yellow, 6);
@@ -143,22 +166,31 @@ export function buildHarbor(
       g.removeFromParent();
       continue;
     }
-    for (let j = 0; j < 2 + (i % 2); j++)
-      box(g, containerMats[(i + j) % 4], 5, 2.6, 12, 0, 1.3 + j * 2.65, 0);
+    for (let j = 0; j < 2 + (i % 2); j++) {
+      const cargo = detailedCargo ? authored('PortContainer', colors[(i + j) % 4]) : null;
+      if (cargo) {
+        cargo.position.y = j * 2.65;
+        g.add(cargo);
+      } else box(g, containerMats[(i + j) % 4], 5, 2.6, 12, 0, 1.3 + j * 2.65, 0);
+    }
     batch(g);
   }
   const vessel = new T.Group();
   kit.add(vessel);
   vessel.position.set(570, 0, 210);
-  box(vessel, dark, 24, 7, 108, 0, 1, 0);
-  box(vessel, steel, 25, 0.8, 110, 0, 4.8, 0);
-  box(vessel, ivory, 20, 15, 16, 0, 12, -40);
-  box(vessel, dark, 22, 3, 17, 0, 17, -40);
-  for (let z = -20; z <= 35; z += 14)
-    for (let x = -7; x <= 7; x += 7)
-      for (let h = 0; h < 2; h++)
-        box(vessel, containerMats[(Math.round(z + 20) + h) % 4], 6, 3.5, 12, x, 7 + h * 3.6, z);
-  rod(vessel, V(0, 19, -40), V(0, 30, -40), 0.2, steel, 6);
+  const freighter = authored('PortFreighter');
+  if (freighter) vessel.add(freighter);
+  else {
+    box(vessel, dark, 24, 7, 108, 0, 1, 0);
+    box(vessel, steel, 25, 0.8, 110, 0, 4.8, 0);
+    box(vessel, ivory, 20, 15, 16, 0, 12, -40);
+    box(vessel, dark, 22, 3, 17, 0, 17, -40);
+    for (let z = -20; z <= 35; z += 14)
+      for (let x = -7; x <= 7; x += 7)
+        for (let h = 0; h < 2; h++)
+          box(vessel, containerMats[(Math.round(z + 20) + h) % 4], 6, 3.5, 12, x, 7 + h * 3.6, z);
+    rod(vessel, V(0, 19, -40), V(0, 30, -40), 0.2, steel, 6);
+  }
   batch(vessel);
   // Water and shore skyline sit beyond the eastern waterfront sweeper.
   // Quay face separates the concrete apron from the lower water plane.
@@ -248,7 +280,7 @@ export function buildHarbor(
     if (o instanceof T.Mesh) parts.push(o);
   });
   for (const part of parts) {
-    part.geometry = part.geometry.clone().applyMatrix4(part.matrixWorld);
+    part.geometry.applyMatrix4(part.matrixWorld);
     part.removeFromParent();
     part.position.set(0, 0, 0);
     part.quaternion.identity();

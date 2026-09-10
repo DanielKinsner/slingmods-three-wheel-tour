@@ -89,7 +89,8 @@ export function makeHeroVehicle(
   withDriver = true,
   quality: Quality = 'full',
 ): T.Group | null {
-  const template = templates.get(quality) ?? templates.get('full') ?? templates.get('low');
+  const loadedQuality = templates.has(quality) ? quality : templates.has('full') ? 'full' : 'low';
+  const template = templates.get(loadedQuality);
   if (!template) return null;
   const group = template.clone(true);
   group.name = 'SlingMods 2025 R-inspired hero roadster';
@@ -146,6 +147,11 @@ export function makeHeroVehicle(
   frontLamp.toneMapped = false;
   const wheels = [0, 1, 2].map((i) => group.getObjectByName(`Wheel_${i}`)!);
   const pivots = [0, 1, 2].map((i) => group.getObjectByName(`Pivot_${i}`)!);
+  const suspension: T.Object3D[] = [];
+  group.traverse((o) => {
+    if (Array.isArray(o.userData.suspensionAnchor) && Number.isInteger(o.userData.wheelIndex))
+      suspension.push(o);
+  });
   const rider = group.getObjectByName('Rider')!;
   rider.visible = withDriver;
   // Fictional game boost flame is kept separate from the naturally aspirated engine.
@@ -159,6 +165,7 @@ export function makeHeroVehicle(
   group.add(flame);
   group.userData = {
     paint,
+    suspension,
     wheels,
     pivots,
     steering: group.getObjectByName('Steering')!,
@@ -174,7 +181,29 @@ export function makeHeroVehicle(
     exhaustTips,
     dimensions: HERO_MODEL,
     modelId: HERO_MODEL.id,
-    assetQuality: quality,
+    assetQuality: loadedQuality,
   };
   return group;
+}
+
+const suspensionUp = new T.Vector3(0, 1, 0);
+const suspensionEnd = new T.Vector3();
+const suspensionOffset = new T.Vector3();
+/** Authored wishbones and coilovers retain body anchors while following the contact-seated hubs. */
+export function updateHeroSuspension(car: T.Object3D) {
+  if (!car.userData.suspension?.length) return;
+  car.updateMatrixWorld(true);
+  for (const link of car.userData.suspension as T.Object3D[]) {
+    const { wheelIndex, suspensionAnchor, wheelOffset, restLength } = link.userData;
+    const pivot = car.userData.pivots[wheelIndex] as T.Object3D;
+    pivot.getWorldPosition(suspensionEnd);
+    link.parent!.worldToLocal(suspensionEnd);
+    suspensionEnd.add(suspensionOffset.fromArray(wheelOffset));
+    link.position.fromArray(suspensionAnchor);
+    suspensionEnd.sub(link.position);
+    const length = suspensionEnd.length();
+    if (length < 0.001 || !restLength) continue;
+    link.quaternion.setFromUnitVectors(suspensionUp, suspensionEnd.divideScalar(length));
+    link.scale.set(1, length / restLength, 1);
+  }
 }

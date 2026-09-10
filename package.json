@@ -1,6 +1,6 @@
 {
   "name": "slingmods-three-wheel-tour",
-  "version": "0.5.0-preview",
+  "version": "0.5.1-preview",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
+    "@types/node": "^24.13.4",
     "@types/three": "^0.183.0",
     "prettier": "^3.9.6",
     "typescript": "^5.9.3",

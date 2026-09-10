@@ -1,6 +1,6 @@
 {
   "id": "slingshot-r-inspired-2025",
-  "created": "2026-09-09",
+  "created": "2026-09-10",
   "classification": "original Blender-authored approximation",
   "reference": "2025 Polaris Slingshot R, ProStar generation",
   "license": "Original project geometry; no manufacturer mesh, photo, logo or CAD included. References are not redistributed. No OEM endorsement or exact-fit claim.",
@@ -27,7 +27,7 @@
   "measuredBounds": {
     "min": [
       -1.003749966621399,
-      -0.001969665288925171,
+      0.0,
       -1.8641873598098755
     ],
     "max": [
@@ -37,30 +37,30 @@
     ],
     "size": [
       2.0149526596069336,
-      1.3190036714076996,
+      1.3170340061187744,
       3.7941828966140747
     ]
   },
   "high": {
-    "triangles": 53212,
-    "meshes": 45
+    "triangles": 68436,
+    "meshes": 67
   },
   "low": {
-    "triangles": 22938,
-    "meshes": 45
+    "triangles": 29900,
+    "meshes": 67
   },
   "files": {
     "public/models/slingshot-r-hero.glb": {
-      "bytes": 2343704,
-      "sha256": "f6fba56ef0d23821018e116da63e0880855fc5f29c1d9ffc582d35587b5f1683"
+      "bytes": 3141776,
+      "sha256": "791b088b18b08eb0ab535ed61863c70bc6e8845716ce04e3cb8337426c4090e8"
     },
     "public/models/slingshot-r-lod.glb": {
-      "bytes": 1227008,
-      "sha256": "de60eb0beb4beeb6bc360cbae6700fbe94c29ee3ad7c52b1967063f5ce193ca6"
+      "bytes": 1440932,
+      "sha256": "d9863d5c1a6bcc8b2006a59bf40cd73588aa6432aedaa63701481bf9b447ad03"
     },
     "artwork/vehicle/slingshot-r-inspired.blend": {
-      "bytes": 4089418,
-      "sha256": "6cda56a0b2f93c413da78941f991a351f6d3b9a7000c111d2502cdac6785a4ff"
+      "bytes": 5063728,
+      "sha256": "3bd8f848e83f2ee1c18d472268e8d1f78d3ebd35c32946c2959fa1aa1957c458"
     },
     "artwork/vehicle/rubber-micro-normal.png": {
       "bytes": 38419,

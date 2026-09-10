@@ -1,5 +1,5 @@
 {
-  "version": "0.5.0-preview",
+  "version": "0.5.1-preview",
   "assets": [
     {
       "file": "public/audio/brief-0.mp3",
@@ -170,16 +170,23 @@
       "usage": "Project artwork; source retained in this delivery"
     },
     {
+      "file": "public/models/harbor-kit.glb",
+      "bytes": 3820100,
+      "sha256": "a90ac70a0adc33d96f144b7c84879277f6583849a783dcd08a8304ff564f18ef",
+      "origin": "Original Blender source artwork/harbor/harbor-kit.blend",
+      "usage": "Original port modules and procedural wear maps; no external models or photographs"
+    },
+    {
       "file": "public/models/slingshot-r-hero.glb",
-      "bytes": 2343704,
-      "sha256": "f6fba56ef0d23821018e116da63e0880855fc5f29c1d9ffc582d35587b5f1683",
+      "bytes": 3141776,
+      "sha256": "791b088b18b08eb0ab535ed61863c70bc6e8845716ce04e3cb8337426c4090e8",
       "origin": "Original Blender source artwork/vehicle/slingshot-r-inspired.blend",
       "usage": "Original R-inspired approximation; reference photographs not embedded; not manufacturer CAD"
     },
     {
       "file": "public/models/slingshot-r-lod.glb",
-      "bytes": 1227008,
-      "sha256": "de60eb0beb4beeb6bc360cbae6700fbe94c29ee3ad7c52b1967063f5ce193ca6",
+      "bytes": 1440932,
+      "sha256": "d9863d5c1a6bcc8b2006a59bf40cd73588aa6432aedaa63701481bf9b447ad03",
       "origin": "Original Blender source artwork/vehicle/slingshot-r-inspired.blend",
       "usage": "Original R-inspired approximation; reference photographs not embedded; not manufacturer CAD"
     },
